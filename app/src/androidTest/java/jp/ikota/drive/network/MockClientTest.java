@@ -63,7 +63,7 @@ public class MockClientTest extends ActivityInstrumentationTestCase2<HelloActivi
             @Override
             public void success(Shots shots, Response response) {
                 assertEquals(shots.items.size(), 15);
-                Shots.Item item = shots.items.get(0);
+                Shot item = shots.items.get(0);
                 assertEquals(item.id, "2357773");
                 assertEquals(item.title, "Sequoia");
                 assertEquals(item.images.hidpi, "https://d13yacurqjgara.cloudfront.net/users/31752/screenshots/2357773/sequoia.png");
