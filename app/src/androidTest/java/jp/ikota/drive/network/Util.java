@@ -9,6 +9,7 @@ public class Util {
 
     public static final HashMap<String, String> RESPONSE_MAP = new HashMap<String, String>(){
         {put(DribbleURL.PATH_SHOTS, SampleResponse.getShots());}
+        {put(DribbleURL.PATH_SHOTS+"/", SampleResponse.getShot());}
     };
 
 }

@@ -43,6 +43,9 @@ public class MockClient implements Client{
     public String retrieveMethod(String url) {
         Matcher m = PATTERN_METHOD.matcher(url);
         if(m.find()){
+            if(m.group(1).startsWith("shots/")) {
+                return "shots/";
+            }
             return m.group(1);
         } else {
             return null;

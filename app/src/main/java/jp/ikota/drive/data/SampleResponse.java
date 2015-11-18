@@ -1248,4 +1248,139 @@ public class SampleResponse {
                 "  }\n" +
                 "]";
     }
+
+    public static String getShot() {
+        return "{\n" +
+                "  \"id\": 1109319,\n" +
+                "  \"title\": \"Caffeinated App Icon\",\n" +
+                "  \"description\": \"<p> Meanwhile on another 'non flat' planet... </p>\\n\\n<p> Refreshed icon for <strong><a href=\\\"http://www.caffeinatedapp.com\\\" rel=\\\"nofollow\\\">Caffeinated</a></strong> - beautiful, full featured, RSS client for Mac OS X 10.6.6+, built from the ground up using the latest OS X technologies. New version with refreshed icon and new features will be available soon! </p>\\n\\n<p> Please check the <strong><a href=\\\"http://dribbble.com/shots/1109319-Caffeinated-Mac-Icon-Ramotion-Shot/attachments/140165\\\" rel=\\\"nofollow\\\">attachment</a></strong>. </p>\\n\\n<p><strong><a href=\\\"http://ramotion.com/work/iconography?utm_source=drbl&amp;utm_medium=special&amp;utm_campaign=1109319-Caffeinated-App-Icon\\\" rel=\\\"nofollow\\\">Ramotion.com/work/iconography</a></strong></p>\\n\\n<p>Follow us:\\n<br /><strong><a href=\\\"http://plus.google.com/+Ramotion\\\" rel=\\\"nofollow\\\">Google+</a></strong> | <strong><a href=\\\"http://behance.net/ramotion\\\" rel=\\\"nofollow\\\">Behance</a></strong> | <strong><a href=\\\"http://twitter.com/Ramotion\\\" rel=\\\"nofollow\\\">Twitter</a></strong> | <strong><a href=\\\"https://www.facebook.com/Ramotioncom\\\" rel=\\\"nofollow\\\">Facebook</a></strong></p>\",\n" +
+                "  \"width\": 400,\n" +
+                "  \"height\": 300,\n" +
+                "  \"images\": {\n" +
+                "    \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/1109319/caffeinated-mac-icon-ramotion-shot.png\",\n" +
+                "    \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/1109319/caffeinated-mac-icon-ramotion-shot_1x.png\",\n" +
+                "    \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/1109319/caffeinated-mac-icon-ramotion-shot_teaser.png\"\n" +
+                "  },\n" +
+                "  \"views_count\": 10125,\n" +
+                "  \"likes_count\": 478,\n" +
+                "  \"comments_count\": 28,\n" +
+                "  \"attachments_count\": 1,\n" +
+                "  \"rebounds_count\": 0,\n" +
+                "  \"buckets_count\": 37,\n" +
+                "  \"created_at\": \"2013-06-11T08:00:08Z\",\n" +
+                "  \"updated_at\": \"2015-01-10T16:17:14Z\",\n" +
+                "  \"html_url\": \"https://dribbble.com/shots/1109319-Caffeinated-App-Icon\",\n" +
+                "  \"attachments_url\": \"https://api.dribbble.com/v1/shots/1109319/attachments\",\n" +
+                "  \"buckets_url\": \"https://api.dribbble.com/v1/shots/1109319/buckets\",\n" +
+                "  \"comments_url\": \"https://api.dribbble.com/v1/shots/1109319/comments\",\n" +
+                "  \"likes_url\": \"https://api.dribbble.com/v1/shots/1109319/likes\",\n" +
+                "  \"projects_url\": \"https://api.dribbble.com/v1/shots/1109319/projects\",\n" +
+                "  \"rebounds_url\": \"https://api.dribbble.com/v1/shots/1109319/rebounds\",\n" +
+                "  \"animated\": false,\n" +
+                "  \"tags\": [\n" +
+                "    \"android\",\n" +
+                "    \"app\",\n" +
+                "    \"application\",\n" +
+                "    \"appstore\",\n" +
+                "    \"branding\",\n" +
+                "    \"caffeinated\",\n" +
+                "    \"cappuccino\",\n" +
+                "    \"chocolate\",\n" +
+                "    \"coffee\",\n" +
+                "    \"cup\",\n" +
+                "    \"google\",\n" +
+                "    \"icon\",\n" +
+                "    \"icons\",\n" +
+                "    \"identity\",\n" +
+                "    \"illustration\",\n" +
+                "    \"ios\",\n" +
+                "    \"iphone\",\n" +
+                "    \"latte\",\n" +
+                "    \"logo\",\n" +
+                "    \"mac\",\n" +
+                "    \"macos\",\n" +
+                "    \"mug\",\n" +
+                "    \"photoshop\",\n" +
+                "    \"pottery\",\n" +
+                "    \"product\",\n" +
+                "    \"ramotion\",\n" +
+                "    \"reader\",\n" +
+                "    \"rss\",\n" +
+                "    \"service\",\n" +
+                "    \"tea\"\n" +
+                "  ],\n" +
+                "  \"user\": {\n" +
+                "    \"id\": 25514,\n" +
+                "    \"name\": \"Ramotion\",\n" +
+                "    \"username\": \"Ramotion\",\n" +
+                "    \"html_url\": \"https://dribbble.com/Ramotion\",\n" +
+                "    \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/25514/avatars/original/avatar.png?1305139078\",\n" +
+                "    \"bio\": \"We Take Digital Experiences to the Next Level. WORK INQUIRIES → <a href=\\\"https://RAMOTION.COM\\\" rel=\\\"nofollow noreferrer\\\">RAMOTION.COM</a>\",\n" +
+                "    \"location\": \"San Francisco, CA\",\n" +
+                "    \"links\": {\n" +
+                "      \"web\": \"https://ramotion.com\",\n" +
+                "      \"twitter\": \"https://twitter.com/Ramotion\"\n" +
+                "    },\n" +
+                "    \"buckets_count\": 0,\n" +
+                "    \"comments_received_count\": 4408,\n" +
+                "    \"followers_count\": 22972,\n" +
+                "    \"followings_count\": 1111,\n" +
+                "    \"likes_count\": 787,\n" +
+                "    \"likes_received_count\": 84942,\n" +
+                "    \"projects_count\": 10,\n" +
+                "    \"rebounds_received_count\": 87,\n" +
+                "    \"shots_count\": 224,\n" +
+                "    \"can_upload_shot\": true,\n" +
+                "    \"type\": \"Team\",\n" +
+                "    \"pro\": false,\n" +
+                "    \"buckets_url\": \"https://api.dribbble.com/v1/users/25514/buckets\",\n" +
+                "    \"followers_url\": \"https://api.dribbble.com/v1/users/25514/followers\",\n" +
+                "    \"following_url\": \"https://api.dribbble.com/v1/users/25514/following\",\n" +
+                "    \"likes_url\": \"https://api.dribbble.com/v1/users/25514/likes\",\n" +
+                "    \"projects_url\": \"https://api.dribbble.com/v1/users/25514/projects\",\n" +
+                "    \"shots_url\": \"https://api.dribbble.com/v1/users/25514/shots\",\n" +
+                "    \"created_at\": \"2011-03-27T17:07:26Z\",\n" +
+                "    \"updated_at\": \"2015-11-13T06:56:43Z\",\n" +
+                "    \"members_count\": 1,\n" +
+                "    \"members_url\": \"https://api.dribbble.com/v1/teams/25514/members\",\n" +
+                "    \"team_shots_url\": \"https://api.dribbble.com/v1/teams/25514/shots\"\n" +
+                "  },\n" +
+                "  \"team\": {\n" +
+                "    \"id\": 25514,\n" +
+                "    \"name\": \"Ramotion\",\n" +
+                "    \"username\": \"Ramotion\",\n" +
+                "    \"html_url\": \"https://dribbble.com/Ramotion\",\n" +
+                "    \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/25514/avatars/original/avatar.png?1305139078\",\n" +
+                "    \"bio\": \"We Take Digital Experiences to the Next Level. WORK INQUIRIES → <a href=\\\"https://RAMOTION.COM\\\" rel=\\\"nofollow noreferrer\\\">RAMOTION.COM</a>\",\n" +
+                "    \"location\": \"San Francisco, CA\",\n" +
+                "    \"links\": {\n" +
+                "      \"web\": \"https://ramotion.com\",\n" +
+                "      \"twitter\": \"https://twitter.com/Ramotion\"\n" +
+                "    },\n" +
+                "    \"buckets_count\": 0,\n" +
+                "    \"comments_received_count\": 4408,\n" +
+                "    \"followers_count\": 22972,\n" +
+                "    \"followings_count\": 1111,\n" +
+                "    \"likes_count\": 787,\n" +
+                "    \"likes_received_count\": 84942,\n" +
+                "    \"projects_count\": 10,\n" +
+                "    \"rebounds_received_count\": 87,\n" +
+                "    \"shots_count\": 224,\n" +
+                "    \"can_upload_shot\": true,\n" +
+                "    \"type\": \"Team\",\n" +
+                "    \"pro\": false,\n" +
+                "    \"buckets_url\": \"https://api.dribbble.com/v1/users/25514/buckets\",\n" +
+                "    \"followers_url\": \"https://api.dribbble.com/v1/users/25514/followers\",\n" +
+                "    \"following_url\": \"https://api.dribbble.com/v1/users/25514/following\",\n" +
+                "    \"likes_url\": \"https://api.dribbble.com/v1/users/25514/likes\",\n" +
+                "    \"projects_url\": \"https://api.dribbble.com/v1/users/25514/projects\",\n" +
+                "    \"shots_url\": \"https://api.dribbble.com/v1/users/25514/shots\",\n" +
+                "    \"created_at\": \"2011-03-27T17:07:26Z\",\n" +
+                "    \"updated_at\": \"2015-11-13T06:56:43Z\",\n" +
+                "    \"members_count\": 1,\n" +
+                "    \"members_url\": \"https://api.dribbble.com/v1/teams/25514/members\",\n" +
+                "    \"team_shots_url\": \"https://api.dribbble.com/v1/teams/25514/shots\"\n" +
+                "  }\n" +
+                "}";
+    }
 }

@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import dagger.ObjectGraph;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.HelloActivity;
+import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.di.DummyAPIModule;
 import retrofit.Callback;
@@ -63,7 +64,7 @@ public class MockClientTest extends ActivityInstrumentationTestCase2<HelloActivi
             public void success(Shots shots, Response response) {
                 assertEquals(shots.items.size(), 15);
                 Shots.Item item = shots.items.get(0);
-                assertEquals(item.id,"2357773");
+                assertEquals(item.id, "2357773");
                 assertEquals(item.title, "Sequoia");
                 assertEquals(item.images.hidpi, "https://d13yacurqjgara.cloudfront.net/users/31752/screenshots/2357773/sequoia.png");
                 assertEquals(item.user.id, "31752");
@@ -74,6 +75,29 @@ public class MockClientTest extends ActivityInstrumentationTestCase2<HelloActivi
             @Override
             public void failure(RetrofitError error) {
                 fail("Error on getShots API: message=" + error.getMessage());
+            }
+        });
+        lock.await(10000, TimeUnit.MILLISECONDS);
+        assertEquals(0, lock.getCount());
+    }
+
+    @Test
+    public void getShot() throws Exception {
+        app.api().getShot("dummy", new Callback<Shot>() {
+            @Override
+            public void success(Shot shot, Response response) {
+                assertEquals(shot.id, "1109319");
+                assertEquals(shot.title, "Caffeinated App Icon");
+                assertEquals(shot.images.hidpi, "https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/1109319/caffeinated-mac-icon-ramotion-shot.png");
+                assertEquals(shot.tags.length, 30);
+                assertEquals(shot.tags[0], "android");
+                assertEquals(shot.user.id, "25514");
+                lock.countDown();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                fail("Error on getShot API: message=" + error.getMessage());
             }
         });
         lock.await(10000, TimeUnit.MILLISECONDS);
