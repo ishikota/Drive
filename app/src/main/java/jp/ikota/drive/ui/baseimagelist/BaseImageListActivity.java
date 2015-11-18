@@ -23,9 +23,10 @@ public class BaseImageListActivity extends BaseActivity {
     }
 
     private void initFragment(Fragment notesFragment) {
+        String tag = BaseImageListFragment.class.getSimpleName();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.container, notesFragment);
+        transaction.add(R.id.container, notesFragment, tag);
         transaction.commit();
     }
 
