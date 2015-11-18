@@ -1,5 +1,6 @@
 package jp.ikota.drive.ui.baseimagelist;
 
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Before;
@@ -31,17 +34,23 @@ import java.util.List;
 import dagger.ObjectGraph;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
+import jp.ikota.drive.data.SampleResponse;
+import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.di.DummyAPIModule;
 import jp.ikota.drive.network.DribbleURL;
 import jp.ikota.drive.network.Util;
+import jp.ikota.drive.ui.imagedetail.ImageDetailActivity;
 import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
 import jp.ikota.drive.util.IdlingResource.VisibilityIdlingResource;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(AndroidJUnit4.class)
@@ -134,25 +143,36 @@ public class BaseImageListScreenTest {
 
     @Test
     public void showShotDetail() {
-        // TODO : implement detail activity
-//        activityRule.launchActivity(new Intent());
+        setupMockServer(null);
+        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
+        BaseImageListFragment fragment = getFragment(activity);
+        @SuppressWarnings("ConstantConditions")
+        RecyclerView recyclerView = (RecyclerView)fragment.getView().findViewById(android.R.id.list);
 
         // Set up an ActivityMonitor
-//        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-//        Instrumentation.ActivityMonitor receiverActivityMonitor =
-//                instrumentation.addMonitor(DetailActivity.class.getName(),null, false);
-        // click list to go detail screen
-//        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                instrumentation.addMonitor(ImageDetailActivity.class.getName(), null, false);
 
-//        Activity activity = receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        // wait list load and click first item to go detail screen
+        IdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 1);
+        Espresso.registerIdlingResources(idlingResource);
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        Espresso.unregisterIdlingResources(idlingResource);
+
+        Activity detail_activity = receiverActivityMonitor.waitForActivityWithTimeout(1000);
         // Remove the ActivityMonitor
-//        instrumentation.removeMonitor(receiverActivityMonitor);
-//        assertNotNull("DetailActivity is null", activity);
-//        assertEquals("Launched Activity is not DetailActivity", DetailActivity.class, activity.getClass());
-//
-//        Intent intent = activity.getIntent();
-//        String tag = intent.getStringExtra(DetailActivity.EXTRA_TAG);
-//        assertEquals("hogehoge", tag);
+        instrumentation.removeMonitor(receiverActivityMonitor);
+        assertNotNull("ImageDetailActivity is null", detail_activity);
+        assertEquals("Launched Activity is not ImageDetailActivity", ImageDetailActivity.class, detail_activity.getClass());
+
+        // assert if clicked shot passed to detail activity
+        Gson gson = new Gson();
+        Shots shots = gson.fromJson("{\"items\":"+SampleResponse.getShots()+"}", Shots.class);
+        String expected = gson.toJson(shots.items.get(0));
+        Intent intent = detail_activity.getIntent();
+        String json = intent.getStringExtra("content");
+        assertEquals(expected, json);
     }
 
     @Test

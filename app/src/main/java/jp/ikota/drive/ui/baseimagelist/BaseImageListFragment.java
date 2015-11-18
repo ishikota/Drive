@@ -2,6 +2,7 @@ package jp.ikota.drive.ui.baseimagelist;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,6 +23,7 @@ import java.util.List;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.model.Shot;
+import jp.ikota.drive.ui.imagedetail.ImageDetailActivity;
 
 
 public class BaseImageListFragment extends Fragment implements BaseImageListContract.View{
@@ -111,7 +113,8 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
 
     @Override
     public void showShotDetail(Shot shot) {
-
+        Intent intent = ImageDetailActivity.createIntent(mApp.getApplicationContext(), shot);
+        startActivity(intent);
     }
 
     @Override
@@ -166,7 +169,7 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
 
         private void addPadding(View v, boolean toRight) {
             int padding = 8;  //TODO replace this value with R.dimen.two_column_padding
-            v.setPadding(toRight? 0:padding, 0, toRight? padding:0, padding*2);
+            v.setPadding(toRight ? 0 : padding, 0, toRight ? padding : 0, padding * 2);
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
