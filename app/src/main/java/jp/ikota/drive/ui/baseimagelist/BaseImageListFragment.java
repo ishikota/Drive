@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,7 +148,10 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Shot shot = mShots.get(position);
-            holder.imageView.setImageResource(R.mipmap.ic_launcher);
+            Picasso.with(holder.imageView.getContext())
+                    .load(shot.images.normal)
+                    .into(holder.imageView);
+            addPadding(holder.itemView, position%2==0);
         }
 
         @Override
@@ -157,6 +162,11 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
         public void replaceData(List<Shot> shots) {
             mShots.addAll(shots);
             notifyDataSetChanged();
+        }
+
+        private void addPadding(View v, boolean toRight) {
+            int padding = 8;  //TODO replace this value with R.dimen.two_column_padding
+            v.setPadding(toRight? 0:padding, 0, toRight? padding:0, padding*2);
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
