@@ -10,7 +10,7 @@ public interface BaseImageListContract {
 
     interface View {
 
-        void setRefreshIndicator(boolean active);
+        void finishRefreshIndicator();
 
         void setProgressIndicator(boolean active);
 

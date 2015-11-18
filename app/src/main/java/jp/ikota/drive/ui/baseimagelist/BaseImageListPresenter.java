@@ -30,20 +30,20 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
 
     @Override
     public void refreshShots() {
-        mShotsView.setRefreshIndicator(true);
         mPage = 0;
         API.getShots(mPage, ITEM_PER_PAGE, new Callback<Shots>() {
             @Override
             public void success(Shots shots, Response response) {
                 mShotsView.showShots(shots.items);
                 mPage++;
-                mShotsView.setRefreshIndicator(false);
+                mShotsView.finishRefreshIndicator();
             }
 
             @Override
             public void failure(RetrofitError error) {
+                error.printStackTrace();
                 mShotsView.showNetworkError();
-                mShotsView.setRefreshIndicator(false);
+                mShotsView.finishRefreshIndicator();
             }
         });
     }
@@ -61,6 +61,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
 
             @Override
             public void failure(RetrofitError error) {
+                error.printStackTrace();
                 mShotsView.showNetworkError();
                 mShotsView.setProgressIndicator(false);
             }
