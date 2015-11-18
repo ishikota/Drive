@@ -4,7 +4,11 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingResource;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.BoundedMatcher;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,8 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-
-import com.google.gson.Gson;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -29,13 +31,14 @@ import java.util.List;
 import dagger.ObjectGraph;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
-import jp.ikota.drive.data.SampleResponse;
-import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.di.DummyAPIModule;
 import jp.ikota.drive.network.Util;
+import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.core.Is.is;
 
@@ -68,6 +71,21 @@ public class BaseImageListScreenTest {
     }
 
     @Test
+    public void checkIfProgressShownAtFirst() {
+        setupMockServer(null);
+        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
+        BaseImageListFragment fragment = getFragment(activity);
+        @SuppressWarnings("ConstantConditions")
+        RecyclerView recyclerView = (RecyclerView)fragment.getView().findViewById(android.R.id.list);
+        onView(ViewMatchers.withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        IdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 1);
+        Espresso.registerIdlingResources(idlingResource);
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, scrollTo()));
+        Espresso.unregisterIdlingResources(idlingResource);
+        onView(withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+    }
+
+    @Test
     public void setProgressIndicator() {
         // TODO calling fragment.setProgressIndicator(false) violates Only-Main-thread-touch-view policy
 //        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
@@ -90,16 +108,8 @@ public class BaseImageListScreenTest {
     }
 
     @Test
-    public void showShots() {
-        String json = SampleResponse.getShots();
-        json = "{\"items\":"+json+"}";
-        Gson gson = new Gson();
-        Shots shots = gson.fromJson(json, Shots.class);
-        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
-        BaseImageListFragment fragment = getFragment(activity);
-        onView(withId(android.R.id.list)).check(matches(withChildCount(0))); // TODO load item count
-        fragment.showShots(shots.items);
-        onView(withId(android.R.id.list)).check(matches(withChildCount(30))); // TODO load item count
+    public void loadFirstItems() {
+        activityRule.launchActivity(mIntent);
     }
 
     @Test

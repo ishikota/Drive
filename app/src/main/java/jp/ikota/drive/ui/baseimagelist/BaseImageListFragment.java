@@ -29,8 +29,8 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
     private AndroidApplication mApp;
 
     // list elements
-    private ArrayList<Shot> mItemList;
-    private BaseImageListAdapter mAdapter;
+    ArrayList<Shot> mItemList;
+    BaseImageListAdapter mAdapter;
 
     // layout elements
     RecyclerView mRecyclerView;
@@ -147,11 +147,11 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
 
         @Override
         public int getItemCount() {
-            return 0;
+            return mShots.size();
         }
 
         public void replaceData(List<Shot> shots) {
-            mShots = shots;
+            mShots.addAll(shots);
             notifyDataSetChanged();
         }
 
