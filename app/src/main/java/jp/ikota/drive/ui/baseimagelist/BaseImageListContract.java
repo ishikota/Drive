@@ -14,12 +14,13 @@ public interface BaseImageListContract {
 
         void setProgressIndicator(boolean active);
 
-        void showShots(List<Shot> shots);
+        void showShots(List<Shot> shots);  //TODO change name to addShots()
 
         void showShotDetail(Shot shot);
 
         void showNetworkError();
 
+        void showEmptyView(boolean show);
     }
 
     interface UserActionsListener {

@@ -114,11 +114,15 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
 
     @Override
     public void showNetworkError() {
-        mEmptyView.setVisibility(View.VISIBLE);
         Toast.makeText(
                 mApp,
                 getResources().getString(R.string.network_problem_message),
                 Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showEmptyView(boolean show) {
+        mEmptyView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     public static class BaseImageListAdapter extends RecyclerView.Adapter<BaseImageListAdapter.ViewHolder> {

@@ -32,8 +32,10 @@ import dagger.ObjectGraph;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
 import jp.ikota.drive.di.DummyAPIModule;
+import jp.ikota.drive.network.DribbleURL;
 import jp.ikota.drive.network.Util;
 import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
+import jp.ikota.drive.util.IdlingResource.VisibilityIdlingResource;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
@@ -83,6 +85,24 @@ public class BaseImageListScreenTest {
         onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, scrollTo()));
         Espresso.unregisterIdlingResources(idlingResource);
         onView(withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+    }
+
+    @Test
+    public void testEmptyView_show() {
+        HashMap<String, String> map = new HashMap<>();
+        String empty_response = "{\"items\":[]}";
+        map.put(DribbleURL.PATH_SHOTS, empty_response);
+        setupMockServer(map);
+        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
+        BaseImageListFragment fragment = getFragment(activity);
+        @SuppressWarnings("ConstantConditions")
+        View progressBar = fragment.getView().findViewById(R.id.progress);
+
+        onView(withId(android.R.id.empty)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        VisibilityIdlingResource idlingResource = new VisibilityIdlingResource(progressBar, View.GONE);
+        Espresso.registerIdlingResources(idlingResource);
+        onView(withId(android.R.id.empty)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        Espresso.unregisterIdlingResources(idlingResource);
     }
 
     @Test

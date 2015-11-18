@@ -30,13 +30,14 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
 
     @Override
     public void refreshShots() {
-        mPage = 0;
-        API.getShots(mPage, ITEM_PER_PAGE, new Callback<Shots>() {
+        API.getShots(0, ITEM_PER_PAGE, new Callback<Shots>() {
             @Override
             public void success(Shots shots, Response response) {
                 mShotsView.showShots(shots.items);
                 mPage++;
                 mShotsView.finishRefreshIndicator();
+                mShotsView.showEmptyView(false);
+                mPage = 0;
             }
 
             @Override
@@ -44,6 +45,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
                 error.printStackTrace();
                 mShotsView.showNetworkError();
                 mShotsView.finishRefreshIndicator();
+                mShotsView.showEmptyView(mPage == 0);
             }
         });
     }
@@ -54,9 +56,10 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
         API.getShots(mPage, ITEM_PER_PAGE, new Callback<Shots>() {
             @Override
             public void success(Shots shots, Response response) {
+                if(shots.items.size() != 0) mPage++;
                 mShotsView.showShots(shots.items);
-                mPage++;
                 mShotsView.setProgressIndicator(false);
+                mShotsView.showEmptyView(mPage==0);
             }
 
             @Override
@@ -64,6 +67,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
                 error.printStackTrace();
                 mShotsView.showNetworkError();
                 mShotsView.setProgressIndicator(false);
+                mShotsView.showEmptyView(mPage==0);
             }
         });
     }
