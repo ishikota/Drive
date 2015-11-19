@@ -47,8 +47,8 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
             @Override public void onPrepareLoad(Drawable placeHolderDrawable) {}
         };
         Picasso.with(mContext).load(shot.images.normal).into(target);
-        mDetailView.setShotData(shot.title, shot.user, shot.created_at);
-        mDetailView.setLikeState(shot.likes_count, false);
+        mDetailView.setShotData(shot.title, shot.user);
+        mDetailView.setLikeNum(shot.likes_count);
         mDetailView.setTags(new ArrayList<>(Arrays.asList(shot.tags)));
     }
 
@@ -56,7 +56,7 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
     public void toggleLike() {
         mShot.likes_count = is_like_on ? mShot.likes_count-1 : mShot.likes_count+1;
         is_like_on = !is_like_on;
-        mDetailView.setLikeState(mShot.likes_count, is_like_on);
+        mDetailView.setLikeNum(mShot.likes_count);
     }
 
     @Override

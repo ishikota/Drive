@@ -12,9 +12,9 @@ public interface ImageDetailAdapterContract {
 
         void setImage(Bitmap loaded_image);
 
-        void setShotData(String title, Shot.User user, String created_at);
+        void setShotData(String title, Shot.User user);
 
-        void setLikeState(int num, boolean to_be_like);
+        void setLikeNum(int num);
 
         void setTags(List<String> tags);
 

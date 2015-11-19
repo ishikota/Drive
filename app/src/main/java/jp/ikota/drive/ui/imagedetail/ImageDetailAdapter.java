@@ -75,12 +75,6 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     presenter.openUserScreen(header_shot.user);
                 }
             });
-            vh.text_like_desc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    presenter.toggleLike();
-                }
-            });
             for(int i=0; i<vh.tag_parent.getChildCount(); i++) {
                 View tag = vh.tag_parent.getChildAt(i);
                 tag.setOnClickListener(new View.OnClickListener() {
@@ -105,16 +99,13 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder implements ImageDetailAdapterContract.View {
         public ImageView image_main, image_user;
-        public TextView text_title, text_username, text_createdat,
-                text_like_desc, text_like_num, text_related_title;
+        public TextView text_title, text_username,text_like_num, text_related_title;
         public LinearLayout tag_parent, tag_line;
         public HeaderViewHolder(View v) {
             super(v);
             image_main = (ImageView)v.findViewById(R.id.image);
             image_user = (ImageView)v.findViewById(R.id.user_icon);
             text_title = (TextView)v.findViewById(R.id.title);
-            text_createdat = (TextView)v.findViewById(R.id.created_at);
-            text_like_desc = (TextView)v.findViewById(R.id.like_text);
             text_like_num  = (TextView)v.findViewById(R.id.like_num);
             text_username  = (TextView)v.findViewById(R.id.user_name);
             text_related_title = (TextView)v.findViewById(R.id.related_title);
@@ -135,19 +126,18 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         @Override
-        public void setShotData(String title, Shot.User user, String created_at) {
+        public void setShotData(String title, Shot.User user) {
             text_title.setText(title);
             Picasso.with(APP).load(user.avatar_url).into(image_user);
             text_username.setText(user.username);
-            text_createdat.setText(created_at);
             text_related_title.setText("More "+user.username+"'s Posts");
         }
 
+        //TODO test it
         @Override
-        public void setLikeState(int num, boolean to_be_like) {
-            // TODO toggle icon
-            text_like_desc.setText(to_be_like ? "You like" : "Like?");
-            text_like_num.setText(num+" likes");
+        public void setLikeNum(int num) {
+            String msg = num == 0 ? "no likes yet" : num == 1 ? "1 like" : num+" likes";
+            text_like_num.setText(msg);
         }
 
         @Override
@@ -180,11 +170,11 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
         }
 
-        private View createTagView(Context context, String tag) {
-            View view = LayoutInflater.from(context).inflate(R.layout.tag, null);
-            ((TextView)view.findViewById(R.id.content)).setText(tag);
-            return view;
-        }
+//        private View createTagView(Context context, String tag) {
+//            View view = LayoutInflater.from(context).inflate(R.layout.tag, null);
+//            ((TextView)view.findViewById(R.id.content)).setText(tag);
+//            return view;
+//        }
     }
 
     public class RelatedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

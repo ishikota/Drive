@@ -48,8 +48,8 @@ public class ImageDetailAdapterPresenterTest {
     //@Test
     public void setCacheData() {
         mPresenter.setCacheData(mShot);
-        verify(mView).setShotData(mShot.title, mShot.user, mShot.created_at);
-        verify(mView).setLikeState(mShot.likes_count, false);
+        verify(mView).setShotData(mShot.title, mShot.user);
+        verify(mView).setLikeNum(mShot.likes_count);
         verify(mView).setTags(new ArrayList<>(Arrays.asList(mShot.tags)));
     }
 
@@ -57,9 +57,9 @@ public class ImageDetailAdapterPresenterTest {
     public void toggleLike() {
         int like = createSampleShot().likes_count;
         mPresenter.toggleLike();
-        verify(mView).setLikeState(like + 1, true);
+        verify(mView).setLikeNum(like + 1);
         mPresenter.toggleLike();
-        verify(mView).setLikeState(like, false);
+        verify(mView).setLikeNum(like);
     }
 
     @Test

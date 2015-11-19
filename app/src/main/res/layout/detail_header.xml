@@ -31,21 +31,32 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="4dp"/>
 
+        <TextView android:id="@+id/username_prefix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="by "
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text_default_material_light"
+            android:layout_toRightOf="@+id/user_icon"
+            android:layout_below="@+id/title"/>
+
         <TextView android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ishikota"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/primary_text_default_material_light"
-            android:layout_toRightOf="@+id/user_icon"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/username_prefix"
             android:layout_below="@+id/title"/>
 
-        <TextView android:id="@+id/created_at"
+        <TextView android:id="@+id/like_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="July 5 2015"
+            android:text="144 like"
+            android:layout_gravity="center_vertical"
             android:textSize="14sp"
-            android:textColor="@color/secondary_text_default_material_light"
+            android:textColor="@color/pink_A400"
             android:layout_toRightOf="@+id/user_name"
             android:layout_below="@+id/title"
             android:layout_marginLeft="8dp"/>
@@ -58,32 +69,6 @@
         android:background="@color/secondary_text_disabled_material_light"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"/>
-
-    <LinearLayout android:id="@+id/like_parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:src="#8888"
-            android:padding="15dp"/>
-
-        <TextView android:id="@+id/like_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="you like ?"
-            android:layout_gravity="center_vertical"/>
-
-        <TextView android:id="@+id/like_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="144 like"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"/>
-
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
