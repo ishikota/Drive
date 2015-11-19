@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -19,7 +20,6 @@ import java.util.List;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.model.Shot;
-import jp.ikota.drive.ui.baseimagelist.BaseImageListFragment;
 
 
 public class ImageDetailFragment extends Fragment implements ImageDetailContract.View {
@@ -74,13 +74,24 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
 
         // list related
         if(mAdapter == null) {
-            mAdapter = new ImageDetailAdapter(mItemList,
-                    new BaseImageListFragment.ShotClickListener() {
+            mAdapter = new ImageDetailAdapter(mApp, mItemList,
+                    new ImageDetailAdapter.OnDetailAdapterClickListener() {
                         @Override
-                        public void onClickShot(Shot clickedShot) {
-                            mActionsListener.openShotDetails(clickedShot);
+                        public void onShotClick(Shot clicked_shot) {
+                            Intent intent = ImageDetailActivity.createIntent(mApp, clicked_shot);
+                            startActivity(intent);
                         }
-            });
+
+                        @Override
+                        public void onUserClick(Shot.User clicked_user) {
+                            Toast.makeText(mApp, "should go User page",Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onTagClick(String clicked_tag) {
+                            Toast.makeText(mApp, "should go Tag page",Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
 
         // TODO change column num by checking device orientation

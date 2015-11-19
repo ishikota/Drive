@@ -12,13 +12,11 @@ public interface ImageDetailAdapterContract {
 
         void setImage(Bitmap loaded_image);
 
-        void setUser(Shot.User user, String created_at);
+        void setShotData(String title, Shot.User user, String created_at);
 
         void setLikeState(int num, boolean to_be_like);
 
         void setTags(List<String> tags);
-
-        void addRelatedItems(List<Shot> items);
 
         void showTagScreen(String tag);
 
@@ -34,8 +32,6 @@ public interface ImageDetailAdapterContract {
         void openTagScreen(String tag);
 
         void openUserScreen(Shot.User user);
-
-        void loadRelatedItems();
     }
 
 }

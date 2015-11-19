@@ -48,7 +48,7 @@ public class ImageDetailAdapterPresenterTest {
     //@Test
     public void setCacheData() {
         mPresenter.setCacheData(mShot);
-        verify(mView).setUser(mShot.user, mShot.created_at);
+        verify(mView).setShotData(mShot.title, mShot.user, mShot.created_at);
         verify(mView).setLikeState(mShot.likes_count, false);
         verify(mView).setTags(new ArrayList<>(Arrays.asList(mShot.tags)));
     }

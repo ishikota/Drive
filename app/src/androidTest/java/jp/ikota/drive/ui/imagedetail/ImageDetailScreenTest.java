@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 
@@ -38,6 +39,7 @@ import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(AndroidJUnit4.class)
@@ -68,8 +70,15 @@ public class ImageDetailScreenTest {
     }
 
     @Test
-    public void setShotInfoHeader() {
-        // TODO : set shot info into header view
+    public void setShotInfoIntoHeader() {
+        setupMockServer(null);
+        activityRule.launchActivity(mIntent);
+        onView(withId(R.id.title)).check(matches(withText(mTarget.title)));
+        onView(withId(R.id.user_name)).check(matches(withText(mTarget.user.username)));
+        onView(withId(R.id.like_text)).check(matches(withText("Like?")));
+        onView(withId(R.id.like_num)).check(matches(withText(String.valueOf(mTarget.likes_count)+" likes")));
+        onView(withId(R.id.related_title)).check(matches(withText("More " + mTarget.user.username + "'s Posts")));
+        onView(withId(R.id.tag_parent)).check(matches(withChildNum(mTarget.tags.length)));
     }
 
     @Test
@@ -126,6 +135,24 @@ public class ImageDetailScreenTest {
             protected boolean matchesSafely(RecyclerView recyclerView) {
                 Log.i("withChildCount", "item num is " + (recyclerView.getAdapter().getItemCount()));
                 return matcher.matches(recyclerView.getAdapter().getItemCount());
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with childCount: ");
+                matcher.describeTo(description);
+            }
+        };
+    }
+
+    // check if child count of target LienarLayout matches to expected one
+    public static Matcher<View> withChildNum(int expected_count) {
+        final Matcher<Integer> matcher = is(expected_count);
+        return new BoundedMatcher<View, LinearLayout>(LinearLayout.class) {
+
+            @Override
+            protected boolean matchesSafely(LinearLayout parent) {
+                return matcher.matches(parent.getChildCount());
             }
 
             @Override

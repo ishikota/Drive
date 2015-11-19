@@ -47,7 +47,7 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
             @Override public void onPrepareLoad(Drawable placeHolderDrawable) {}
         };
         Picasso.with(mContext).load(shot.images.normal).into(target);
-        mDetailView.setUser(shot.user, shot.created_at);
+        mDetailView.setShotData(shot.title, shot.user, shot.created_at);
         mDetailView.setLikeState(shot.likes_count, false);
         mDetailView.setTags(new ArrayList<>(Arrays.asList(shot.tags)));
     }
@@ -69,8 +69,4 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
         mDetailView.showUserScreen(user);
     }
 
-    @Override
-    public void loadRelatedItems() {
-
-    }
 }
