@@ -152,10 +152,12 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         public void setTags(List<String> tags) {
-            if(tags.isEmpty()) tag_line.setVisibility(View.GONE);
-            for(String tag : tags) {
-                tag_parent.addView(createTagView(APP, tag));
-            }
+            // TODO temporary remove tag from UI to simplify app concept
+            tag_line.setVisibility(View.GONE);
+//            if(tags.isEmpty()) tag_line.setVisibility(View.GONE);
+//            for(String tag : tags) {
+//                tag_parent.addView(createTagView(APP, tag));
+//            }
         }
 
         @Override
