@@ -22,16 +22,32 @@ public class ImageDetailActivity extends BaseActivity{
         return intent;
     }
 
+    public interface OnToolbarAlphaListener {
+        void updateToolbarAlpha(int alpha);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagedetail);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         if (savedInstanceState == null) {
             String json = getIntent().getStringExtra(EXTRA_CONTENT);
             String tag  = ImageDetailFragment.class.getSimpleName();
+            ImageDetailFragment fragment = ImageDetailFragment.newInstance(json);
+            fragment.setToolbarListener(new OnToolbarAlphaListener() {
+                @Override
+                public void updateToolbarAlpha(int alpha) {
+                    if(mActionBarToolbar!=null){
+                        mActionBarToolbar.getBackground().mutate().setAlpha(alpha);
+                    }
+                }
+            });
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, ImageDetailFragment.newInstance(json), tag)
+                    .add(R.id.container, fragment, tag)
                     .commit();
         }
     }

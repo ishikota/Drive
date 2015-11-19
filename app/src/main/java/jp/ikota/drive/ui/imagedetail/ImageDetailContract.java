@@ -19,6 +19,8 @@ public interface ImageDetailContract {
 
         void toggleFab(boolean be_like);
 
+        void setToolbarAlpha(int alpha);
+
     }
 
     interface UserActionsListener {
@@ -30,6 +32,8 @@ public interface ImageDetailContract {
         void openShotDetails(@NonNull Shot shot);
 
         void clickFab();
+
+        void updateToolbarAlpha(int dy);
 
     }
 

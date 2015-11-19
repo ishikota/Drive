@@ -18,6 +18,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
 
     // state variable
     int mPage = 0;
+    int toolbar_alpha = 0;
     boolean loading = false;
     boolean fab_is_displayed = true;
     boolean fab_is_on = false;
@@ -67,5 +68,12 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     public void clickFab() {
         fab_is_on = !fab_is_on;
         mDetailView.toggleFab(fab_is_on);
+    }
+
+    @Override
+    public void updateToolbarAlpha(int dy) {
+        toolbar_alpha += dy;
+        toolbar_alpha = Math.max(0, Math.min(200, toolbar_alpha));
+        mDetailView.setToolbarAlpha(toolbar_alpha);
     }
 }

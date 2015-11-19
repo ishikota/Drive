@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import jp.ikota.drive.data.model.Shot;
 public class ImageDetailFragment extends Fragment implements ImageDetailContract.View {
 
     private ImageDetailContract.UserActionsListener mActionsListener;
+    private ImageDetailActivity.OnToolbarAlphaListener mToolbarListener;
 
     private AndroidApplication mApp;
 
@@ -34,6 +36,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     ImageDetailAdapter mAdapter;
 
     // layout elements
+    Toolbar mToolbar;
     RecyclerView mRecyclerView;
     FloatingActionButton mFab;
 
@@ -120,9 +123,13 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
                 }
 
                 mActionsListener.fabStateMayChange(firstVisibleItem == 0);
+                mActionsListener.updateToolbarAlpha(dy);
             }
         });
 
+        mToolbar = (Toolbar)root.findViewById(R.id.toolbar_actionbar);
+
+        setToolbarAlpha(0); // first make Toolbar invisible
         mFab = (FloatingActionButton)root.findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,6 +194,15 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
             public void run() {
                 mFab.hide();
             }
-        },300);
+        }, 300);
+    }
+
+    @Override
+    public void setToolbarAlpha(int alpha) {
+        mToolbarListener.updateToolbarAlpha(alpha);
+    }
+
+    public void setToolbarListener(ImageDetailActivity.OnToolbarAlphaListener listener) {
+        mToolbarListener = listener;
     }
 }

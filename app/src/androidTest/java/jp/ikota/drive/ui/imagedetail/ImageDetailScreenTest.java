@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,6 +44,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.core.deps.guava.base.Preconditions.checkNotNull;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -141,6 +143,22 @@ public class ImageDetailScreenTest {
         onView(withId(R.id.fab)).check(matches(not(isDisplayed())));
     }
 
+    // TODO RecyclerViewAction's scroll always gives dy=0 ?
+    //@Test
+    public void checkIfToolbarAlphaChange() {
+        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
+        ImageDetailFragment fragment = getFragment(activity);
+        RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(android.R.id.list);
+        onView(withId(R.id.toolbar_actionbar)).check(matches(withAlpha(0)));
+        ListCountIdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 2);
+        Espresso.registerIdlingResources(idlingResource);
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(5, scrollTo()));
+        Espresso.unregisterIdlingResources(idlingResource);
+        SystemClock.sleep(5000);
+        onView(withId(R.id.toolbar_actionbar)).check(matches(not(withAlpha(0))));
+    }
+
+
     private ImageDetailFragment getFragment(AppCompatActivity activity) {
         return (ImageDetailFragment) activity.getSupportFragmentManager().
                 findFragmentByTag(ImageDetailFragment.class.getSimpleName());
@@ -206,6 +224,24 @@ public class ImageDetailScreenTest {
             public void describeTo(Description description) {
                 description.appendText("with childCount: ");
                 matcher.describeTo(description);
+            }
+        };
+    }
+
+    private static Matcher<View> withAlpha(final int expected_alpha) {
+        final Matcher<Integer> alphaMatcher = is(expected_alpha);
+        checkNotNull(alphaMatcher);
+        return new TypeSafeMatcher<View>() {
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with alpha: ");
+                alphaMatcher.describeTo(description);
+            }
+
+            @Override
+            protected boolean matchesSafely(View view) {
+                return alphaMatcher.matches(view.getBackground().getAlpha());
             }
         };
     }

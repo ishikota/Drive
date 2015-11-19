@@ -68,6 +68,16 @@ public class ImageDetailPresenterTest {
         verify(mView).toggleFab(false);
     }
 
+    @Test
+    public void updateToolbarAlpha() {
+        mPresenter.updateToolbarAlpha(100);
+        verify(mView).setToolbarAlpha(100);
+        mPresenter.updateToolbarAlpha(500);
+        verify(mView).setToolbarAlpha(200);
+        mPresenter.updateToolbarAlpha(-700);
+        verify(mView).setToolbarAlpha(0);
+    }
+
     private Shots createSampleData() {
         Gson gson = new Gson();
         String json = SampleResponse.getShots();
