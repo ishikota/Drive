@@ -69,4 +69,9 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
         mDetailView.showUserScreen(user);
     }
 
+    @Override
+    public void relatedLoadFinished(boolean success) {
+        mDetailView.removeProgress();
+    }
+
 }

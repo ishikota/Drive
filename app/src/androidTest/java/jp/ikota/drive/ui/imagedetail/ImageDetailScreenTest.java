@@ -93,6 +93,21 @@ public class ImageDetailScreenTest {
         //onView(withId(R.id.tag_parent)).check(matches(withChildNum(mTarget.tags.length)));
     }
 
+    @Test
+    public void showProgressDuringRelatedLoading() {
+        setupMockServer(null);
+        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
+        ImageDetailFragment fragment = getFragment(activity);
+        RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(android.R.id.list);
+        onView(withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        ListCountIdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 2);
+        Espresso.registerIdlingResources(idlingResource);
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(15, scrollTo()));
+        Espresso.unregisterIdlingResources(idlingResource);
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, scrollTo()));
+        onView(withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+    }
+
     //TODO test fails
     @Test
     public void loadRelatedItems() {
@@ -136,6 +151,7 @@ public class ImageDetailScreenTest {
         onView(withId(R.id.tag_line)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
     }
 
+    //TODO not implemented this feature because it needs communication between two presenter
     @Test
     public void clickFab() {
         activityRule.launchActivity(mIntent);

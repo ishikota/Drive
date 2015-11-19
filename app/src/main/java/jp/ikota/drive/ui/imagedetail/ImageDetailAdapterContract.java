@@ -21,6 +21,8 @@ public interface ImageDetailAdapterContract {
         void showTagScreen(String tag);
 
         void showUserScreen(Shot.User user);
+
+        void removeProgress();
     }
 
     interface UserActionsListener {
@@ -32,6 +34,8 @@ public interface ImageDetailAdapterContract {
         void openTagScreen(String tag);
 
         void openUserScreen(Shot.User user);
+
+        void relatedLoadFinished(boolean success);  //TODO test it
     }
 
 }

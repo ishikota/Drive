@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -30,6 +31,8 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final DribbleService API;
     private List<Shot> mShots;
     private OnDetailAdapterClickListener mClickListener;
+
+    ImageDetailAdapterPresenter mPresenter;
 
     public ImageDetailAdapter(AndroidApplication app, List<Shot> shots, OnDetailAdapterClickListener listener) {
         APP = app;
@@ -66,13 +69,13 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if(position == 0) {
             HeaderViewHolder vh = (HeaderViewHolder)holder;
             //TODO feels like presenter causes memory leak. Need to unbind presenter with ViewHolder
-            final ImageDetailAdapterPresenter presenter = new ImageDetailAdapterPresenter(API, vh.itemView.getContext(),header_shot, vh);
+            mPresenter = new ImageDetailAdapterPresenter(API, vh.itemView.getContext(),header_shot, vh);
             // bind view holder to presenter
-            presenter.setCacheData(header_shot);
+            mPresenter.setCacheData(header_shot);
             vh.image_user.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    presenter.openUserScreen(header_shot.user);
+                    mPresenter.openUserScreen(header_shot.user);
                 }
             });
             for(int i=0; i<vh.tag_parent.getChildCount(); i++) {
@@ -81,7 +84,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     @Override
                     public void onClick(View view) {
                         String tag = ((TextView)view.findViewById(R.id.content)).getText().toString();
-                        presenter.openTagScreen(tag);
+                        mPresenter.openTagScreen(tag);
                     }
                 });
             }
@@ -101,6 +104,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public ImageView image_main, image_user;
         public TextView text_title, text_username,text_like_num, text_related_title;
         public LinearLayout tag_parent, tag_line;
+        public ProgressBar progress;
         public HeaderViewHolder(View v) {
             super(v);
             image_main = (ImageView)v.findViewById(R.id.image);
@@ -111,6 +115,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             text_related_title = (TextView)v.findViewById(R.id.related_title);
             tag_parent = (LinearLayout)v.findViewById(R.id.tag_parent);
             tag_line   = (LinearLayout)v.findViewById(R.id.tag_line);
+            progress   = (ProgressBar)v.findViewById(R.id.progress);
         }
 
         @Override
@@ -160,6 +165,11 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             mClickListener.onUserClick(user);
         }
 
+        @Override
+        public void removeProgress() {
+            progress.setVisibility(View.GONE);
+        }
+
         private int getScreenWidth(AndroidApplication app) {
             int display_mode = app.getResources().getConfiguration().orientation;
             if(display_mode == Configuration.ORIENTATION_PORTRAIT) {
@@ -175,6 +185,10 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 //            ((TextView)view.findViewById(R.id.content)).setText(tag);
 //            return view;
 //        }
+    }
+
+    public void notifyRelatedLoadFinish(boolean success) {
+        mPresenter.relatedLoadFinished(success);
     }
 
     public class RelatedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
