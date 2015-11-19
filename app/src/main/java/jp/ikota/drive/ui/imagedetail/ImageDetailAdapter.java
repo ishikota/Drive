@@ -135,7 +135,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             text_title.setText(title);
             Picasso.with(APP).load(user.avatar_url).into(image_user);
             text_username.setText(user.username);
-            text_related_title.setText("More "+user.username+"'s Posts");
+            text_related_title.setText(user.username+"'s Likes");
         }
 
         //TODO test it

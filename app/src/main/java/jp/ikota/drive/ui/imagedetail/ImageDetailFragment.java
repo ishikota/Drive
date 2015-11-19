@@ -167,6 +167,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
 
     @Override
     public void addShots(List<Shot> shots) {
+        if(!isAdded()) return;  // This method is called after async task
         if(mItemList.size()==1) {
             mAdapter.notifyRelatedLoadFinish(!shots.isEmpty());  //TODO test it
         }
