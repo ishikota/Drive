@@ -136,9 +136,25 @@ public class BaseImageListScreenTest {
 //        onView(withId(R.id.swipe_refresh)).check(matches(withSwipeRefreshState(false)));
     }
 
-    @Test
-    public void loadFirstItems() {
-        activityRule.launchActivity(mIntent);
+    // TODO do not load next item because sample response size is 15 item
+    //@Test
+    public void loadItems() {
+        setupMockServer(null);
+        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
+        BaseImageListFragment fragment = getFragment(activity);
+        @SuppressWarnings("ConstantConditions")
+        RecyclerView recyclerView = (RecyclerView)fragment.getView().findViewById(android.R.id.list);
+
+        IdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 1);
+        Espresso.registerIdlingResources(idlingResource);
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(10, scrollTo()));
+        Espresso.unregisterIdlingResources(idlingResource);
+
+        IdlingResource idlingResource2 = new ListCountIdlingResource(recyclerView, 20);
+        Espresso.registerIdlingResources(idlingResource2);
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(10, scrollTo()));
+        Espresso.unregisterIdlingResources(idlingResource2);
+        onView(withId(android.R.id.list)).check(matches(withChildCount(30)));
     }
 
     @Test

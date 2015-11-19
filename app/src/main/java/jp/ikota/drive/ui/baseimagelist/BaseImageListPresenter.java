@@ -18,6 +18,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
 
     // state variable
     private int mPage;
+    boolean loading = false;
 
     public BaseImageListPresenter(
             @NonNull DribbleService api,
@@ -52,14 +53,16 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
 
     @Override
     public void loadShots() {
-        mShotsView.setProgressIndicator(true);
+        if(loading) return;
+        loading = true;
         API.getShots(mPage, ITEM_PER_PAGE, new Callback<Shots>() {
             @Override
             public void success(Shots shots, Response response) {
                 if(shots.items.size() != 0) mPage++;
                 mShotsView.showShots(shots.items);
                 mShotsView.setProgressIndicator(false);
-                mShotsView.showEmptyView(mPage==0);
+                mShotsView.showEmptyView(mPage == 0);
+                loading = false;
             }
 
             @Override
@@ -67,7 +70,8 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
                 error.printStackTrace();
                 mShotsView.showNetworkError();
                 mShotsView.setProgressIndicator(false);
-                mShotsView.showEmptyView(mPage==0);
+                mShotsView.showEmptyView(mPage == 0);
+                loading = false;
             }
         });
     }
@@ -75,6 +79,11 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
     @Override
     public void openShotDetails(@NonNull Shot shot) {
         mShotsView.showShotDetail(shot);
+    }
+
+    @Override
+    public void reachListBottom() {
+        if(loading) mShotsView.setProgressIndicator(true);
     }
 
 }

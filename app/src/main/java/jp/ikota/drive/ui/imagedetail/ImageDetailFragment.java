@@ -119,7 +119,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
                 super.onScrolled(recyclerView, dx, dy);
                 // load next related images page
                 GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-                int totalItemCount = layoutManager.getItemCount() - 1;
+                int totalItemCount = layoutManager.getItemCount() - 1;  //TODO do not need -1 (used in Flickr client)
                 int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
                 if (totalItemCount - firstVisibleItem <= 30 && isAdded()) {  // TODO hard coding item page page

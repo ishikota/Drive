@@ -71,6 +71,25 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(mApp, 2));
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                // load next related images page
+                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+                int totalItemCount   = layoutManager.getItemCount();
+                int visibleItemCount = layoutManager.getChildCount();
+                int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+
+                if (totalItemCount - firstVisibleItem <= 30) {  // TODO hard coding item page page
+                    mActionsListener.loadShots();
+                }
+
+                if(firstVisibleItem + visibleItemCount == totalItemCount) {
+                    mActionsListener.reachListBottom();
+                }
+            }
+        });
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -91,6 +110,7 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
             });
             mRecyclerView.setAdapter(mAdapter);
             mActionsListener.loadShots();
+            mActionsListener.reachListBottom();
         }
 
         return root;

@@ -31,6 +31,8 @@ public interface BaseImageListContract {
 
         void openShotDetails(@NonNull Shot shot);
 
+        void reachListBottom();
+
     }
 
 }
