@@ -21,7 +21,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     private final int ITEM_PER_PAGE;
 
     // state variable
-    int mPage = 0;
+    int mPage = 1;  // page count is 1-index
     int toolbar_alpha = 0;
     boolean loading = false;
     boolean fab_is_displayed = true;
@@ -61,6 +61,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
                 }
                 mDetailView.addShots(shots.items);
                 loading = false;
+                mPage++;
             }
 
             @Override

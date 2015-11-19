@@ -17,7 +17,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
     private final int ITEM_PER_PAGE;
 
     // state variable
-    private int mPage;
+    private int mPage = 1; // page count is 1-index
     boolean loading = false;
 
     public BaseImageListPresenter(
