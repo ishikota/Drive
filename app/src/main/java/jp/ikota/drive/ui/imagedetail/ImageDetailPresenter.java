@@ -18,6 +18,9 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
 
     // state variable
     int mPage = 0;
+    boolean loading = false;
+    boolean fab_is_displayed = true;
+    boolean fab_is_on = false;
 
     public ImageDetailPresenter(
             @NonNull DribbleService api,
@@ -29,16 +32,28 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     }
 
     @Override
+    public void fabStateMayChange(boolean show) {
+        if(fab_is_displayed != show) {
+            fab_is_displayed = show;
+            mDetailView.showFab(show);
+        }
+    }
+
+    @Override
     public void loadRelatedShots() {
+        if(loading) return;
+        loading = true;
         API.getShots(mPage, ITEM_PER_PAGE, new Callback<Shots>() {
             @Override
             public void success(Shots shots, Response response) {
                 mDetailView.addShots(shots.items);
+                loading = false;
             }
 
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
+                loading = false;
             }
         });
     }
@@ -46,5 +61,11 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     @Override
     public void openShotDetails(@NonNull Shot shot) {
         mDetailView.showShotDetail(shot);
+    }
+
+    @Override
+    public void clickFab() {
+        fab_is_on = !fab_is_on;
+        mDetailView.toggleFab(fab_is_on);
     }
 }

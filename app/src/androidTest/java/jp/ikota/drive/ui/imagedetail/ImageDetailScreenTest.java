@@ -3,8 +3,10 @@ package jp.ikota.drive.ui.imagedetail;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
@@ -38,10 +40,14 @@ import jp.ikota.drive.network.Util;
 import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(AndroidJUnit4.class)
@@ -97,6 +103,25 @@ public class ImageDetailScreenTest {
         onView(withId(android.R.id.list)).check(matches(withChildCount(16)));
     }
 
+    // TODO cannot scroll
+    // android.support.test.espresso.PerformException:
+    // Error performing 'android.support.test.espresso.contrib.RecyclerViewActions$ActionOnItemAtPositionViewAction@3f1aee29'
+    // on view 'with id: android:id/list'.
+    //@Test
+    public void checkFabBehavior() {
+        setupMockServer(null);
+        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
+        ImageDetailFragment fragment = getFragment(activity);
+        RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(android.R.id.list);
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+        ListCountIdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 2);
+        Espresso.registerIdlingResources(idlingResource);
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(8, scrollTo()));
+        Espresso.unregisterIdlingResources(idlingResource);
+        SystemClock.sleep(3000);
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+    }
+
     @Test
     public void noTagCase() {
         Shot noTagShot = getSampleShot();
@@ -105,6 +130,15 @@ public class ImageDetailScreenTest {
         activityRule.launchActivity(intent);
         onView(withId(R.id.tag_parent)).check(matches(withChildNum(0)));
         onView(withId(R.id.tag_line)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+    }
+
+    @Test
+    public void asideFabWhenClick() {
+        activityRule.launchActivity(mIntent);
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+        onView(withId(R.id.fab)).perform(click());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.fab)).check(matches(not(isDisplayed())));
     }
 
     private ImageDetailFragment getFragment(AppCompatActivity activity) {

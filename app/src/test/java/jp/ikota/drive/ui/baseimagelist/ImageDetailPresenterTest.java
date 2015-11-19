@@ -60,6 +60,14 @@ public class ImageDetailPresenterTest {
         verify(mView).showShotDetail(shot);
     }
 
+    @Test
+    public void toggleFab() {
+        mPresenter.clickFab();
+        verify(mView).toggleFab(true);
+        mPresenter.clickFab();
+        verify(mView).toggleFab(false);
+    }
+
     private Shots createSampleData() {
         Gson gson = new Gson();
         String json = SampleResponse.getShots();
