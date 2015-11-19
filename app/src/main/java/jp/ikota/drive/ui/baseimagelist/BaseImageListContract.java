@@ -14,6 +14,8 @@ public interface BaseImageListContract {
 
         void setProgressIndicator(boolean active);
 
+        void clearShots();
+
         void showShots(List<Shot> shots);  //TODO change name to addShots()
 
         void showShotDetail(Shot shot);

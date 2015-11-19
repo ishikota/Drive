@@ -77,7 +77,7 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
                 super.onScrolled(recyclerView, dx, dy);
                 // load next related images page
                 GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-                int totalItemCount   = layoutManager.getItemCount();
+                int totalItemCount = layoutManager.getItemCount();
                 int visibleItemCount = layoutManager.getChildCount();
                 int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
@@ -85,11 +85,18 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
                     mActionsListener.loadShots();
                 }
 
-                if(firstVisibleItem + visibleItemCount == totalItemCount) {
+                if (firstVisibleItem + visibleItemCount == totalItemCount) {
                     mActionsListener.reachListBottom();
                 }
             }
         });
+
+        mSwipeRefreshLayout.setColorSchemeColors(
+                getResources().getColor(R.color.swipe_color_1),
+                getResources().getColor(R.color.swipe_color_2),
+                getResources().getColor(R.color.swipe_color_3),
+                getResources().getColor(R.color.swipe_color_4)
+        );
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -124,6 +131,12 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
     @Override
     public void setProgressIndicator(boolean active) {
         mProgressbar.setVisibility(active ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void clearShots() {
+        mItemList.clear();
+        mAdapter.replaceData(mItemList);
     }
 
     @Override
@@ -188,7 +201,7 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
         }
 
         private void addPadding(View v, boolean toRight) {
-            int padding = 8;  //TODO replace this value with R.dimen.two_column_padding
+            int padding = (int)v.getContext().getResources().getDimension(R.dimen.list_row_padding);
             v.setPadding(toRight ? 0 : padding, 0, toRight ? padding : 0, padding * 2);
         }
 

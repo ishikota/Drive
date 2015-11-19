@@ -58,7 +58,6 @@ public class BaseImageListPresenterTest {
         // TODO : assert mShotsPresenter.mPage == 0
         mShotsPresenter.loadShots();
         // before api call
-        verify(mShotsView).setProgressIndicator(true);
         verify(mApi).getShots(anyInt(), anyInt(), mLoadShotsCallbackCaptor.capture());
 
         mLoadShotsCallbackCaptor.getValue().success(SHOTS, null);

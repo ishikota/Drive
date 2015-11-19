@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="list_black">#151616</color>
+
     <color name="white_dull">#FAFAFA</color>
     <color name="black">#0D0F14</color>
     <color name="teal">#00BFA5</color>

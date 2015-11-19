@@ -10,7 +10,10 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+
 import jp.ikota.drive.data.SampleResponse;
+import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.network.DribbleService;
@@ -19,12 +22,14 @@ import jp.ikota.drive.ui.imagedetail.ImageDetailPresenter;
 import retrofit.Callback;
 
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class ImageDetailPresenterTest {
 
     private final Shots SHOTS = createSampleData();
+    private final Shot SHOT = SHOTS.items.get(0);
 
     private DribbleService mApi;
 
@@ -32,7 +37,7 @@ public class ImageDetailPresenterTest {
     private ImageDetailContract.View mView;
 
     @Captor
-    private ArgumentCaptor<Callback<Shots>> mLoadShotsCallbackCaptor;
+    private ArgumentCaptor<Callback<Likes>> mLoadLikesCallbackCaptor;
 
     private ImageDetailPresenter mPresenter;
 
@@ -40,16 +45,25 @@ public class ImageDetailPresenterTest {
     public void setupShotsPresenter() {
         MockitoAnnotations.initMocks(this);
         mApi = mock(DribbleService.class);
-        mPresenter = new ImageDetailPresenter(mApi, mView, 15);
+        mPresenter = new ImageDetailPresenter(mApi, mView, SHOT, 15);
     }
 
     @Test
     public void loadNotesAndSetIntoView() {
+        // create data
+        String json = SampleResponse.getUserLikes();
+        String wrapped_json = "{\"items\":"+json+"}";
+        Likes likes = new Gson().fromJson(wrapped_json, Likes.class);
+        Shots expected = new Shots();
+        expected.items = new ArrayList<>();
+        for(Likes.Like like: likes.items) expected.items.add(like.shot);
+
+        // start verification
         // TODO : check progress visibility
         mPresenter.loadRelatedShots();
-        verify(mApi).getShots(anyInt(), anyInt(), mLoadShotsCallbackCaptor.capture());
-        mLoadShotsCallbackCaptor.getValue().success(SHOTS, null);
-        verify(mView).addShots(SHOTS.items);
+        verify(mApi).getUserLikes(anyInt(), anyInt(), anyString(), mLoadLikesCallbackCaptor.capture());
+        mLoadLikesCallbackCaptor.getValue().success(likes, null);
+        verify(mView).addShots(expected.items);
         // TODO : assert mShotsPresenter.mPage == 1
     }
 

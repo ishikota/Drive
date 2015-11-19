@@ -31,14 +31,15 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
 
     @Override
     public void refreshShots() {
-        API.getShots(0, ITEM_PER_PAGE, new Callback<Shots>() {
+        API.getShots(1, ITEM_PER_PAGE, new Callback<Shots>() {
             @Override
             public void success(Shots shots, Response response) {
+                mPage = 1;
+                mShotsView.clearShots();
                 mShotsView.showShots(shots.items);
-                mPage++;
+                if(!shots.items.isEmpty()) mPage++;
                 mShotsView.finishRefreshIndicator();
-                mShotsView.showEmptyView(false);
-                mPage = 0;
+                mShotsView.showEmptyView(mPage == 1);
             }
 
             @Override
@@ -46,7 +47,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
                 error.printStackTrace();
                 mShotsView.showNetworkError();
                 mShotsView.finishRefreshIndicator();
-                mShotsView.showEmptyView(mPage == 0);
+                mShotsView.showEmptyView(mPage == 1);
             }
         });
     }
@@ -61,7 +62,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
                 if(shots.items.size() != 0) mPage++;
                 mShotsView.showShots(shots.items);
                 mShotsView.setProgressIndicator(false);
-                mShotsView.showEmptyView(mPage == 0);
+                mShotsView.showEmptyView(mPage == 1);
                 loading = false;
             }
 
@@ -70,7 +71,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
                 error.printStackTrace();
                 mShotsView.showNetworkError();
                 mShotsView.setProgressIndicator(false);
-                mShotsView.showEmptyView(mPage == 0);
+                mShotsView.showEmptyView(mPage == 1);
                 loading = false;
             }
         });

@@ -68,7 +68,8 @@
         android:layout_height="1dp"
         android:background="@color/secondary_text_disabled_material_light"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"/>
 
     <View
         android:layout_width="match_parent"
