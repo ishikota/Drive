@@ -112,7 +112,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             text_title = (TextView)v.findViewById(R.id.title);
             text_like_num  = (TextView)v.findViewById(R.id.like_num);
             text_username  = (TextView)v.findViewById(R.id.user_name);
-            text_related_title = (TextView)v.findViewById(R.id.related_title);
+            text_related_title = (TextView)v.findViewById(R.id.related_username);
             tag_parent = (LinearLayout)v.findViewById(R.id.tag_parent);
             tag_line   = (LinearLayout)v.findViewById(R.id.tag_line);
             progress   = (ProgressBar)v.findViewById(R.id.progress);
@@ -135,7 +135,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             text_title.setText(title);
             Picasso.with(APP).load(user.avatar_url).into(image_user);
             text_username.setText(user.username);
-            text_related_title.setText(user.username+"'s Likes");
+            text_related_title.setText(user.username);
         }
 
         //TODO test it
