@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.matcher.BoundedMatcher;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,7 @@ import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.Is.is;
@@ -45,6 +47,7 @@ import static org.hamcrest.core.Is.is;
 @RunWith(AndroidJUnit4.class)
 public class ImageDetailScreenTest {
 
+    private Context mContext;
     private Intent mIntent;
     private Shot mTarget = getSampleShot();
 
@@ -57,8 +60,8 @@ public class ImageDetailScreenTest {
     @Before
     public void setUp(){
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        Context context = instrumentation.getTargetContext();
-        mIntent = ImageDetailActivity.createIntent(context, mTarget);
+        mContext = instrumentation.getTargetContext();
+        mIntent = ImageDetailActivity.createIntent(mContext, mTarget);
     }
 
     @Test
@@ -76,7 +79,7 @@ public class ImageDetailScreenTest {
         onView(withId(R.id.title)).check(matches(withText(mTarget.title)));
         onView(withId(R.id.user_name)).check(matches(withText(mTarget.user.username)));
         onView(withId(R.id.like_text)).check(matches(withText("Like?")));
-        onView(withId(R.id.like_num)).check(matches(withText(String.valueOf(mTarget.likes_count)+" likes")));
+        onView(withId(R.id.like_num)).check(matches(withText(String.valueOf(mTarget.likes_count) + " likes")));
         onView(withId(R.id.related_title)).check(matches(withText("More " + mTarget.user.username + "'s Posts")));
         onView(withId(R.id.tag_parent)).check(matches(withChildNum(mTarget.tags.length)));
     }
@@ -92,6 +95,16 @@ public class ImageDetailScreenTest {
         onView(withId(R.id.container)).check(matches(withId(R.id.container)));  // just wait loading
         Espresso.unregisterIdlingResources(idlingResource);
         onView(withId(android.R.id.list)).check(matches(withChildCount(16)));
+    }
+
+    @Test
+    public void noTagCase() {
+        Shot noTagShot = getSampleShot();
+        noTagShot.tags = new String[0];
+        Intent intent = ImageDetailActivity.createIntent(mContext, noTagShot);
+        activityRule.launchActivity(intent);
+        onView(withId(R.id.tag_parent)).check(matches(withChildNum(0)));
+        onView(withId(R.id.tag_line)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
     }
 
     private ImageDetailFragment getFragment(AppCompatActivity activity) {

@@ -107,7 +107,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public ImageView image_main, image_user;
         public TextView text_title, text_username, text_createdat,
                 text_like_desc, text_like_num, text_related_title;
-        public LinearLayout tag_parent;
+        public LinearLayout tag_parent, tag_line;
         public HeaderViewHolder(View v) {
             super(v);
             image_main = (ImageView)v.findViewById(R.id.image);
@@ -119,6 +119,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             text_username  = (TextView)v.findViewById(R.id.user_name);
             text_related_title = (TextView)v.findViewById(R.id.related_title);
             tag_parent = (LinearLayout)v.findViewById(R.id.tag_parent);
+            tag_line   = (LinearLayout)v.findViewById(R.id.tag_line);
         }
 
         @Override
@@ -149,9 +150,9 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             text_like_num.setText(num+" likes");
         }
 
-        // TODO handle empty tag case
         @Override
         public void setTags(List<String> tags) {
+            if(tags.isEmpty()) tag_line.setVisibility(View.GONE);
             for(String tag : tags) {
                 tag_parent.addView(createTagView(APP, tag));
             }
