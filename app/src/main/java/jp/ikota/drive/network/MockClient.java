@@ -46,6 +46,9 @@ public class MockClient implements Client{
             if(m.group(1).startsWith("shots/")) {
                 return "shots/";
             }
+            if(m.group(1).startsWith(DribbleURL.PATH_USERS+"/")) {
+                return DribbleURL.PATH_USERS+"/";
+            }
             return m.group(1);
         } else {
             return null;

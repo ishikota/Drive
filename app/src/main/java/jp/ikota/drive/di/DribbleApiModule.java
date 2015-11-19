@@ -17,6 +17,7 @@ import javax.inject.Singleton;
 
 import dagger.Provides;
 import jp.ikota.drive.AndroidApplication;
+import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.network.DribbleService;
 import jp.ikota.drive.network.DribbleURL;
@@ -44,10 +45,26 @@ public class DribbleApiModule {
         }
     }
 
+    class LikesDeserializer implements JsonDeserializer<Likes> {
+        @Override
+        public Likes deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonArray array = json.getAsJsonArray();
+            JSONObject jo = new JSONObject();
+            try {
+                jo.put("items", array);
+            } catch (JSONException e) {
+                throw new JsonParseException(e.getMessage());
+            }
+            String wrapped_json = "{\"items\":"+array+"}";
+            return new Gson().fromJson(wrapped_json, Likes.class);
+        }
+    }
+
     @Provides @Singleton
     public DribbleService provideDribbleService() {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Shots.class, new ShotsDeserializer())
+                .registerTypeAdapter(Likes.class, new LikesDeserializer())
                 .create();
         return new RestAdapter.Builder()
                 .setEndpoint(DribbleURL.END_POINT)

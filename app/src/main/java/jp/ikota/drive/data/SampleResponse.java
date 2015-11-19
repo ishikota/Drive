@@ -1383,4 +1383,895 @@ public class SampleResponse {
                 "  }\n" +
                 "}";
     }
+
+    public static String getUserLikes() {
+        return "[\n" +
+                "  {\n" +
+                "    \"id\": 46915821,\n" +
+                "    \"created_at\": \"2015-11-13T04:41:31Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2121350,\n" +
+                "      \"title\": \"Delivery Card\",\n" +
+                "      \"description\": \"<p>Sending request for shipment</p>\\n\\n<p><strong>We are ready for new projects</strong> → <strong><a href=\\\"https://ramotion.com?utm_source=drbl&amp;utm_medium=special&amp;utm_campaign=2121350-Delivery-Card\\\" rel=\\\"nofollow noreferrer\\\">Ramotion.com</a></strong></p>\\n\\n<p>The iPhone device mockup available here:\\n<br />→ <strong><a href=\\\"https://store.ramotion.com?utm_source=drbl&amp;utm_medium=special&amp;utm_campaign=2121350-Delivery-Card\\\" rel=\\\"nofollow noreferrer\\\">store.ramotion.com</a></strong></p>\",\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/2121350/delivery_card.gif\",\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/2121350/delivery_card_1x.gif\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/2121350/delivery_card_teaser.gif\"\n" +
+                "      },\n" +
+                "      \"views_count\": 32515,\n" +
+                "      \"likes_count\": 1750,\n" +
+                "      \"comments_count\": 72,\n" +
+                "      \"attachments_count\": 0,\n" +
+                "      \"rebounds_count\": 0,\n" +
+                "      \"buckets_count\": 539,\n" +
+                "      \"created_at\": \"2015-06-25T13:45:20Z\",\n" +
+                "      \"updated_at\": \"2015-11-13T06:26:10Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2121350-Delivery-Card\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2121350/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2121350/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2121350/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2121350/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2121350/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2121350/rebounds\",\n" +
+                "      \"rebound_source_url\": \"https://api.dribbble.com/v1/shots/1928659\",\n" +
+                "      \"animated\": true,\n" +
+                "      \"tags\": [\n" +
+                "        \"amazon navigation menu\",\n" +
+                "        \"android delivery app\",\n" +
+                "        \"application interaction\",\n" +
+                "        \"dhl shipping mail\",\n" +
+                "        \"ios 8 flat design\",\n" +
+                "        \"iphone 6\",\n" +
+                "        \"material design\",\n" +
+                "        \"online store commerce\",\n" +
+                "        \"ups package card\",\n" +
+                "        \"user experience\",\n" +
+                "        \"user interface animation\",\n" +
+                "        \"ux ui loading\"\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 25514,\n" +
+                "        \"name\": \"Ramotion\",\n" +
+                "        \"username\": \"Ramotion\",\n" +
+                "        \"html_url\": \"https://dribbble.com/Ramotion\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/25514/avatars/original/avatar.png?1305139078\",\n" +
+                "        \"bio\": \"We Take Digital Experiences to the Next Level. WORK INQUIRIES → <a href=\\\"https://RAMOTION.COM\\\" rel=\\\"nofollow noreferrer\\\">RAMOTION.COM</a>\",\n" +
+                "        \"location\": \"San Francisco, CA\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"https://ramotion.com\",\n" +
+                "          \"twitter\": \"https://twitter.com/Ramotion\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 4410,\n" +
+                "        \"followers_count\": 23032,\n" +
+                "        \"followings_count\": 1204,\n" +
+                "        \"likes_count\": 787,\n" +
+                "        \"likes_received_count\": 85016,\n" +
+                "        \"projects_count\": 10,\n" +
+                "        \"rebounds_received_count\": 87,\n" +
+                "        \"shots_count\": 224,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Team\",\n" +
+                "        \"pro\": false,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/25514/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/25514/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/25514/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/25514/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/25514/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/25514/shots\",\n" +
+                "        \"created_at\": \"2011-03-27T17:07:26Z\",\n" +
+                "        \"updated_at\": \"2015-11-13T06:56:43Z\",\n" +
+                "        \"members_count\": 1,\n" +
+                "        \"members_url\": \"https://api.dribbble.com/v1/teams/25514/members\",\n" +
+                "        \"team_shots_url\": \"https://api.dribbble.com/v1/teams/25514/shots\"\n" +
+                "      },\n" +
+                "      \"team\": {\n" +
+                "        \"id\": 25514,\n" +
+                "        \"name\": \"Ramotion\",\n" +
+                "        \"username\": \"Ramotion\",\n" +
+                "        \"html_url\": \"https://dribbble.com/Ramotion\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/25514/avatars/original/avatar.png?1305139078\",\n" +
+                "        \"bio\": \"We Take Digital Experiences to the Next Level. WORK INQUIRIES → <a href=\\\"https://RAMOTION.COM\\\" rel=\\\"nofollow noreferrer\\\">RAMOTION.COM</a>\",\n" +
+                "        \"location\": \"San Francisco, CA\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"https://ramotion.com\",\n" +
+                "          \"twitter\": \"https://twitter.com/Ramotion\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 4410,\n" +
+                "        \"followers_count\": 23032,\n" +
+                "        \"followings_count\": 1204,\n" +
+                "        \"likes_count\": 787,\n" +
+                "        \"likes_received_count\": 85016,\n" +
+                "        \"projects_count\": 10,\n" +
+                "        \"rebounds_received_count\": 87,\n" +
+                "        \"shots_count\": 224,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Team\",\n" +
+                "        \"pro\": false,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/25514/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/25514/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/25514/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/25514/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/25514/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/25514/shots\",\n" +
+                "        \"created_at\": \"2011-03-27T17:07:26Z\",\n" +
+                "        \"updated_at\": \"2015-11-13T06:56:43Z\",\n" +
+                "        \"members_count\": 1,\n" +
+                "        \"members_url\": \"https://api.dribbble.com/v1/teams/25514/members\",\n" +
+                "        \"team_shots_url\": \"https://api.dribbble.com/v1/teams/25514/shots\"\n" +
+                "      }\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": 46473763,\n" +
+                "    \"created_at\": \"2015-11-05T07:03:40Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2334117,\n" +
+                "      \"title\": \"Muji CD Player / iPad Player Skin\",\n" +
+                "      \"description\": \"<p>Muji inspired skin for an iPad music player.\\n<br />PLS Check attachment or see it in <a href=\\\"http://musho.design/ipad-music-player-app-ui/\\\" rel=\\\"nofollow noreferrer\\\">(HTML) action</a>.</p>\",\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/7037/screenshots/2334117/untitled-3.gif\",\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/7037/screenshots/2334117/untitled-3_1x.gif\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/7037/screenshots/2334117/untitled-3_teaser.gif\"\n" +
+                "      },\n" +
+                "      \"views_count\": 3323,\n" +
+                "      \"likes_count\": 163,\n" +
+                "      \"comments_count\": 13,\n" +
+                "      \"attachments_count\": 1,\n" +
+                "      \"rebounds_count\": 0,\n" +
+                "      \"buckets_count\": 10,\n" +
+                "      \"created_at\": \"2015-11-04T21:51:00Z\",\n" +
+                "      \"updated_at\": \"2015-11-04T21:56:42Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2334117-Muji-CD-Player-iPad-Player-Skin\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2334117/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2334117/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2334117/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2334117/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2334117/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2334117/rebounds\",\n" +
+                "      \"animated\": true,\n" +
+                "      \"tags\": [\n" +
+                "        \"application\",\n" +
+                "        \"cd\",\n" +
+                "        \"ipad\",\n" +
+                "        \"mobile\",\n" +
+                "        \"muji\",\n" +
+                "        \"music\",\n" +
+                "        \"player\",\n" +
+                "        \"skin\"\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 7037,\n" +
+                "        \"name\": \"musHo\",\n" +
+                "        \"username\": \"musHo\",\n" +
+                "        \"html_url\": \"https://dribbble.com/musHo\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/7037/avatars/normal/9ba42c15a8a0eb2f2ee1e80216858d3c.png?1427522633\",\n" +
+                "        \"bio\": \"Digital Art Director, Startup Enthusiast &amp; Creative Invader\",\n" +
+                "        \"location\": \"Palo Alto, California\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"https://www.behance.net/musHo\",\n" +
+                "          \"twitter\": \"https://twitter.com/musHo\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 1533,\n" +
+                "        \"followers_count\": 10890,\n" +
+                "        \"followings_count\": 225,\n" +
+                "        \"likes_count\": 7697,\n" +
+                "        \"likes_received_count\": 28106,\n" +
+                "        \"projects_count\": 10,\n" +
+                "        \"rebounds_received_count\": 23,\n" +
+                "        \"shots_count\": 117,\n" +
+                "        \"teams_count\": 0,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Player\",\n" +
+                "        \"pro\": true,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/7037/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/7037/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/7037/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/7037/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/7037/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/7037/shots\",\n" +
+                "        \"teams_url\": \"https://api.dribbble.com/v1/users/7037/teams\",\n" +
+                "        \"created_at\": \"2011-01-12T18:24:09Z\",\n" +
+                "        \"updated_at\": \"2015-11-17T22:35:58Z\"\n" +
+                "      },\n" +
+                "      \"team\": null\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": 46142120,\n" +
+                "    \"created_at\": \"2015-10-29T20:40:50Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2322233,\n" +
+                "      \"title\": \"One Year of Luxe\",\n" +
+                "      \"description\": \"<p>Quick sneak peek of the \\\"One Year of Luxe\\\" graphic I put together for our one year celebration. More to come!</p>\",\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/77275/screenshots/2322233/drib-luxe.jpg\",\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/77275/screenshots/2322233/drib-luxe_1x.jpg\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/77275/screenshots/2322233/drib-luxe_teaser.jpg\"\n" +
+                "      },\n" +
+                "      \"views_count\": 4296,\n" +
+                "      \"likes_count\": 247,\n" +
+                "      \"comments_count\": 13,\n" +
+                "      \"attachments_count\": 0,\n" +
+                "      \"rebounds_count\": 1,\n" +
+                "      \"buckets_count\": 27,\n" +
+                "      \"created_at\": \"2015-10-29T16:33:18Z\",\n" +
+                "      \"updated_at\": \"2015-10-29T16:33:57Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2322233-One-Year-of-Luxe\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2322233/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2322233/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2322233/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2322233/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2322233/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2322233/rebounds\",\n" +
+                "      \"animated\": false,\n" +
+                "      \"tags\": [\n" +
+                "        \"car\",\n" +
+                "        \"design\",\n" +
+                "        \"hero\",\n" +
+                "        \"layout\",\n" +
+                "        \"luxe\",\n" +
+                "        \"parallax\",\n" +
+                "        \"type\"\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 77275,\n" +
+                "        \"name\": \"Gene Ross\",\n" +
+                "        \"username\": \"geneross\",\n" +
+                "        \"html_url\": \"https://dribbble.com/geneross\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/77275/avatars/normal/e136b5baa3c0e435f8e7d4c31fe10bdb.jpg?1428975527\",\n" +
+                "        \"bio\": \"Left Handed • Designer @ Luxe • Formerly Senior Designer / Lead Developer <a href=\\\"/elegantseagulls\\\">@elegantseagulls</a> • Freelancer • Let&#39;s Build Something!\",\n" +
+                "        \"location\": \"San Francisco, California\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"http://geneross.co/\",\n" +
+                "          \"twitter\": \"https://twitter.com/generosss\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 1,\n" +
+                "        \"comments_received_count\": 1015,\n" +
+                "        \"followers_count\": 4691,\n" +
+                "        \"followings_count\": 413,\n" +
+                "        \"likes_count\": 3090,\n" +
+                "        \"likes_received_count\": 16454,\n" +
+                "        \"projects_count\": 14,\n" +
+                "        \"rebounds_received_count\": 41,\n" +
+                "        \"shots_count\": 84,\n" +
+                "        \"teams_count\": 1,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Player\",\n" +
+                "        \"pro\": true,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/77275/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/77275/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/77275/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/77275/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/77275/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/77275/shots\",\n" +
+                "        \"teams_url\": \"https://api.dribbble.com/v1/users/77275/teams\",\n" +
+                "        \"created_at\": \"2011-11-21T20:23:02Z\",\n" +
+                "        \"updated_at\": \"2015-11-11T19:14:59Z\"\n" +
+                "      },\n" +
+                "      \"team\": null\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": 46110203,\n" +
+                "    \"created_at\": \"2015-10-29T11:44:14Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2318829,\n" +
+                "      \"title\": \"Hello dribbble\",\n" +
+                "      \"description\": null,\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/851862/screenshots/2318829/hellodrib.jpg\",\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/851862/screenshots/2318829/hellodrib_1x.jpg\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/851862/screenshots/2318829/hellodrib_teaser.jpg\"\n" +
+                "      },\n" +
+                "      \"views_count\": 144,\n" +
+                "      \"likes_count\": 12,\n" +
+                "      \"comments_count\": 2,\n" +
+                "      \"attachments_count\": 0,\n" +
+                "      \"rebounds_count\": 0,\n" +
+                "      \"buckets_count\": 0,\n" +
+                "      \"created_at\": \"2015-10-28T08:45:26Z\",\n" +
+                "      \"updated_at\": \"2015-10-28T08:45:55Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2318829-Hello-dribbble\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2318829/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2318829/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2318829/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2318829/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2318829/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2318829/rebounds\",\n" +
+                "      \"animated\": false,\n" +
+                "      \"tags\": [\n" +
+                "        \"design\",\n" +
+                "        \"diseño\",\n" +
+                "        \"illustration\",\n" +
+                "        \"ilustración\",\n" +
+                "        \"vector\"\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 851862,\n" +
+                "        \"name\": \"Comoon Studio\",\n" +
+                "        \"username\": \"comoonstudio\",\n" +
+                "        \"html_url\": \"https://dribbble.com/comoonstudio\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/851862/avatars/normal/b00d62fbd9980161082a8fbdab458745.png?1446026184\",\n" +
+                "        \"bio\": \"Comoon studio, independent studio from Extremadura dedicated to Graphic design and illustration\",\n" +
+                "        \"location\": null,\n" +
+                "        \"links\": {\n" +
+                "          \"twitter\": \"https://twitter.com/comoon_studio\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 4,\n" +
+                "        \"followers_count\": 18,\n" +
+                "        \"followings_count\": 3,\n" +
+                "        \"likes_count\": 1,\n" +
+                "        \"likes_received_count\": 69,\n" +
+                "        \"projects_count\": 0,\n" +
+                "        \"rebounds_received_count\": 0,\n" +
+                "        \"shots_count\": 6,\n" +
+                "        \"teams_count\": 0,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Player\",\n" +
+                "        \"pro\": false,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/851862/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/851862/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/851862/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/851862/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/851862/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/851862/shots\",\n" +
+                "        \"teams_url\": \"https://api.dribbble.com/v1/users/851862/teams\",\n" +
+                "        \"created_at\": \"2015-05-19T08:53:12Z\",\n" +
+                "        \"updated_at\": \"2015-11-08T15:01:47Z\"\n" +
+                "      },\n" +
+                "      \"team\": null\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": 45892958,\n" +
+                "    \"created_at\": \"2015-10-25T20:46:18Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2268000,\n" +
+                "      \"title\": \"Swoosh Light Dimmer\",\n" +
+                "      \"description\": \"<p>Made this prototype of the Swoosh controls when you are controlling the light dimmer.</p>\\n\\n<p><a href=\\\"https://dribbble.com/shots/2268000-Swoosh-Light-Dimmer/attachments/426320\\\" rel=\\\"nofollow\\\">Watch the video</a> to hear the UI sounds too.</p>\\n\\n<p><strong>Press L</strong> to show some love.</p>\",\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/14193/screenshots/2268000/swoosh-control.gif\",\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/14193/screenshots/2268000/swoosh-control_1x.gif\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/14193/screenshots/2268000/swoosh-control_teaser.gif\"\n" +
+                "      },\n" +
+                "      \"views_count\": 729,\n" +
+                "      \"likes_count\": 33,\n" +
+                "      \"comments_count\": 4,\n" +
+                "      \"attachments_count\": 1,\n" +
+                "      \"rebounds_count\": 0,\n" +
+                "      \"buckets_count\": 2,\n" +
+                "      \"created_at\": \"2015-09-29T16:39:04Z\",\n" +
+                "      \"updated_at\": \"2015-09-30T22:41:58Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2268000-Swoosh-Light-Dimmer\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2268000/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2268000/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2268000/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2268000/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2268000/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2268000/rebounds\",\n" +
+                "      \"animated\": true,\n" +
+                "      \"tags\": [\n" +
+                "        \"app\",\n" +
+                "        \"dimmer\",\n" +
+                "        \"fan\",\n" +
+                "        \"framer\",\n" +
+                "        \"homekit\",\n" +
+                "        \"light\"\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 14193,\n" +
+                "        \"name\": \"Joshua Pekera\",\n" +
+                "        \"username\": \"joshuapekera\",\n" +
+                "        \"html_url\": \"https://dribbble.com/joshuapekera\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/14193/avatars/normal/headshot-small.jpg?1382919838\",\n" +
+                "        \"bio\": \"Product Designer\",\n" +
+                "        \"location\": \"San Francisco, CA\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"http://joshuapekera.com\",\n" +
+                "          \"twitter\": \"https://twitter.com/joshuapekera\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 29,\n" +
+                "        \"comments_received_count\": 78,\n" +
+                "        \"followers_count\": 274,\n" +
+                "        \"followings_count\": 709,\n" +
+                "        \"likes_count\": 1521,\n" +
+                "        \"likes_received_count\": 650,\n" +
+                "        \"projects_count\": 10,\n" +
+                "        \"rebounds_received_count\": 3,\n" +
+                "        \"shots_count\": 45,\n" +
+                "        \"teams_count\": 0,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Player\",\n" +
+                "        \"pro\": true,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/14193/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/14193/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/14193/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/14193/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/14193/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/14193/shots\",\n" +
+                "        \"teams_url\": \"https://api.dribbble.com/v1/users/14193/teams\",\n" +
+                "        \"created_at\": \"2011-01-27T17:16:28Z\",\n" +
+                "        \"updated_at\": \"2015-11-17T17:32:44Z\"\n" +
+                "      },\n" +
+                "      \"team\": null\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": 45892261,\n" +
+                "    \"created_at\": \"2015-10-25T20:24:18Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2302268,\n" +
+                "      \"title\": \"Facebook Messenger VR\",\n" +
+                "      \"description\": \"<p>I'm really impatient of the new interaction range bringing by VR in the next few months. A whole new ecosystem to explore!\\n<br />What could be Messenger in one year? Sharing moment in a 3D space?</p>\",\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/663782/screenshots/2302268/open-uri20151020-3-1va0bcb\",\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/663782/screenshots/2302268/open-uri20151020-3-1va0bcb_1x\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/663782/screenshots/2302268/open-uri20151020-3-1va0bcb_teaser\"\n" +
+                "      },\n" +
+                "      \"views_count\": 936,\n" +
+                "      \"likes_count\": 51,\n" +
+                "      \"comments_count\": 4,\n" +
+                "      \"attachments_count\": 0,\n" +
+                "      \"rebounds_count\": 0,\n" +
+                "      \"buckets_count\": 1,\n" +
+                "      \"created_at\": \"2015-10-20T06:20:30Z\",\n" +
+                "      \"updated_at\": \"2015-10-20T06:20:36Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2302268-Facebook-Messenger-VR\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2302268/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2302268/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2302268/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2302268/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2302268/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2302268/rebounds\",\n" +
+                "      \"animated\": true,\n" +
+                "      \"tags\": [\n" +
+                "        \"app\",\n" +
+                "        \"facebook\",\n" +
+                "        \"iphone\",\n" +
+                "        \"messenger\",\n" +
+                "        \"oculus\",\n" +
+                "        \"reality\",\n" +
+                "        \"rift\",\n" +
+                "        \"virtual\",\n" +
+                "        \"vr\"\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 663782,\n" +
+                "        \"name\": \"Arnaud Le Roux\",\n" +
+                "        \"username\": \"arnaudlrx\",\n" +
+                "        \"html_url\": \"https://dribbble.com/arnaudlrx\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/663782/avatars/normal/33f3e48f1b4f1b009dda70e553e99152.png?1444854476\",\n" +
+                "        \"bio\": \"I&#39;m a freelance designer. My works spans multiple disciplines.\",\n" +
+                "        \"location\": \"Paris, France\",\n" +
+                "        \"links\": {\n" +
+                "          \"twitter\": \"https://twitter.com/arnaudlrx\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 9,\n" +
+                "        \"comments_received_count\": 43,\n" +
+                "        \"followers_count\": 351,\n" +
+                "        \"followings_count\": 175,\n" +
+                "        \"likes_count\": 6723,\n" +
+                "        \"likes_received_count\": 684,\n" +
+                "        \"projects_count\": 1,\n" +
+                "        \"rebounds_received_count\": 0,\n" +
+                "        \"shots_count\": 19,\n" +
+                "        \"teams_count\": 0,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Player\",\n" +
+                "        \"pro\": true,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/663782/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/663782/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/663782/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/663782/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/663782/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/663782/shots\",\n" +
+                "        \"teams_url\": \"https://api.dribbble.com/v1/users/663782/teams\",\n" +
+                "        \"created_at\": \"2014-10-04T07:53:07Z\",\n" +
+                "        \"updated_at\": \"2015-10-23T06:59:51Z\"\n" +
+                "      },\n" +
+                "      \"team\": null\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": 45714962,\n" +
+                "    \"created_at\": \"2015-10-21T17:13:27Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2306085,\n" +
+                "      \"title\": \"Apple Watch Mockups [PSD]\",\n" +
+                "      \"description\": \"<p>10 models of Apple Watch carefully crafted by our team.</p>\\n\\n<p>Use this link to buy all our mockups with <strong>30% discount</strong>: \\n<br />→ <a href=\\\"https://store.ramotion.com/?coupon=DRIBBBLE30?utm_source=drbl&amp;utm_medium=special&amp;utm_campaign=2306085-Apple-Watch-Mockups-PSD\\\" rel=\\\"nofollow noreferrer\\\">store.ramotion.com</a></p>\\n\\n<p>Apple Watch <a href=\\\"https://store.ramotion.com/product/apple-watch-mockups\\\" rel=\\\"nofollow noreferrer\\\">Demo PSD available here</a></p>\",\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/2306085/apple-watch-mockups-templates-psd-free-ramotion.gif\",\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/2306085/apple-watch-mockups-templates-psd-free-ramotion_1x.gif\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/2306085/apple-watch-mockups-templates-psd-free-ramotion_teaser.gif\"\n" +
+                "      },\n" +
+                "      \"views_count\": 6873,\n" +
+                "      \"likes_count\": 302,\n" +
+                "      \"comments_count\": 40,\n" +
+                "      \"attachments_count\": 4,\n" +
+                "      \"rebounds_count\": 0,\n" +
+                "      \"buckets_count\": 31,\n" +
+                "      \"created_at\": \"2015-10-21T17:10:21Z\",\n" +
+                "      \"updated_at\": \"2015-11-13T05:46:17Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2306085-Apple-Watch-Mockups-PSD\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2306085/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2306085/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2306085/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2306085/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2306085/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2306085/rebounds\",\n" +
+                "      \"rebound_source_url\": \"https://api.dribbble.com/v1/shots/1722076\",\n" +
+                "      \"animated\": true,\n" +
+                "      \"tags\": [\n" +
+                "        \"app\",\n" +
+                "        \"apple watch\",\n" +
+                "        \"appliaction\",\n" +
+                "        \"device\",\n" +
+                "        \"download\",\n" +
+                "        \"free mock-up\",\n" +
+                "        \"mockup\",\n" +
+                "        \"photoshop\",\n" +
+                "        \"psd\",\n" +
+                "        \"ramotion\",\n" +
+                "        \"render\",\n" +
+                "        \"template\"\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 25514,\n" +
+                "        \"name\": \"Ramotion\",\n" +
+                "        \"username\": \"Ramotion\",\n" +
+                "        \"html_url\": \"https://dribbble.com/Ramotion\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/25514/avatars/original/avatar.png?1305139078\",\n" +
+                "        \"bio\": \"We Take Digital Experiences to the Next Level. WORK INQUIRIES → <a href=\\\"https://RAMOTION.COM\\\" rel=\\\"nofollow noreferrer\\\">RAMOTION.COM</a>\",\n" +
+                "        \"location\": \"San Francisco, CA\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"https://ramotion.com\",\n" +
+                "          \"twitter\": \"https://twitter.com/Ramotion\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 4410,\n" +
+                "        \"followers_count\": 23032,\n" +
+                "        \"followings_count\": 1204,\n" +
+                "        \"likes_count\": 787,\n" +
+                "        \"likes_received_count\": 85016,\n" +
+                "        \"projects_count\": 10,\n" +
+                "        \"rebounds_received_count\": 87,\n" +
+                "        \"shots_count\": 224,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Team\",\n" +
+                "        \"pro\": false,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/25514/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/25514/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/25514/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/25514/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/25514/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/25514/shots\",\n" +
+                "        \"created_at\": \"2011-03-27T17:07:26Z\",\n" +
+                "        \"updated_at\": \"2015-11-13T06:56:43Z\",\n" +
+                "        \"members_count\": 1,\n" +
+                "        \"members_url\": \"https://api.dribbble.com/v1/teams/25514/members\",\n" +
+                "        \"team_shots_url\": \"https://api.dribbble.com/v1/teams/25514/shots\"\n" +
+                "      },\n" +
+                "      \"team\": {\n" +
+                "        \"id\": 25514,\n" +
+                "        \"name\": \"Ramotion\",\n" +
+                "        \"username\": \"Ramotion\",\n" +
+                "        \"html_url\": \"https://dribbble.com/Ramotion\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/25514/avatars/original/avatar.png?1305139078\",\n" +
+                "        \"bio\": \"We Take Digital Experiences to the Next Level. WORK INQUIRIES → <a href=\\\"https://RAMOTION.COM\\\" rel=\\\"nofollow noreferrer\\\">RAMOTION.COM</a>\",\n" +
+                "        \"location\": \"San Francisco, CA\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"https://ramotion.com\",\n" +
+                "          \"twitter\": \"https://twitter.com/Ramotion\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 4410,\n" +
+                "        \"followers_count\": 23032,\n" +
+                "        \"followings_count\": 1204,\n" +
+                "        \"likes_count\": 787,\n" +
+                "        \"likes_received_count\": 85016,\n" +
+                "        \"projects_count\": 10,\n" +
+                "        \"rebounds_received_count\": 87,\n" +
+                "        \"shots_count\": 224,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Team\",\n" +
+                "        \"pro\": false,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/25514/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/25514/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/25514/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/25514/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/25514/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/25514/shots\",\n" +
+                "        \"created_at\": \"2011-03-27T17:07:26Z\",\n" +
+                "        \"updated_at\": \"2015-11-13T06:56:43Z\",\n" +
+                "        \"members_count\": 1,\n" +
+                "        \"members_url\": \"https://api.dribbble.com/v1/teams/25514/members\",\n" +
+                "        \"team_shots_url\": \"https://api.dribbble.com/v1/teams/25514/shots\"\n" +
+                "      }\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": 45505619,\n" +
+                "    \"created_at\": \"2015-10-17T17:39:12Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2298308,\n" +
+                "      \"title\": \"Banking Account Overview\",\n" +
+                "      \"description\": \"<p> -_-  forgot to set my gif to loop. Looping below!\\n<br /><a href=\\\"https://dribbble.com/shots/2298505-Banking-Account-Overview-Loop\\\" target=\\\"_blank\\\" rel=\\\"noreferrer\\\">https://dribbble.com/shots/2298505-Banking-Account-Overview-Loop</a></p>\\n\\n<p>Working on UI and interaction ideas for a mobile banking project. Focusing on enhancing a user's spatial awareness within the app – account details for individual accounts are displayed over the current context of your account overview, rather than segueing to another screen.</p>\\n\\n<p>Prototyped in Framer:\\n<br /><a href=\\\"http://share.framerjs.com/jze53fddc2s5/\\\" target=\\\"_blank\\\" rel=\\\"noreferrer\\\">http://share.framerjs.com/jze53fddc2s5/</a></p>\\n\\n<p>Thanks to @Ramotion for the iPhone template!\\n<br /><a href=\\\"https://dribbble.com/shots/1722076-Free-iPhone-6-4-7-inch-Template-PSD\\\" target=\\\"_blank\\\" rel=\\\"noreferrer\\\">https://dribbble.com/shots/1722076-Free-iPhone-6-4-7-inch-Template-PSD</a></p>\",\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/933160/screenshots/2298308/accountoverview.gif\",\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/933160/screenshots/2298308/accountoverview_1x.gif\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/933160/screenshots/2298308/accountoverview_teaser.gif\"\n" +
+                "      },\n" +
+                "      \"views_count\": 528,\n" +
+                "      \"likes_count\": 28,\n" +
+                "      \"comments_count\": 5,\n" +
+                "      \"attachments_count\": 0,\n" +
+                "      \"rebounds_count\": 0,\n" +
+                "      \"buckets_count\": 0,\n" +
+                "      \"created_at\": \"2015-10-17T17:09:08Z\",\n" +
+                "      \"updated_at\": \"2015-10-17T21:28:03Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2298308-Banking-Account-Overview\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2298308/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2298308/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2298308/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2298308/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2298308/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2298308/rebounds\",\n" +
+                "      \"animated\": true,\n" +
+                "      \"tags\": [\n" +
+                "        \"animation\",\n" +
+                "        \"banking\",\n" +
+                "        \"framer\",\n" +
+                "        \"interaction\",\n" +
+                "        \"ios\",\n" +
+                "        \"mobile\",\n" +
+                "        \"ui\"\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 933160,\n" +
+                "        \"name\": \"Sean Mateer\",\n" +
+                "        \"username\": \"Sean_Mateer\",\n" +
+                "        \"html_url\": \"https://dribbble.com/Sean_Mateer\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/933160/avatars/normal/554a9eb3c60781f8753e31a6997fc8f3.jpg?1440512534\",\n" +
+                "        \"bio\": \"UX and Interaction Designer in Austin\",\n" +
+                "        \"location\": null,\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"http://seanmateer.com\",\n" +
+                "          \"twitter\": \"https://twitter.com/sean_mateer\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 5,\n" +
+                "        \"followers_count\": 17,\n" +
+                "        \"followings_count\": 16,\n" +
+                "        \"likes_count\": 14,\n" +
+                "        \"likes_received_count\": 68,\n" +
+                "        \"projects_count\": 0,\n" +
+                "        \"rebounds_received_count\": 0,\n" +
+                "        \"shots_count\": 3,\n" +
+                "        \"teams_count\": 0,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Player\",\n" +
+                "        \"pro\": false,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/933160/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/933160/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/933160/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/933160/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/933160/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/933160/shots\",\n" +
+                "        \"teams_url\": \"https://api.dribbble.com/v1/users/933160/teams\",\n" +
+                "        \"created_at\": \"2015-08-25T14:20:20Z\",\n" +
+                "        \"updated_at\": \"2015-10-21T22:12:36Z\"\n" +
+                "      },\n" +
+                "      \"team\": null\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": 45146801,\n" +
+                "    \"created_at\": \"2015-10-09T13:47:22Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2284383,\n" +
+                "      \"title\": \"Brandbook Design Process\",\n" +
+                "      \"description\": \"<p>Part of the process of brand research</p>\\n\\n<p><strong>We are ready for new projects</strong> → <strong><a href=\\\"https://ramotion.com?utm_source=drbl&amp;utm_medium=special&amp;utm_campaign=2284383-Brandbook-Design-Process\\\" rel=\\\"nofollow noreferrer\\\">Ramotion.com</a></strong></p>\\n\\n<p>Visit our store → <strong><a href=\\\"https://store.ramotion.com?utm_source=drbl&amp;utm_medium=special&amp;utm_campaign=2284383-Brandbook-Design-Process\\\" rel=\\\"nofollow noreferrer\\\">store.ramotion.com</a></strong></p>\",\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/2284383/brandbook_design_process.png\",\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/2284383/brandbook_design_process_1x.png\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/25514/screenshots/2284383/brandbook_design_process_teaser.png\"\n" +
+                "      },\n" +
+                "      \"views_count\": 7480,\n" +
+                "      \"likes_count\": 506,\n" +
+                "      \"comments_count\": 38,\n" +
+                "      \"attachments_count\": 0,\n" +
+                "      \"rebounds_count\": 0,\n" +
+                "      \"buckets_count\": 36,\n" +
+                "      \"created_at\": \"2015-10-09T13:45:17Z\",\n" +
+                "      \"updated_at\": \"2015-11-13T06:17:45Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2284383-Brandbook-Design-Process\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2284383/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2284383/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2284383/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2284383/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2284383/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2284383/rebounds\",\n" +
+                "      \"animated\": false,\n" +
+                "      \"tags\": [\n" +
+                "        \"audience analysis\",\n" +
+                "        \"brandbook\",\n" +
+                "        \"clarity simplicity\",\n" +
+                "        \"company branding\",\n" +
+                "        \"font selection\",\n" +
+                "        \"helpful intelligent\",\n" +
+                "        \"identity\",\n" +
+                "        \"logo design\",\n" +
+                "        \"luxury service\",\n" +
+                "        \"mark research\",\n" +
+                "        \"professional approach\"\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 25514,\n" +
+                "        \"name\": \"Ramotion\",\n" +
+                "        \"username\": \"Ramotion\",\n" +
+                "        \"html_url\": \"https://dribbble.com/Ramotion\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/25514/avatars/original/avatar.png?1305139078\",\n" +
+                "        \"bio\": \"We Take Digital Experiences to the Next Level. WORK INQUIRIES → <a href=\\\"https://RAMOTION.COM\\\" rel=\\\"nofollow noreferrer\\\">RAMOTION.COM</a>\",\n" +
+                "        \"location\": \"San Francisco, CA\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"https://ramotion.com\",\n" +
+                "          \"twitter\": \"https://twitter.com/Ramotion\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 4410,\n" +
+                "        \"followers_count\": 23032,\n" +
+                "        \"followings_count\": 1204,\n" +
+                "        \"likes_count\": 787,\n" +
+                "        \"likes_received_count\": 85016,\n" +
+                "        \"projects_count\": 10,\n" +
+                "        \"rebounds_received_count\": 87,\n" +
+                "        \"shots_count\": 224,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Team\",\n" +
+                "        \"pro\": false,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/25514/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/25514/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/25514/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/25514/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/25514/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/25514/shots\",\n" +
+                "        \"created_at\": \"2011-03-27T17:07:26Z\",\n" +
+                "        \"updated_at\": \"2015-11-13T06:56:43Z\",\n" +
+                "        \"members_count\": 1,\n" +
+                "        \"members_url\": \"https://api.dribbble.com/v1/teams/25514/members\",\n" +
+                "        \"team_shots_url\": \"https://api.dribbble.com/v1/teams/25514/shots\"\n" +
+                "      },\n" +
+                "      \"team\": {\n" +
+                "        \"id\": 25514,\n" +
+                "        \"name\": \"Ramotion\",\n" +
+                "        \"username\": \"Ramotion\",\n" +
+                "        \"html_url\": \"https://dribbble.com/Ramotion\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/25514/avatars/original/avatar.png?1305139078\",\n" +
+                "        \"bio\": \"We Take Digital Experiences to the Next Level. WORK INQUIRIES → <a href=\\\"https://RAMOTION.COM\\\" rel=\\\"nofollow noreferrer\\\">RAMOTION.COM</a>\",\n" +
+                "        \"location\": \"San Francisco, CA\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"https://ramotion.com\",\n" +
+                "          \"twitter\": \"https://twitter.com/Ramotion\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 4410,\n" +
+                "        \"followers_count\": 23032,\n" +
+                "        \"followings_count\": 1204,\n" +
+                "        \"likes_count\": 787,\n" +
+                "        \"likes_received_count\": 85016,\n" +
+                "        \"projects_count\": 10,\n" +
+                "        \"rebounds_received_count\": 87,\n" +
+                "        \"shots_count\": 224,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Team\",\n" +
+                "        \"pro\": false,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/25514/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/25514/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/25514/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/25514/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/25514/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/25514/shots\",\n" +
+                "        \"created_at\": \"2011-03-27T17:07:26Z\",\n" +
+                "        \"updated_at\": \"2015-11-13T06:56:43Z\",\n" +
+                "        \"members_count\": 1,\n" +
+                "        \"members_url\": \"https://api.dribbble.com/v1/teams/25514/members\",\n" +
+                "        \"team_shots_url\": \"https://api.dribbble.com/v1/teams/25514/shots\"\n" +
+                "      }\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"id\": 44054535,\n" +
+                "    \"created_at\": \"2015-09-15T11:05:50Z\",\n" +
+                "    \"shot\": {\n" +
+                "      \"id\": 2244888,\n" +
+                "      \"title\": \"Plant\",\n" +
+                "      \"description\": null,\n" +
+                "      \"width\": 400,\n" +
+                "      \"height\": 300,\n" +
+                "      \"images\": {\n" +
+                "        \"hidpi\": null,\n" +
+                "        \"normal\": \"https://d13yacurqjgara.cloudfront.net/users/348378/screenshots/2244888/plant.jpg\",\n" +
+                "        \"teaser\": \"https://d13yacurqjgara.cloudfront.net/users/348378/screenshots/2244888/plant_teaser.jpg\"\n" +
+                "      },\n" +
+                "      \"views_count\": 529,\n" +
+                "      \"likes_count\": 60,\n" +
+                "      \"comments_count\": 1,\n" +
+                "      \"attachments_count\": 0,\n" +
+                "      \"rebounds_count\": 1,\n" +
+                "      \"buckets_count\": 1,\n" +
+                "      \"created_at\": \"2015-09-15T05:45:30Z\",\n" +
+                "      \"updated_at\": \"2015-09-15T05:45:35Z\",\n" +
+                "      \"html_url\": \"https://dribbble.com/shots/2244888-Plant\",\n" +
+                "      \"attachments_url\": \"https://api.dribbble.com/v1/shots/2244888/attachments\",\n" +
+                "      \"buckets_url\": \"https://api.dribbble.com/v1/shots/2244888/buckets\",\n" +
+                "      \"comments_url\": \"https://api.dribbble.com/v1/shots/2244888/comments\",\n" +
+                "      \"likes_url\": \"https://api.dribbble.com/v1/shots/2244888/likes\",\n" +
+                "      \"projects_url\": \"https://api.dribbble.com/v1/shots/2244888/projects\",\n" +
+                "      \"rebounds_url\": \"https://api.dribbble.com/v1/shots/2244888/rebounds\",\n" +
+                "      \"animated\": false,\n" +
+                "      \"tags\": [\n" +
+                "\n" +
+                "      ],\n" +
+                "      \"user\": {\n" +
+                "        \"id\": 348378,\n" +
+                "        \"name\": \"Sydney Goldstein\",\n" +
+                "        \"username\": \"SydneyGoldstein\",\n" +
+                "        \"html_url\": \"https://dribbble.com/SydneyGoldstein\",\n" +
+                "        \"avatar_url\": \"https://d13yacurqjgara.cloudfront.net/users/348378/avatars/normal/pic.jpg?1371156330\",\n" +
+                "        \"bio\": \"Hi.\",\n" +
+                "        \"location\": \"San Francisco, California\",\n" +
+                "        \"links\": {\n" +
+                "          \"web\": \"http://sydneygoldsteindesign.com\",\n" +
+                "          \"twitter\": \"https://twitter.com/thisis_sydney\"\n" +
+                "        },\n" +
+                "        \"buckets_count\": 0,\n" +
+                "        \"comments_received_count\": 217,\n" +
+                "        \"followers_count\": 581,\n" +
+                "        \"followings_count\": 1180,\n" +
+                "        \"likes_count\": 2568,\n" +
+                "        \"likes_received_count\": 2794,\n" +
+                "        \"projects_count\": 5,\n" +
+                "        \"rebounds_received_count\": 40,\n" +
+                "        \"shots_count\": 92,\n" +
+                "        \"teams_count\": 0,\n" +
+                "        \"can_upload_shot\": true,\n" +
+                "        \"type\": \"Player\",\n" +
+                "        \"pro\": true,\n" +
+                "        \"buckets_url\": \"https://api.dribbble.com/v1/users/348378/buckets\",\n" +
+                "        \"followers_url\": \"https://api.dribbble.com/v1/users/348378/followers\",\n" +
+                "        \"following_url\": \"https://api.dribbble.com/v1/users/348378/following\",\n" +
+                "        \"likes_url\": \"https://api.dribbble.com/v1/users/348378/likes\",\n" +
+                "        \"projects_url\": \"https://api.dribbble.com/v1/users/348378/projects\",\n" +
+                "        \"shots_url\": \"https://api.dribbble.com/v1/users/348378/shots\",\n" +
+                "        \"teams_url\": \"https://api.dribbble.com/v1/users/348378/teams\",\n" +
+                "        \"created_at\": \"2013-06-10T21:41:37Z\",\n" +
+                "        \"updated_at\": \"2015-11-05T04:39:45Z\"\n" +
+                "      },\n" +
+                "      \"team\": null\n" +
+                "    }\n" +
+                "  }\n" +
+                "]";
+    }
 }

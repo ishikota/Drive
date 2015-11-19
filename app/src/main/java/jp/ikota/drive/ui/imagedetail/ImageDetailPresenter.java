@@ -44,7 +44,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     public void loadRelatedShots() {
         if(loading) return;
         loading = true;
-        API.getShots(mPage, ITEM_PER_PAGE, new Callback<Shots>() {
+        API.getShots(mPage, ITEM_PER_PAGE,  new Callback<Shots>() {
             @Override
             public void success(Shots shots, Response response) {
                 mDetailView.addShots(shots.items);
