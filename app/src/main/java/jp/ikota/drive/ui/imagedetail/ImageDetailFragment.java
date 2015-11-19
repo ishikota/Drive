@@ -52,8 +52,12 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        // TODO refactor here
+        Gson gson = new Gson();
+        String json = getArguments().getString(EXTRA_CONTENT);
+        Shot shot = gson.fromJson(json, Shot.class);
         mApp = (AndroidApplication) getActivity().getApplicationContext();
-        mActionsListener = new ImageDetailPresenter(mApp.api(), this, 30);
+        mActionsListener = new ImageDetailPresenter(mApp.api(), this, shot, 30);
     }
 
     @Override

@@ -3,6 +3,9 @@ package jp.ikota.drive.ui.imagedetail;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+
+import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.network.DribbleService;
@@ -14,6 +17,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
 
     private final DribbleService API;
     private final ImageDetailContract.View mDetailView;
+    private final Shot mShot;
     private final int ITEM_PER_PAGE;
 
     // state variable
@@ -26,9 +30,11 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     public ImageDetailPresenter(
             @NonNull DribbleService api,
             @NonNull ImageDetailContract.View detailView,
+            Shot shot,
             int item_per_page) {
         API = api;
         mDetailView = detailView;
+        mShot = shot;
         ITEM_PER_PAGE = item_per_page;
     }
 
@@ -43,10 +49,16 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     @Override
     public void loadRelatedShots() {
         if(loading) return;
+        if(mShot==null) return; // TODO notify error to user
         loading = true;
-        API.getShots(mPage, ITEM_PER_PAGE,  new Callback<Shots>() {
+        API.getUserLikes(mPage, ITEM_PER_PAGE, mShot.user.id, new Callback<Likes>() {
             @Override
-            public void success(Shots shots, Response response) {
+            public void success(Likes likes, Response response) {
+                Shots shots = new Shots();
+                shots.items = new ArrayList<>();
+                for (Likes.Like like : likes.items) {
+                    shots.items.add(like.shot);
+                }
                 mDetailView.addShots(shots.items);
                 loading = false;
             }
