@@ -10,6 +10,9 @@ import retrofit.RestAdapter;
 
 public class OauthUtil {
 
+    // use this key to retrieve access token from SharedPreferences
+    public static final String KEY_ACCESS_TOKEN = "access_token";
+
     private static final String OAUTH_URL = "https://dribbble.com/oauth/authorize";
     private static final String CLIENT_ID = "119011ca89c3d6ed96a16a7521888f48b76aa1950615a17f05c37f48fc21f176";
     private static final String CLIENT_SECRET = "Replace with real client secret"; //TODO Replace this value
