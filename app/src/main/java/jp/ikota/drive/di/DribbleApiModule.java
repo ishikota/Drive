@@ -67,7 +67,7 @@ public class DribbleApiModule {
                 .registerTypeAdapter(Likes.class, new LikesDeserializer())
                 .create();
         return new RestAdapter.Builder()
-                .setEndpoint(DribbleURL.END_POINT)
+                .setEndpoint(DribbleURL.API_END_POINT)
                 .setConverter(new GsonConverter(gson))
                 .build()
                 .create(DribbleService.class);

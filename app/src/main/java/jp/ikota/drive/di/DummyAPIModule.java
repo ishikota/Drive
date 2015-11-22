@@ -31,7 +31,7 @@ public class DummyAPIModule {
     public DribbleService provideFlickrService() {
         return new RestAdapter
                 .Builder()
-                .setEndpoint(DribbleURL.END_POINT)
+                .setEndpoint(DribbleURL.API_END_POINT)
                 .setClient(new MockClient(RESPONSE_MAP))
                 .build()
                 .create(DribbleService.class);
