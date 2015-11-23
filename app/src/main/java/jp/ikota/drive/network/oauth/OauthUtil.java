@@ -1,8 +1,16 @@
 package jp.ikota.drive.network.oauth;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 
+import jp.ikota.drive.R;
 import jp.ikota.drive.network.DribbleService;
 import jp.ikota.drive.network.DribbleURL;
 import retrofit.Callback;
@@ -32,9 +40,48 @@ public class OauthUtil {
         OAUTH_SERVICE.exchangeAccessToken(params, callback);
     }
 
+    public static void showOauthDialog(String action, FragmentManager fm) {
+        OauthAlertDialogFragment fragment = OauthAlertDialogFragment.newInstance(action);
+        fragment.show(fm, "dialog");
+    }
+
     private static Uri buildAuthorizeUri() {
         return Uri.parse(OAUTH_URL).buildUpon()
                 .appendQueryParameter("client_id", CLIENT_ID)
                 .build();
+    }
+
+    public static class OauthAlertDialogFragment extends DialogFragment {
+
+        public static OauthAlertDialogFragment newInstance(String action) {
+            OauthAlertDialogFragment fragment = new OauthAlertDialogFragment();
+            Bundle args = new Bundle();
+            args.putString("action", action);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            String action = getArguments().getString("action");
+
+            return new AlertDialog.Builder(getActivity())
+                    .setTitle("[ "+action+" ] requires login")
+                    .setPositiveButton(R.string.login, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = createOauthAccessIntent();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            getActivity().startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dismiss();
+                        }
+                    }).create();
+        }
     }
 }

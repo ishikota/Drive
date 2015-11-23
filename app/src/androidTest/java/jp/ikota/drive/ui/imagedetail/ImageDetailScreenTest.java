@@ -89,7 +89,7 @@ public class ImageDetailScreenTest {
         onView(withId(R.id.title)).check(matches(withText(mTarget.title)));
         onView(withId(R.id.user_name)).check(matches(withText(mTarget.user.username)));
         onView(withId(R.id.like_num)).check(matches(withText(String.valueOf(mTarget.likes_count) + " likes")));
-        onView(withId(R.id.related_title)).check(matches(withText(mTarget.user.username + "'s Likes")));
+        onView(withId(R.id.related_username)).check(matches(withText(mTarget.user.username)));
         //onView(withId(R.id.tag_parent)).check(matches(withChildNum(mTarget.tags.length)));
     }
 
