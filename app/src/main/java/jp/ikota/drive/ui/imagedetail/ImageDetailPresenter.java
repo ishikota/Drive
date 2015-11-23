@@ -79,8 +79,12 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
 
     @Override
     public void clickFab() {
-        fab_is_on = !fab_is_on;
-        mDetailView.toggleFab(fab_is_on);
+        if(mDetailView.checkIfLoggedIn()) {
+            fab_is_on = !fab_is_on;
+            mDetailView.toggleFab(fab_is_on);
+        } else {
+            mDetailView.showLoginDialog();
+        }
     }
 
     @Override

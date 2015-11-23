@@ -4,8 +4,10 @@ import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.contrib.RecyclerViewActions;
@@ -15,6 +17,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -40,6 +43,7 @@ import jp.ikota.drive.data.SampleResponse;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.di.DummyAPIModule;
 import jp.ikota.drive.network.Util;
+import jp.ikota.drive.network.oauth.OauthUtil;
 import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -55,11 +59,15 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(AndroidJUnit4.class)
-public class ImageDetailScreenTest {
+public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<ImageDetailActivity>{
 
     private Context mContext;
     private Intent mIntent;
     private Shot mTarget = getSampleShot();
+
+    public ImageDetailScreenTest() {
+        super(ImageDetailActivity.class);
+    }
 
     @Rule
     public ActivityTestRule<ImageDetailActivity> activityRule = new ActivityTestRule<>(
@@ -118,6 +126,29 @@ public class ImageDetailScreenTest {
         Espresso.registerIdlingResources(idlingResource);
         onView(withId(R.id.container)).check(matches(withId(R.id.container)));  // just wait loading
         Espresso.unregisterIdlingResources(idlingResource);
+    }
+
+    @Test
+    public void checkIfLoggedIn() {
+        setupMockServer(null);
+        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
+        ImageDetailFragment fragment = getFragment(activity);
+        toggleLoginState(mContext, true);
+        assertEquals(fragment.checkIfLoggedIn(), true);
+        toggleLoginState(mContext, false);
+        assertEquals(fragment.checkIfLoggedIn(), false);
+    }
+
+    @Test
+    public void showLoginDialogWhenFabClicked() {
+        setupMockServer(null);
+        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
+        ImageDetailFragment fragment = getFragment(activity);
+        toggleLoginState(mContext, true);
+        fragment.showLoginDialog();
+        SystemClock.sleep(1000);
+        onView(withText(R.string.cancel)).perform(click());
+        toggleLoginState(mContext, false);
     }
 
     // TODO cannot scroll
@@ -185,6 +216,13 @@ public class ImageDetailScreenTest {
 
     private Shot getSampleShot() {
         return new Gson().fromJson(SampleResponse.getShot(), Shot.class);
+    }
+
+    private void toggleLoginState(Context context, boolean be_login) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(OauthUtil.KEY_ACCESS_TOKEN, be_login ? "dummy" : "");
+        editor.apply();
     }
 
     public static void setupMockServer(HashMap<String, String> override_map) {

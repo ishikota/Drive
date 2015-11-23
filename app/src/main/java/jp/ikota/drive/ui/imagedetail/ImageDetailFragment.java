@@ -3,7 +3,9 @@ package jp.ikota.drive.ui.imagedetail;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,6 +24,7 @@ import java.util.List;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.model.Shot;
+import jp.ikota.drive.network.oauth.OauthUtil;
 
 
 public class ImageDetailFragment extends Fragment implements ImageDetailContract.View {
@@ -208,6 +211,18 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     @Override
     public void setToolbarAlpha(int alpha) {
         mToolbarListener.updateToolbarAlpha(alpha);
+    }
+
+    @Override
+    public boolean checkIfLoggedIn() {
+        if(!isAdded()) return false;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return !prefs.getString(OauthUtil.KEY_ACCESS_TOKEN, "").isEmpty();
+    }
+
+    @Override
+    public void showLoginDialog() {
+        OauthUtil.showOauthDialog("Like a shot", getChildFragmentManager());
     }
 
     public void setToolbarListener(ImageDetailActivity.OnToolbarAlphaListener listener) {

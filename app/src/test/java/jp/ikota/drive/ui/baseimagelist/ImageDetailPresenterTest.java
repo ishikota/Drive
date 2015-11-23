@@ -25,6 +25,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ImageDetailPresenterTest {
 
@@ -76,10 +77,18 @@ public class ImageDetailPresenterTest {
 
     @Test
     public void toggleFab() {
+        when(mView.checkIfLoggedIn()).thenReturn(true);
         mPresenter.clickFab();
         verify(mView).toggleFab(true);
         mPresenter.clickFab();
         verify(mView).toggleFab(false);
+    }
+
+    @Test
+    public void checkIfShowLoginDialog() {
+        when(mView.checkIfLoggedIn()).thenReturn(false);
+        mPresenter.clickFab();
+        verify(mView).showLoginDialog();
     }
 
     @Test
