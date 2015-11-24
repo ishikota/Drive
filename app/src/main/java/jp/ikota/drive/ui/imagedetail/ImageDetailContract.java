@@ -21,9 +21,9 @@ public interface ImageDetailContract {
 
         void setToolbarAlpha(int alpha);
 
-        boolean checkIfLoggedIn();
-
         void showLoginDialog();
+
+        String getAccessToken();
 
     }
 

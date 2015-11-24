@@ -79,7 +79,7 @@ public class ImageDetailPresenterTest {
 
     @Test
     public void toggleFab() {
-        when(mView.checkIfLoggedIn()).thenReturn(true);
+        when(mView.getAccessToken()).thenReturn("dummy");
         mPresenter.clickFab();
         verify(mView).toggleFab(true, true);
         assertTrue(mPresenter.getIfFabIsOn());
@@ -100,7 +100,7 @@ public class ImageDetailPresenterTest {
 
     @Test
     public void checkIfShowLoginDialog() {
-        when(mView.checkIfLoggedIn()).thenReturn(false);
+        when(mView.getAccessToken()).thenReturn("");
         mPresenter.clickFab();
         verify(mView).showLoginDialog();
     }

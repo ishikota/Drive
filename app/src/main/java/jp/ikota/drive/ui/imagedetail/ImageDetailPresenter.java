@@ -51,7 +51,6 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     @Override
     public void loadRelatedShots() {
         if(loading) return;
-        if(mShot==null) return; // TODO notify error to user
         loading = true;
         API.getUserLikes(mPage, ITEM_PER_PAGE, mShot.user.id, new Callback<Likes>() {
             @Override
@@ -81,7 +80,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
 
     @Override
     public void clickFab() {
-        if(mDetailView.checkIfLoggedIn()) {
+        if(!mDetailView.getAccessToken().isEmpty()) {
             fab_is_on = !fab_is_on;
             mDetailView.toggleFab(fab_is_on, true);  // hide fab after click
         } else {

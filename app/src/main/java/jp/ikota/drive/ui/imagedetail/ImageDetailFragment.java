@@ -230,15 +230,15 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     }
 
     @Override
-    public boolean checkIfLoggedIn() {
-        if(!isAdded()) return false;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        return !prefs.getString(OauthUtil.KEY_ACCESS_TOKEN, "").isEmpty();
+    public void showLoginDialog() {
+        OauthUtil.showOauthDialog("Like a shot", getChildFragmentManager());
     }
 
     @Override
-    public void showLoginDialog() {
-        OauthUtil.showOauthDialog("Like a shot", getChildFragmentManager());
+    public String getAccessToken() {
+        if(!isAdded()) return "";
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return prefs.getString(OauthUtil.KEY_ACCESS_TOKEN, "");
     }
 
     public void setToolbarListener(ImageDetailActivity.OnToolbarAlphaListener listener) {

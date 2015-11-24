@@ -134,9 +134,9 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         ImageDetailActivity activity = activityRule.launchActivity(mIntent);
         ImageDetailFragment fragment = getFragment(activity);
         toggleLoginState(mContext, true);
-        assertEquals(fragment.checkIfLoggedIn(), true);
+        assertEquals(fragment.getAccessToken(), "dummy");
         toggleLoginState(mContext, false);
-        assertEquals(fragment.checkIfLoggedIn(), false);
+        assertEquals(fragment.getAccessToken(), "");
     }
 
     @Test
