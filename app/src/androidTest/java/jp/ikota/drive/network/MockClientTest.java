@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import dagger.ObjectGraph;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.HelloActivity;
+import jp.ikota.drive.data.model.Like;
 import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
@@ -107,7 +108,7 @@ public class MockClientTest extends ActivityInstrumentationTestCase2<HelloActivi
 
     @Test
     public void getUserLikes() throws Exception {
-        app.api().getUserLikes(0, 20, "25514",new Callback<Likes>() {
+        app.api().getUserLikes(0, 20, "25514", new Callback<Likes>() {
             @Override
             public void success(Likes likes, Response response) {
                 assertEquals(likes.items.size(), 10);
@@ -115,6 +116,25 @@ public class MockClientTest extends ActivityInstrumentationTestCase2<HelloActivi
                 assertEquals(item.id, "46915821");
                 assertEquals(item.created_at, "2015-11-13T04:41:31Z");
                 assertEquals(item.shot.id, "2121350");
+                lock.countDown();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                fail("Error on getUserLikes API: message=" + error.getMessage());
+            }
+        });
+        lock.await(10000, TimeUnit.MILLISECONDS);
+        assertEquals(0, lock.getCount());
+    }
+
+    @Test
+    public void getLike() throws Exception {
+        app.api().getIfLikeAShot("25514", new Callback<Like>() {
+            @Override
+            public void success(Like like, Response response) {
+                assertEquals(like.id, "47478639");
+                assertEquals(like.created_at, "2015-11-24T00:42:06Z");
                 lock.countDown();
             }
 

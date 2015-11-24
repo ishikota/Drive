@@ -1,6 +1,7 @@
 package jp.ikota.drive.network;
 
 
+import jp.ikota.drive.data.model.Like;
 import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
@@ -23,6 +24,9 @@ public interface DribbleService {
 
     @GET("/"+DribbleURL.PATH_USERS+"/{id}/"+DribbleURL.PATH_LIKES+"?"+DribbleURL.ACCESS_TOKEN)
     void getUserLikes(@Query("page") int page, @Query("per_page") int per_page, @Path("id") String id, Callback<Likes> cb);
+
+    @GET("/"+DribbleURL.PATH_SHOTS+"/{id}/"+DribbleURL.PATH_LIKE+"?"+DribbleURL.ACCESS_TOKEN)
+    void getIfLikeAShot(@Path("id") String id, Callback<Like> cb);
 
     @POST("/oauth/token")
     void exchangeAccessToken(@Body OauthRequestParams params, Callback<OauthResponse> cb);

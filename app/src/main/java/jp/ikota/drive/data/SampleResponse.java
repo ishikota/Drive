@@ -2274,4 +2274,11 @@ public class SampleResponse {
                 "  }\n" +
                 "]";
     }
+
+    public static String getLikeResponse() {
+        return "{\n" +
+                "  \"id\": 47478639,\n" +
+                "  \"created_at\": \"2015-11-24T00:42:06Z\"\n" +
+                "}";
+    }
 }

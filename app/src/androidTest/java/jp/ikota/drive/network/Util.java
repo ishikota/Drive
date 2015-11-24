@@ -11,6 +11,7 @@ public class Util {
         {put(DribbleURL.PATH_SHOTS, SampleResponse.getShots());}
         {put(DribbleURL.PATH_SHOTS+"/", SampleResponse.getShot());}
         {put(DribbleURL.PATH_USERS+"/", SampleResponse.getUserLikes());}
+        {put(DribbleURL.PATH_LIKE, SampleResponse.getLikeResponse());}
     };
 
 }
