@@ -201,6 +201,10 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mPresenter.relatedLoadFinished(success);
     }
 
+    public void notifyLikeToggle() {
+        mPresenter.toggleLike();
+    }
+
     public class RelatedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView imageView;

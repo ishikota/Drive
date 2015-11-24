@@ -19,8 +19,11 @@ import jp.ikota.drive.network.DribbleService;
 import jp.ikota.drive.ui.imagedetail.ImageDetailAdapterContract;
 import jp.ikota.drive.ui.imagedetail.ImageDetailAdapterPresenter;
 
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ImageDetailAdapterPresenterTest {
 
@@ -55,7 +58,11 @@ public class ImageDetailAdapterPresenterTest {
 
     @Test
     public void toggleLike() {
+        when(mView.checkIfLoggedIn()).thenReturn(false);
         int like = createSampleShot().likes_count;
+        mPresenter.toggleLike();
+        verify(mView, never()).setLikeNum(anyInt());
+        when(mView.checkIfLoggedIn()).thenReturn(true);
         mPresenter.toggleLike();
         verify(mView).setLikeNum(like + 1);
         mPresenter.toggleLike();

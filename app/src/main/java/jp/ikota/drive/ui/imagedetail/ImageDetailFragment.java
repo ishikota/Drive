@@ -155,6 +155,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
             @Override
             public void onClick(View view) {
                 mActionsListener.clickFab();
+                mAdapter.notifyLikeToggle();
             }
         });
         mFab.hide();

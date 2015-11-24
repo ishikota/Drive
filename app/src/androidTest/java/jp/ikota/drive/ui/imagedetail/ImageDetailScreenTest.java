@@ -191,17 +191,18 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         onView(withId(R.id.tag_line)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
     }
 
-    //TODO not implemented this feature because it needs communication between two presenter
-    //@Test
+    @Test
     public void clickFab() {
+        setupMockServer(null);
+        toggleLoginState(mContext, true);
         activityRule.launchActivity(mIntent);
+        SystemClock.sleep(3000);  // wait initial like state loading
         onView(withId(R.id.like_num)).check(matches(withText("478 likes")));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.like_num)).check(matches(withText("479 likes")));
-        SystemClock.sleep(1000);
-        onView(withId(R.id.fab)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.like_num)).check(matches(withText("478 likes")));
+        SystemClock.sleep(3000);
+        onView(withId(R.id.like_num)).check(matches(withText("477 likes")));
+        toggleLoginState(mContext, false);
     }
 
     // TODO RecyclerViewAction's scroll always gives dy=0 ?

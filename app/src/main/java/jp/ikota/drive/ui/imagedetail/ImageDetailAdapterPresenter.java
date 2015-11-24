@@ -64,11 +64,13 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
             API.getIfLikeAShot(mShot.id, new Callback<Like>() {
                 @Override
                 public void success(Like like, Response response) {
+                    is_like_on = true;
                     BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(true));
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
+                    is_like_on = false;
                     BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(false));
                 }
             });
@@ -79,9 +81,13 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
 
     @Override
     public void toggleLike() {
-        mShot.likes_count = is_like_on ? mShot.likes_count-1 : mShot.likes_count+1;
-        is_like_on = !is_like_on;
-        mDetailView.setLikeNum(mShot.likes_count);
+        // Not logged in user also can click fab (it displays login dialog)
+        if(mDetailView.checkIfLoggedIn()) {
+            mShot.likes_count = is_like_on ? mShot.likes_count - 1 : mShot.likes_count + 1;
+            is_like_on = !is_like_on;
+            mDetailView.setLikeNum(mShot.likes_count);
+            // TODO POST/DELETE like state
+        }
     }
 
     @Override
