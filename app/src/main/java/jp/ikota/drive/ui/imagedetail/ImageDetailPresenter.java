@@ -3,6 +3,8 @@ package jp.ikota.drive.ui.imagedetail;
 
 import android.support.annotation.NonNull;
 
+import com.squareup.otto.Subscribe;
+
 import java.util.ArrayList;
 
 import jp.ikota.drive.data.model.Likes;
@@ -24,7 +26,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     int mPage = 1;  // page count is 1-index
     int toolbar_alpha = 0;
     boolean loading = false;
-    boolean fab_is_displayed = true;
+    boolean fab_is_displayed = false;
     boolean fab_is_on = false;
 
     public ImageDetailPresenter(
@@ -81,7 +83,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     public void clickFab() {
         if(mDetailView.checkIfLoggedIn()) {
             fab_is_on = !fab_is_on;
-            mDetailView.toggleFab(fab_is_on);
+            mDetailView.toggleFab(fab_is_on, true);  // hide fab after click
         } else {
             mDetailView.showLoginDialog();
         }
@@ -92,5 +94,28 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
         toolbar_alpha += dy;
         toolbar_alpha = Math.max(0, Math.min(200, toolbar_alpha));
         mDetailView.setToolbarAlpha(toolbar_alpha);
+    }
+
+    @Subscribe
+    public void initFab(LikeAvailableEvent event) {
+        fab_is_on = event.status;
+        mDetailView.toggleFab(fab_is_on, false);
+        // Don't know why but ImageDetailAdapterPresenter.loadLikeState
+        // is called twice which invoke this method.
+        // So only invoke fab.show() when fab is not displayed
+        fabStateMayChange(true);
+    }
+
+    // Receive this event when like state has loaded
+    public static class LikeAvailableEvent {
+        public final boolean status;
+        public LikeAvailableEvent(boolean status) {
+            this.status = status;
+        }
+    }
+
+    // helper method for test
+    public boolean getIfFabIsOn() {
+        return fab_is_on;
     }
 }

@@ -72,6 +72,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             mPresenter = new ImageDetailAdapterPresenter(API, vh.itemView.getContext(),header_shot, vh);
             // bind view holder to presenter
             mPresenter.setCacheData(header_shot);
+            mPresenter.loadLikeState();
             vh.image_user.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

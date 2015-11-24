@@ -21,6 +21,8 @@ import jp.ikota.drive.ui.imagedetail.ImageDetailContract;
 import jp.ikota.drive.ui.imagedetail.ImageDetailPresenter;
 import retrofit.Callback;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -79,9 +81,21 @@ public class ImageDetailPresenterTest {
     public void toggleFab() {
         when(mView.checkIfLoggedIn()).thenReturn(true);
         mPresenter.clickFab();
-        verify(mView).toggleFab(true);
+        verify(mView).toggleFab(true, true);
+        assertTrue(mPresenter.getIfFabIsOn());
         mPresenter.clickFab();
-        verify(mView).toggleFab(false);
+        verify(mView).toggleFab(false, true);
+        assertFalse(mPresenter.getIfFabIsOn());
+    }
+
+    @Test
+    public void initFab() {
+        mPresenter.initFab(new ImageDetailPresenter.LikeAvailableEvent(true));
+        verify(mView).toggleFab(true, false);
+        assertTrue(mPresenter.getIfFabIsOn());
+        mPresenter.initFab(new ImageDetailPresenter.LikeAvailableEvent(false));
+        verify(mView).toggleFab(false, false);
+        assertFalse(mPresenter.getIfFabIsOn());
     }
 
     @Test

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.ikota.drive.AndroidApplication;
+import jp.ikota.drive.BusHolder;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.network.oauth.OauthUtil;
@@ -67,6 +68,18 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusHolder.get().register(mActionsListener);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusHolder.get().unregister(mActionsListener);
     }
 
     @Override
@@ -144,6 +157,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
                 mActionsListener.clickFab();
             }
         });
+        mFab.hide();
 
         return root;
     }
@@ -196,16 +210,18 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
 
     //TODO test it (how to check imageView's resource)
     @Override
-    public void toggleFab(boolean be_like) {
+    public void toggleFab(boolean be_like, boolean hide) {
         mFab.setImageResource(be_like ?
                 R.drawable.ic_favorite_white_24dp :
                 R.drawable.ic_favorite_border_white_24dp);
-        mFab.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mFab.hide();
-            }
-        }, 300);
+        if(hide) {
+            mFab.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mFab.hide();
+                }
+            }, 300);
+        }
     }
 
     @Override

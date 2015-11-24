@@ -17,7 +17,7 @@ public interface ImageDetailContract {
 
         void showFab(boolean show);
 
-        void toggleFab(boolean be_like);
+        void toggleFab(boolean be_like, boolean hide);
 
         void setToolbarAlpha(int alpha);
 

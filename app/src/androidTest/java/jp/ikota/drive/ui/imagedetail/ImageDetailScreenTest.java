@@ -151,6 +151,15 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         toggleLoginState(mContext, false);
     }
 
+    @Test
+    public void checkFabInitialization() {
+        setupMockServer(null);
+        activityRule.launchActivity(mIntent);
+        onView(withId(R.id.fab)).check(matches(not(isDisplayed())));
+        SystemClock.sleep(3000);
+        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+    }
+
     // TODO cannot scroll
     // android.support.test.espresso.PerformException:
     // Error performing 'android.support.test.espresso.contrib.RecyclerViewActions$ActionOnItemAtPositionViewAction@3f1aee29'

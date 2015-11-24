@@ -11,8 +11,13 @@ import com.squareup.picasso.Target;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import jp.ikota.drive.BusHolder;
+import jp.ikota.drive.data.model.Like;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.network.DribbleService;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.UserActionsListener {
@@ -50,6 +55,22 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
         mDetailView.setShotData(shot.title, shot.user);
         mDetailView.setLikeNum(shot.likes_count);
         mDetailView.setTags(new ArrayList<>(Arrays.asList(shot.tags)));
+    }
+
+    @Override
+    public void loadLikeState() {
+        // TODO check if this user is logged in, if so call api else just post false event
+        API.getIfLikeAShot(mShot.id, new Callback<Like>() {
+            @Override
+            public void success(Like like, Response response) {
+                BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(true));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(false));
+            }
+        });
     }
 
     @Override

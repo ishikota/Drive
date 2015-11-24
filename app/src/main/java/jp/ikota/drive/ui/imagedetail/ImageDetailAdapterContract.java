@@ -29,6 +29,8 @@ public interface ImageDetailAdapterContract {
 
         void setCacheData(Shot shot);
 
+        void loadLikeState();
+
         void toggleLike();
 
         void openTagScreen(String tag);
