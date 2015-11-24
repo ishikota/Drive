@@ -48,6 +48,7 @@ public class OauthUtil {
     private static Uri buildAuthorizeUri() {
         return Uri.parse(OAUTH_URL).buildUpon()
                 .appendQueryParameter("client_id", CLIENT_ID)
+                .appendQueryParameter("scope", "public write")
                 .build();
     }
 

@@ -175,9 +175,9 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         @Override
-        public boolean checkIfLoggedIn() {
+        public String getAccessToken() {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(APP);
-            return !prefs.getString(OauthUtil.KEY_ACCESS_TOKEN, "").isEmpty();
+            return prefs.getString(OauthUtil.KEY_ACCESS_TOKEN, "");
         }
 
         private int getScreenWidth(AndroidApplication app) {

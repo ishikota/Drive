@@ -196,7 +196,7 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         setupMockServer(null);
         toggleLoginState(mContext, true);
         activityRule.launchActivity(mIntent);
-        SystemClock.sleep(3000);  // wait initial like state loading
+        SystemClock.sleep(5000);  // wait initial like state loading
         onView(withId(R.id.like_num)).check(matches(withText("478 likes")));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).perform(click());

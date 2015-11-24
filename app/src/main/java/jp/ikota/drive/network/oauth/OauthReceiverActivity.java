@@ -51,6 +51,7 @@ public class OauthReceiverActivity extends Activity {
             } else {
                 Log.i("OauthSampleActivity", "Access Denied");
                 Toast.makeText(OauthReceiverActivity.this, "Access Denied", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }

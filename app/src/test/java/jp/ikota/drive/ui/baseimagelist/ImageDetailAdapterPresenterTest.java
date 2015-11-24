@@ -58,11 +58,11 @@ public class ImageDetailAdapterPresenterTest {
 
     @Test
     public void toggleLike() {
-        when(mView.checkIfLoggedIn()).thenReturn(false);
+        when(mView.getAccessToken()).thenReturn("");
         int like = createSampleShot().likes_count;
         mPresenter.toggleLike();
         verify(mView, never()).setLikeNum(anyInt());
-        when(mView.checkIfLoggedIn()).thenReturn(true);
+        when(mView.getAccessToken()).thenReturn("dummy");
         mPresenter.toggleLike();
         verify(mView).setLikeNum(like + 1);
         mPresenter.toggleLike();

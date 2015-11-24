@@ -24,7 +24,7 @@ public interface ImageDetailAdapterContract {
 
         void removeProgress();
 
-        boolean checkIfLoggedIn();
+        String getAccessToken();
     }
 
     interface UserActionsListener {

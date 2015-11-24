@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -60,7 +61,7 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
     @Override
     public void loadLikeState() {
         // TODO cannot write test. How to verify if BusHolder.get().post called with specified event
-        if(mDetailView.checkIfLoggedIn()) {
+        if(!mDetailView.getAccessToken().isEmpty()) {
             API.getIfLikeAShot(mShot.id, new Callback<Like>() {
                 @Override
                 public void success(Like like, Response response) {
@@ -82,11 +83,16 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
     @Override
     public void toggleLike() {
         // Not logged in user also can click fab (it displays login dialog)
-        if(mDetailView.checkIfLoggedIn()) {
+        String access_token = mDetailView.getAccessToken();
+        if(!access_token.isEmpty()) {
+            if(is_like_on) {
+                API.unlikeAShot(mShot.id, access_token, createEmptyCallback("UnlikeAShot"));
+            } else {
+                API.likeAShot(mShot.id, access_token, createEmptyCallback("LikeAShot"));
+            }
             mShot.likes_count = is_like_on ? mShot.likes_count - 1 : mShot.likes_count + 1;
             is_like_on = !is_like_on;
             mDetailView.setLikeNum(mShot.likes_count);
-            // TODO POST/DELETE like state
         }
     }
 
@@ -103,6 +109,20 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
     @Override
     public void relatedLoadFinished(boolean success) {
         mDetailView.removeProgress();
+    }
+
+    private Callback<Response> createEmptyCallback(final String log_tag) {
+        return new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                Log.i(log_tag, response.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        };
     }
 
 }
