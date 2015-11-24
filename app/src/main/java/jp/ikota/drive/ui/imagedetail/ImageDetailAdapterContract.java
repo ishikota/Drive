@@ -23,6 +23,8 @@ public interface ImageDetailAdapterContract {
         void showUserScreen(Shot.User user);
 
         void removeProgress();
+
+        boolean checkIfLoggedIn();
     }
 
     interface UserActionsListener {

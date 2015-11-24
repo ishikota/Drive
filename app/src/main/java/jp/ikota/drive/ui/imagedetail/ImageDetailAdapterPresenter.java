@@ -59,18 +59,22 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
 
     @Override
     public void loadLikeState() {
-        // TODO check if this user is logged in, if so call api else just post false event
-        API.getIfLikeAShot(mShot.id, new Callback<Like>() {
-            @Override
-            public void success(Like like, Response response) {
-                BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(true));
-            }
+        // TODO cannot write test. How to verify if BusHolder.get().post called with specified event
+        if(mDetailView.checkIfLoggedIn()) {
+            API.getIfLikeAShot(mShot.id, new Callback<Like>() {
+                @Override
+                public void success(Like like, Response response) {
+                    BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(true));
+                }
 
-            @Override
-            public void failure(RetrofitError error) {
-                BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(false));
-            }
-        });
+                @Override
+                public void failure(RetrofitError error) {
+                    BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(false));
+                }
+            });
+        } else {
+            BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(false));
+        }
     }
 
     @Override

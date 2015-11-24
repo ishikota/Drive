@@ -154,10 +154,12 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
     @Test
     public void checkFabInitialization() {
         setupMockServer(null);
+        toggleLoginState(mContext, true);
         activityRule.launchActivity(mIntent);
         onView(withId(R.id.fab)).check(matches(not(isDisplayed())));
         SystemClock.sleep(3000);
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
+        toggleLoginState(mContext, false);
     }
 
     // TODO cannot scroll

@@ -2,8 +2,10 @@ package jp.ikota.drive.ui.imagedetail;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.network.DribbleService;
+import jp.ikota.drive.network.oauth.OauthUtil;
 
 public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -169,6 +172,12 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         @Override
         public void removeProgress() {
             progress.setVisibility(View.GONE);
+        }
+
+        @Override
+        public boolean checkIfLoggedIn() {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(APP);
+            return !prefs.getString(OauthUtil.KEY_ACCESS_TOKEN, "").isEmpty();
         }
 
         private int getScreenWidth(AndroidApplication app) {
