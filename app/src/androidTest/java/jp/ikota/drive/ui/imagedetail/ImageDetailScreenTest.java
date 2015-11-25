@@ -42,6 +42,7 @@ import jp.ikota.drive.R;
 import jp.ikota.drive.data.SampleResponse;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.di.DummyAPIModule;
+import jp.ikota.drive.network.DribbleURL;
 import jp.ikota.drive.network.Util;
 import jp.ikota.drive.network.oauth.OauthUtil;
 import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
@@ -203,6 +204,25 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         SystemClock.sleep(3000);
         onView(withId(R.id.like_num)).check(matches(withText("477 likes")));
         toggleLoginState(mContext, false);
+    }
+
+    @Test
+    public void noLikesCase() {
+        Shot no_likes_shot = getSampleShot();
+        no_likes_shot.likes_count = 0;
+        Intent intent = ImageDetailActivity.createIntent(mContext, no_likes_shot);
+        activityRule.launchActivity(intent);
+        onView(withId(R.id.like_num)).check(matches(withText("no likes yet")));
+    }
+
+    //@Test  TODO implement it
+    public void noRelatedImagesCase() {
+        HashMap<String, String> map = new HashMap<>();
+        String empty_response = "{\"items\":[]}";
+        map.put(DribbleURL.PATH_USERS+"/", empty_response);
+        setupMockServer(map);
+        activityRule.launchActivity(mIntent);
+        SystemClock.sleep(100000);
     }
 
     // TODO RecyclerViewAction's scroll always gives dy=0 ?

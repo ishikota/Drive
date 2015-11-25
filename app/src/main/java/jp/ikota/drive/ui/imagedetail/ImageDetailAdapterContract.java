@@ -39,7 +39,7 @@ public interface ImageDetailAdapterContract {
 
         void openUserScreen(Shot.User user);
 
-        void relatedLoadFinished(boolean success);  //TODO test it
+        void relatedLoadFinished(boolean success);
     }
 
 }

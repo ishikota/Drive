@@ -7,6 +7,7 @@
     <string name="network_problem_message">Network Error Occurred</string>
     <string name="login">Login</string>
     <string name="cancel">Cancel</string>
+    <string name="action_likes">Like a shot</string>
 
     <!-- layout text -->
     <string name="sample_title">Awsome Image</string>

@@ -31,8 +31,10 @@ public class ImageDetailActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagedetail);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         if (savedInstanceState == null) {
             String json = getIntent().getStringExtra(EXTRA_CONTENT);
@@ -41,7 +43,7 @@ public class ImageDetailActivity extends BaseActivity{
             fragment.setToolbarListener(new OnToolbarAlphaListener() {
                 @Override
                 public void updateToolbarAlpha(int alpha) {
-                    if(mActionBarToolbar!=null){
+                    if (mActionBarToolbar != null) {
                         mActionBarToolbar.getBackground().mutate().setAlpha(alpha);
                     }
                 }

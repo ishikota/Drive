@@ -71,7 +71,6 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         final Shot header_shot = mShots.get(position);
         if(position == 0) {
             HeaderViewHolder vh = (HeaderViewHolder)holder;
-            //TODO feels like presenter causes memory leak. Need to unbind presenter with ViewHolder
             mPresenter = new ImageDetailAdapterPresenter(API, vh.itemView.getContext(),header_shot, vh);
             // bind view holder to presenter
             mPresenter.setCacheData(header_shot);
@@ -82,6 +81,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     mPresenter.openUserScreen(header_shot.user);
                 }
             });
+            // Now tag is not displayed. So below code has no effect on the screen
             for(int i=0; i<vh.tag_parent.getChildCount(); i++) {
                 View tag = vh.tag_parent.getChildAt(i);
                 tag.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +142,6 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             text_related_title.setText(user.username);
         }
 
-        //TODO test it
         @Override
         public void setLikeNum(int num) {
             String msg = num == 0 ? "no likes yet" : num == 1 ? "1 like" : num+" likes";
@@ -151,7 +150,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         public void setTags(List<String> tags) {
-            // TODO temporary remove tag from UI to simplify app concept
+            // Now tag is not displayed on UI to simplify app concept
             tag_line.setVisibility(View.GONE);
 //            if(tags.isEmpty()) tag_line.setVisibility(View.GONE);
 //            for(String tag : tags) {

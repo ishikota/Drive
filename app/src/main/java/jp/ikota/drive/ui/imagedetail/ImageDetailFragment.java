@@ -35,6 +35,10 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
 
     private AndroidApplication mApp;
 
+    // const
+    private static final int PORTRAIT_SPAN_COUNT = 2;
+    private static final int ITEM_PER_PAGE = 30;
+
     // list elements
     ArrayList<Shot> mItemList = new ArrayList<>();
     ImageDetailAdapter mAdapter;
@@ -56,12 +60,12 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        // TODO refactor here
         Gson gson = new Gson();
         String json = getArguments().getString(EXTRA_CONTENT);
         Shot shot = gson.fromJson(json, Shot.class);
+        mItemList.add(shot);
         mApp = (AndroidApplication) getActivity().getApplicationContext();
-        mActionsListener = new ImageDetailPresenter(mApp.api(), this, shot, 30);
+        mActionsListener = new ImageDetailPresenter(mApp.api(), this, shot, ITEM_PER_PAGE);
     }
 
     @Override
@@ -87,13 +91,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_imagedetail, container, false);
 
-        // setup content
-        Gson gson = new Gson();
-        String json = getArguments().getString(EXTRA_CONTENT);
-        Shot shot = gson.fromJson(json, Shot.class);
-
-        if(mItemList.isEmpty()) {
-            mItemList.add(shot);
+        if(mItemList.size() == 1) {
             mActionsListener.loadRelatedShots();  // TODO this method here is correct?
         }
 
@@ -120,8 +118,8 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
         }
 
         // TODO change column num by checking device orientation
-        // add span size lookup to change column num dynamically
-        GridLayoutManager manager = new GridLayoutManager(mApp, 2);
+        // add span size lookup to change column num by item position
+        GridLayoutManager manager = new GridLayoutManager(mApp, PORTRAIT_SPAN_COUNT);
         manager = addSpanSizeLookup(mApp, manager,mAdapter);
 
         mRecyclerView = (RecyclerView)root.findViewById(android.R.id.list);
@@ -135,10 +133,10 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
                 super.onScrolled(recyclerView, dx, dy);
                 // load next related images page
                 GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-                int totalItemCount = layoutManager.getItemCount() - 1;  //TODO do not need -1 (used in Flickr client)
+                int totalItemCount = layoutManager.getItemCount() - 1;
                 int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
-                if (totalItemCount - firstVisibleItem <= 30 && isAdded()) {  // TODO hard coding item page page
+                if (totalItemCount - firstVisibleItem <= ITEM_PER_PAGE && isAdded()) {
                     mActionsListener.loadRelatedShots();
                 }
 
@@ -148,8 +146,8 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
         });
 
         mToolbar = (Toolbar)root.findViewById(R.id.toolbar_actionbar);
-
         setToolbarAlpha(0); // first make Toolbar invisible
+
         mFab = (FloatingActionButton)root.findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +170,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
             public int getSpanSize(int position) {
                 switch (adapter.getItemViewType(position)) {
                     case ImageDetailAdapter.TYPE_HEADER:
-                        return 2;
+                        return PORTRAIT_SPAN_COUNT;
                     case ImageDetailAdapter.TYPE_ITEM:
                         return 1;
                     default:
@@ -187,7 +185,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     public void addShots(List<Shot> shots) {
         if(!isAdded()) return;  // This method is called after async task
         if(mItemList.size()==1) {
-            mAdapter.notifyRelatedLoadFinish(!shots.isEmpty());  //TODO test it
+            mAdapter.notifyRelatedLoadFinish(!shots.isEmpty());
         }
         mItemList.addAll(shots);
         mAdapter.notifyDataSetChanged();
@@ -199,7 +197,6 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
         startActivity(intent);
     }
 
-    //TODO test it
     @Override
     public void showFab(boolean show) {
         if(show) {
@@ -232,7 +229,8 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
 
     @Override
     public void showLoginDialog() {
-        OauthUtil.showOauthDialog("Like a shot", getChildFragmentManager());
+        OauthUtil.showOauthDialog(
+                getResources().getString(R.string.action_likes), getChildFragmentManager());
     }
 
     @Override
