@@ -1,4 +1,4 @@
-package jp.ikota.drive.ui.baseimagelist;
+package jp.ikota.drive.ui.basicimagelist;
 
 import android.support.annotation.NonNull;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 import jp.ikota.drive.data.model.Shot;
 
-public interface BaseImageListContract {
+public interface BasicImageListContract {
 
     interface View {
 
@@ -16,7 +16,7 @@ public interface BaseImageListContract {
 
         void clearShots();
 
-        void showShots(List<Shot> shots);  //TODO change name to addShots()
+        void addShots(List<Shot> shots);
 
         void showShotDetail(Shot shot);
 

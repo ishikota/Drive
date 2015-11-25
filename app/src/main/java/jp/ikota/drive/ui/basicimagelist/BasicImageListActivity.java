@@ -1,4 +1,4 @@
-package jp.ikota.drive.ui.baseimagelist;
+package jp.ikota.drive.ui.basicimagelist;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +9,7 @@ import jp.ikota.drive.BaseActivity;
 import jp.ikota.drive.R;
 
 
-public class BaseImageListActivity extends BaseActivity {
+public class BasicImageListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,13 +17,13 @@ public class BaseImageListActivity extends BaseActivity {
         setContentView(R.layout.activity_base);
 
         if (null == savedInstanceState) {
-            initFragment(BaseImageListFragment.newInstance());
+            initFragment(BasicImageListFragment.newInstance());
         }
 
     }
 
     private void initFragment(Fragment notesFragment) {
-        String tag = BaseImageListFragment.class.getSimpleName();
+        String tag = BasicImageListFragment.class.getSimpleName();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.container, notesFragment, tag);

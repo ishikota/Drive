@@ -1,4 +1,4 @@
-package jp.ikota.drive.ui.baseimagelist;
+package jp.ikota.drive.ui.imagedetail;
 
 
 import com.google.gson.Gson;

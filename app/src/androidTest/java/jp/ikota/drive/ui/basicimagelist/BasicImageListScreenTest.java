@@ -1,4 +1,4 @@
-package jp.ikota.drive.ui.baseimagelist;
+package jp.ikota.drive.ui.basicimagelist;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -54,13 +54,13 @@ import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(AndroidJUnit4.class)
-public class BaseImageListScreenTest {
+public class BasicImageListScreenTest {
 
     private Intent mIntent;
 
     @Rule
-    public ActivityTestRule<BaseImageListActivity> activityRule = new ActivityTestRule<>(
-            BaseImageListActivity.class,
+    public ActivityTestRule<BasicImageListActivity> activityRule = new ActivityTestRule<>(
+            BasicImageListActivity.class,
             true,     // initialTouchMode
             false);   // launchActivity. False so we can customize the intent per test method
 
@@ -68,7 +68,7 @@ public class BaseImageListScreenTest {
     public void setUp(){
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         Context context = instrumentation.getTargetContext();
-        mIntent = new Intent(context, BaseImageListActivity.class);
+        mIntent = new Intent(context, BasicImageListActivity.class);
     }
 
     @Test
@@ -84,8 +84,8 @@ public class BaseImageListScreenTest {
     @Test
     public void checkIfProgressShownAtFirst() {
         setupMockServer(null);
-        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
-        BaseImageListFragment fragment = getFragment(activity);
+        BasicImageListActivity activity = activityRule.launchActivity(mIntent);
+        BasicImageListFragment fragment = getFragment(activity);
         @SuppressWarnings("ConstantConditions")
         RecyclerView recyclerView = (RecyclerView)fragment.getView().findViewById(android.R.id.list);
         onView(ViewMatchers.withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -102,8 +102,8 @@ public class BaseImageListScreenTest {
         String empty_response = "{\"items\":[]}";
         map.put(DribbleURL.PATH_SHOTS, empty_response);
         setupMockServer(map);
-        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
-        BaseImageListFragment fragment = getFragment(activity);
+        BasicImageListActivity activity = activityRule.launchActivity(mIntent);
+        BasicImageListFragment fragment = getFragment(activity);
         @SuppressWarnings("ConstantConditions")
         View progressBar = fragment.getView().findViewById(R.id.progress);
 
@@ -117,8 +117,8 @@ public class BaseImageListScreenTest {
     @Test
     public void setProgressIndicator() {
         // TODO calling fragment.setProgressIndicator(false) violates Only-Main-thread-touch-view policy
-//        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
-//        BaseImageListFragment fragment = getFragment(activity);
+//        BasicImageListActivity activity = activityRule.launchActivity(mIntent);
+//        BasicImageListFragment fragment = getFragment(activity);
 //        fragment.setProgressIndicator(false);
 //        onView(withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 //        fragment.setProgressIndicator(true);
@@ -129,8 +129,8 @@ public class BaseImageListScreenTest {
     @Test
     public void finishRefreshIndicator() {
         // TODO Add custom action to swipe down and invoke swipe refresh layout
-//        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
-//        BaseImageListFragment fragment = getFragment(activity);
+//        BasicImageListActivity activity = activityRule.launchActivity(mIntent);
+//        BasicImageListFragment fragment = getFragment(activity);
 //        onView(withId(R.id.swipe_refresh)).check(matches(withSwipeRefreshState(true)));
 //        fragment.finishRefreshIndicator();
 //        onView(withId(R.id.swipe_refresh)).check(matches(withSwipeRefreshState(false)));
@@ -140,8 +140,8 @@ public class BaseImageListScreenTest {
     //@Test
     public void loadItems() {
         setupMockServer(null);
-        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
-        BaseImageListFragment fragment = getFragment(activity);
+        BasicImageListActivity activity = activityRule.launchActivity(mIntent);
+        BasicImageListFragment fragment = getFragment(activity);
         @SuppressWarnings("ConstantConditions")
         RecyclerView recyclerView = (RecyclerView)fragment.getView().findViewById(android.R.id.list);
 
@@ -160,8 +160,8 @@ public class BaseImageListScreenTest {
     @Test
     public void showShotDetail() {
         setupMockServer(null);
-        BaseImageListActivity activity = activityRule.launchActivity(mIntent);
-        BaseImageListFragment fragment = getFragment(activity);
+        BasicImageListActivity activity = activityRule.launchActivity(mIntent);
+        BasicImageListFragment fragment = getFragment(activity);
         @SuppressWarnings("ConstantConditions")
         RecyclerView recyclerView = (RecyclerView)fragment.getView().findViewById(android.R.id.list);
 
@@ -196,9 +196,9 @@ public class BaseImageListScreenTest {
         //TODO : how to test if toast is shown
     }
 
-    private BaseImageListFragment getFragment(AppCompatActivity activity) {
-        return (BaseImageListFragment)activity.getSupportFragmentManager()
-                .findFragmentByTag(BaseImageListFragment.class.getSimpleName());
+    private BasicImageListFragment getFragment(AppCompatActivity activity) {
+        return (BasicImageListFragment)activity.getSupportFragmentManager()
+                .findFragmentByTag(BasicImageListFragment.class.getSimpleName());
     }
 
     public static void setupMockServer(HashMap<String, String> override_map) {

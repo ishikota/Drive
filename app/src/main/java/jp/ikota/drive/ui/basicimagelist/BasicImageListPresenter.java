@@ -1,4 +1,4 @@
-package jp.ikota.drive.ui.baseimagelist;
+package jp.ikota.drive.ui.basicimagelist;
 
 
 import android.support.annotation.NonNull;
@@ -10,19 +10,19 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class BaseImageListPresenter implements BaseImageListContract.UserActionsListener {
+public class BasicImageListPresenter implements BasicImageListContract.UserActionsListener {
 
     private final DribbleService API;
-    private final BaseImageListContract.View mShotsView;
+    private final BasicImageListContract.View mShotsView;
     private final int ITEM_PER_PAGE;
 
     // state variable
     private int mPage = 1; // page count is 1-index
     boolean loading = false;
 
-    public BaseImageListPresenter(
+    public BasicImageListPresenter(
             @NonNull DribbleService api,
-            @NonNull BaseImageListContract.View shotsView,
+            @NonNull BasicImageListContract.View shotsView,
             int item_per_page) {
         API = api;
         mShotsView = shotsView;
@@ -36,7 +36,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
             public void success(Shots shots, Response response) {
                 mPage = 1;
                 mShotsView.clearShots();
-                mShotsView.showShots(shots.items);
+                mShotsView.addShots(shots.items);
                 if(!shots.items.isEmpty()) mPage++;
                 mShotsView.finishRefreshIndicator();
                 mShotsView.showEmptyView(mPage == 1);
@@ -60,7 +60,7 @@ public class BaseImageListPresenter implements BaseImageListContract.UserActions
             @Override
             public void success(Shots shots, Response response) {
                 if(shots.items.size() != 0) mPage++;
-                mShotsView.showShots(shots.items);
+                mShotsView.addShots(shots.items);
                 mShotsView.setProgressIndicator(false);
                 mShotsView.showEmptyView(mPage == 1);
                 loading = false;

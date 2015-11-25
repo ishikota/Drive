@@ -1,4 +1,4 @@
-package jp.ikota.drive.ui.baseimagelist;
+package jp.ikota.drive.ui.basicimagelist;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,9 +26,9 @@ import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.ui.imagedetail.ImageDetailActivity;
 
 
-public class BaseImageListFragment extends Fragment implements BaseImageListContract.View{
+public class BasicImageListFragment extends Fragment implements BasicImageListContract.View{
 
-    private BaseImageListContract.UserActionsListener mActionsListener;
+    private BasicImageListContract.UserActionsListener mActionsListener;
 
     private AndroidApplication mApp;
 
@@ -42,15 +42,15 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
     ProgressBar mProgressbar;
     View mEmptyView;
 
-    public static BaseImageListFragment newInstance() {
-        return new BaseImageListFragment();
+    public static BasicImageListFragment newInstance() {
+        return new BasicImageListFragment();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mApp = (AndroidApplication) getActivity().getApplicationContext();
-        mActionsListener = new BaseImageListPresenter(mApp.api(), this, 30);
+        mActionsListener = new BasicImageListPresenter(mApp.api(), this, 30);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class BaseImageListFragment extends Fragment implements BaseImageListCont
     }
 
     @Override
-    public void showShots(List<Shot> shots) {
+    public void addShots(List<Shot> shots) {
         mAdapter.replaceData(shots);
     }
 

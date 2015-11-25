@@ -1,4 +1,4 @@
-package jp.ikota.drive.ui.baseimagelist;
+package jp.ikota.drive.ui.basicimagelist;
 
 
 import com.google.gson.Gson;
@@ -20,25 +20,25 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class BaseImageListPresenterTest {
+public class BasicImageListPresenterTest {
 
     private final Shots SHOTS = createSampleData();
 
     private DribbleService mApi;
 
     @Mock
-    private BaseImageListContract.View mShotsView;
+    private BasicImageListContract.View mShotsView;
 
     @Captor
     private ArgumentCaptor<Callback<Shots>> mLoadShotsCallbackCaptor;
 
-    private BaseImageListPresenter mShotsPresenter;
+    private BasicImageListPresenter mShotsPresenter;
 
     @Before
     public void setupShotsPresenter() {
         MockitoAnnotations.initMocks(this);
         mApi = mock(DribbleService.class);
-        mShotsPresenter = new BaseImageListPresenter(mApi, mShotsView, 15);
+        mShotsPresenter = new BasicImageListPresenter(mApi, mShotsView, 15);
     }
 
 //    @Test
@@ -63,7 +63,7 @@ public class BaseImageListPresenterTest {
         mLoadShotsCallbackCaptor.getValue().success(SHOTS, null);
         // after api call
         verify(mShotsView).setProgressIndicator(false);
-        verify(mShotsView).showShots(SHOTS.items);
+        verify(mShotsView).addShots(SHOTS.items);
         // TODO : assert mShotsPresenter.mPage == 1
     }
 

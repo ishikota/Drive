@@ -1,4 +1,4 @@
-package jp.ikota.drive.ui.baseimagelist;
+package jp.ikota.drive.ui.imagedetail;
 
 
 import android.content.Context;
@@ -16,8 +16,6 @@ import java.util.Arrays;
 import jp.ikota.drive.data.SampleResponse;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.network.DribbleService;
-import jp.ikota.drive.ui.imagedetail.ImageDetailAdapterContract;
-import jp.ikota.drive.ui.imagedetail.ImageDetailAdapterPresenter;
 
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
