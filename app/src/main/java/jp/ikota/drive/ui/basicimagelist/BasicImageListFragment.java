@@ -32,6 +32,10 @@ public class BasicImageListFragment extends Fragment implements BasicImageListCo
 
     private AndroidApplication mApp;
 
+    // const
+    private static final int PORTRAIT_SPAN_COUNT = 2;
+    private static final int ITEM_PER_PAGE = 30;
+
     // list elements
     ArrayList<Shot> mItemList;
     BaseImageListAdapter mAdapter;
@@ -50,7 +54,7 @@ public class BasicImageListFragment extends Fragment implements BasicImageListCo
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mApp = (AndroidApplication) getActivity().getApplicationContext();
-        mActionsListener = new BasicImageListPresenter(mApp.api(), this, 30);
+        mActionsListener = new BasicImageListPresenter(mApp.api(), this, ITEM_PER_PAGE);
     }
 
     @Override
@@ -70,23 +74,23 @@ public class BasicImageListFragment extends Fragment implements BasicImageListCo
         mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_refresh);
 
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(mApp, 2));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mApp, PORTRAIT_SPAN_COUNT));
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                // load next related images page
+
                 GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
                 int totalItemCount = layoutManager.getItemCount();
                 int visibleItemCount = layoutManager.getChildCount();
                 int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
-                if (totalItemCount - firstVisibleItem <= 30) {  // TODO hard coding item page page
-                    mActionsListener.loadShots();
+                if (totalItemCount - firstVisibleItem <= ITEM_PER_PAGE) {
+                    mActionsListener.loadShots(); // load next related images page
                 }
 
                 if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                    mActionsListener.reachListBottom();
+                    mActionsListener.reachListBottom(); // show bottom progress
                 }
             }
         });
@@ -109,7 +113,7 @@ public class BasicImageListFragment extends Fragment implements BasicImageListCo
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mItemList = new ArrayList<>();
-            mAdapter = new BaseImageListAdapter(mItemList, new ShotClickListener() {
+            mAdapter  = new BaseImageListAdapter(mItemList, new ShotClickListener() {
                 @Override
                 public void onClickShot(Shot clickedShot) {
                     mActionsListener.openShotDetails(clickedShot);
@@ -200,6 +204,7 @@ public class BasicImageListFragment extends Fragment implements BasicImageListCo
             notifyDataSetChanged();
         }
 
+        // Add cell padding to center side and bottom side
         private void addPadding(View v, boolean toRight) {
             int padding = (int)v.getContext().getResources().getDimension(R.dimen.list_row_padding);
             v.setPadding(toRight ? 0 : padding, 0, toRight ? padding : 0, padding * 2);
@@ -227,7 +232,6 @@ public class BasicImageListFragment extends Fragment implements BasicImageListCo
     }
 
     public interface ShotClickListener {
-
         void onClickShot(Shot clickedShot);
     }
 

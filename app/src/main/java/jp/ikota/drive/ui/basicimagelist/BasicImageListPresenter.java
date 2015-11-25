@@ -18,7 +18,7 @@ public class BasicImageListPresenter implements BasicImageListContract.UserActio
 
     // state variable
     private int mPage = 1; // page count is 1-index
-    boolean loading = false;
+    private boolean loading = false;
 
     public BasicImageListPresenter(
             @NonNull DribbleService api,
