@@ -215,14 +215,15 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         onView(withId(R.id.like_num)).check(matches(withText("no likes yet")));
     }
 
-    //@Test  TODO implement it
+    @Test
     public void noRelatedImagesCase() {
         HashMap<String, String> map = new HashMap<>();
         String empty_response = "{\"items\":[]}";
         map.put(DribbleURL.PATH_USERS+"/", empty_response);
         setupMockServer(map);
         activityRule.launchActivity(mIntent);
-        SystemClock.sleep(100000);
+        SystemClock.sleep(3000);
+        onView(withText(R.string.no_data)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     // TODO RecyclerViewAction's scroll always gives dy=0 ?

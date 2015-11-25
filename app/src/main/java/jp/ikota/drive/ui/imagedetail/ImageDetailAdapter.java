@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,10 @@ import jp.ikota.drive.network.oauth.OauthUtil;
 public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static final int TYPE_HEADER = 0;
-    static final int TYPE_ITEM = 1;
+    static final int TYPE_ITEM  = 1;
+    static final int TYPE_EMPTY = -1;
+
+    private static final String EMPTY_ITEM_ID = "-1";
 
     private final AndroidApplication APP;
     private final DribbleService API;
@@ -46,7 +50,13 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? TYPE_HEADER : TYPE_ITEM;
+        if(position == 0) {
+            return TYPE_HEADER;
+        } else if(mShots.get(position).id.equals(EMPTY_ITEM_ID)) {
+            return TYPE_EMPTY;
+        } else {
+            return TYPE_ITEM;
+        }
     }
 
     @Override
@@ -58,6 +68,9 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case TYPE_HEADER:
                 v = inflater.inflate(R.layout.detail_header, parent, false);
                 return new HeaderViewHolder(v);
+            case TYPE_EMPTY:
+                v = inflater.inflate(R.layout.detail_emptyview, parent, false);
+                return new EmptyViewHolder(v);
             case TYPE_ITEM:
                 v = inflater.inflate(R.layout.row_baseimagelist, parent, false);
                 return new RelatedViewHolder(v, mClickListener);
@@ -68,17 +81,17 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final Shot header_shot = mShots.get(position);
+        final Shot shot = mShots.get(position);
         if(position == 0) {
             HeaderViewHolder vh = (HeaderViewHolder)holder;
-            mPresenter = new ImageDetailAdapterPresenter(API, vh.itemView.getContext(),header_shot, vh);
+            mPresenter = new ImageDetailAdapterPresenter(API, vh.itemView.getContext(),shot, vh);
             // bind view holder to presenter
-            mPresenter.setCacheData(header_shot);
+            mPresenter.setCacheData(shot);
             mPresenter.loadLikeState();
             vh.image_user.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mPresenter.openUserScreen(header_shot.user);
+                    mPresenter.openUserScreen(shot.user);
                 }
             });
             // Now tag is not displayed. So below code has no effect on the screen
@@ -93,10 +106,11 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 });
             }
 
-        } else {
+        } else if(!shot.id.equals(EMPTY_ITEM_ID)) {
             RelatedViewHolder vh = (RelatedViewHolder)holder;
-            Picasso.with(vh.itemView.getContext()).load(header_shot.images.normal).into(vh.imageView);
+            Picasso.with(vh.itemView.getContext()).load(shot.images.normal).into(vh.imageView);
         }
+        // else { do nothing for empty view }
     }
 
     @Override
@@ -174,6 +188,19 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         @Override
+        public void addEmptyView() {
+            // debug code
+            if(mShots.size()!=1) {
+                Log.e("ImageDetailAdapter", "addEmptyView called when mShots.size!=1");
+                return;
+            }
+            Shot shot = new Shot();
+            shot.id = EMPTY_ITEM_ID;  // attach special ID to indicate this is empty view
+            mShots.add(shot);
+            notifyDataSetChanged();
+        }
+
+        @Override
         public String getAccessToken() {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(APP);
             return prefs.getString(OauthUtil.KEY_ACCESS_TOKEN, "");
@@ -196,8 +223,8 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 //        }
     }
 
-    public void notifyRelatedLoadFinish(boolean success) {
-        mPresenter.relatedLoadFinished(success);
+    public void notifyRelatedLoadFinish(boolean show_empty_view) {
+        mPresenter.relatedLoadFinished(show_empty_view);
     }
 
     public void notifyLikeToggle() {
@@ -222,6 +249,14 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             Shot shot = mShots.get(position);
             clickListener.onShotClick(shot);
         }
+    }
+
+    public class EmptyViewHolder extends RecyclerView.ViewHolder {
+
+        public EmptyViewHolder(View itemView) {
+            super(itemView);
+        }
+
     }
 
     public interface OnDetailAdapterClickListener {

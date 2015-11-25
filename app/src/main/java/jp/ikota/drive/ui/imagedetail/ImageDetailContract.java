@@ -23,6 +23,10 @@ public interface ImageDetailContract {
 
         void showLoginDialog();
 
+        void showNetworkError();
+
+        void notifyRelatedLoadFinish(boolean show_empty_view);
+
         String getAccessToken();
 
     }

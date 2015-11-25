@@ -106,10 +106,12 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
         mDetailView.showUserScreen(user);
     }
 
-    // TODO show empty view when success == false (it means load finished but no related item is found)
     @Override
-    public void relatedLoadFinished(boolean success) {
+    public void relatedLoadFinished(boolean show_empty_view) {
         mDetailView.removeProgress();
+        if(show_empty_view) {
+            mDetailView.addEmptyView();
+        }
     }
 
     private Callback<Response> createEmptyCallback(final String log_tag) {

@@ -62,13 +62,15 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
                 }
                 mDetailView.addShots(shots.items);
                 loading = false;
-                mPage++;
+                if(!shots.items.isEmpty()) mPage++;
+                mDetailView.notifyRelatedLoadFinish(mPage == 1);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-                loading = false;
+                mDetailView.showNetworkError();
+                mDetailView.notifyRelatedLoadFinish(mPage==1);
             }
         });
     }

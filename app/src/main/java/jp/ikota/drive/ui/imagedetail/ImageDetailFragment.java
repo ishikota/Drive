@@ -171,6 +171,8 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
                 switch (adapter.getItemViewType(position)) {
                     case ImageDetailAdapter.TYPE_HEADER:
                         return PORTRAIT_SPAN_COUNT;
+                    case ImageDetailAdapter.TYPE_EMPTY:
+                        return PORTRAIT_SPAN_COUNT;
                     case ImageDetailAdapter.TYPE_ITEM:
                         return 1;
                     default:
@@ -184,9 +186,6 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     @Override
     public void addShots(List<Shot> shots) {
         if(!isAdded()) return;  // This method is called after async task
-        if(mItemList.size()==1) {
-            mAdapter.notifyRelatedLoadFinish(!shots.isEmpty());
-        }
         mItemList.addAll(shots);
         mAdapter.notifyDataSetChanged();
     }
@@ -231,6 +230,19 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
     public void showLoginDialog() {
         OauthUtil.showOauthDialog(
                 getResources().getString(R.string.action_likes), getChildFragmentManager());
+    }
+
+    @Override
+    public void showNetworkError() {
+        Toast.makeText(
+                mApp,
+                getResources().getString(R.string.network_problem_message),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void notifyRelatedLoadFinish(boolean show_empty_view) {
+        mAdapter.notifyRelatedLoadFinish(show_empty_view);
     }
 
     @Override

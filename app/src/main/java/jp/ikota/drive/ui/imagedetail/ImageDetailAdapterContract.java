@@ -24,6 +24,8 @@ public interface ImageDetailAdapterContract {
 
         void removeProgress();
 
+        void addEmptyView();
+
         String getAccessToken();
     }
 
@@ -39,7 +41,7 @@ public interface ImageDetailAdapterContract {
 
         void openUserScreen(Shot.User user);
 
-        void relatedLoadFinished(boolean success);
+        void relatedLoadFinished(boolean show_empty_view);
     }
 
 }
