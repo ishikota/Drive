@@ -15,12 +15,13 @@ import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 
@@ -32,20 +33,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
-import dagger.ObjectGraph;
-import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.SampleResponse;
 import jp.ikota.drive.data.model.Shot;
-import jp.ikota.drive.di.DummyAPIModule;
 import jp.ikota.drive.network.DribbleURL;
-import jp.ikota.drive.network.Util;
 import jp.ikota.drive.network.oauth.OauthUtil;
 import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
+import jp.ikota.drive.util.IdlingResource.VisibilityIdlingResource;
+import jp.ikota.drive.util.TestUtil;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -93,7 +90,7 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
 
     @Test
     public void setShotInfoIntoHeader() {
-        setupMockServer(null);
+        TestUtil.setupMockServer(null);
         activityRule.launchActivity(mIntent);
         onView(withId(R.id.title)).check(matches(withText(mTarget.title)));
         onView(withId(R.id.user_name)).check(matches(withText(mTarget.user.username)));
@@ -104,12 +101,10 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
 
     @Test
     public void showProgressDuringRelatedLoading() {
-        setupMockServer(null);
+        TestUtil.setupMockServer(null);
         ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        ImageDetailFragment fragment = getFragment(activity);
-        RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(android.R.id.list);
         onView(withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        ListCountIdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 2);
+        ListCountIdlingResource idlingResource = new ListCountIdlingResource(getList(getFragment(activity)), 2);
         Espresso.registerIdlingResources(idlingResource);
         onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(15, scrollTo()));
         Espresso.unregisterIdlingResources(idlingResource);
@@ -119,11 +114,9 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
 
     @Test
     public void loadRelatedItems() {
-        setupMockServer(null);
+        TestUtil.setupMockServer(null);
         ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        ImageDetailFragment fragment = getFragment(activity);
-        RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(android.R.id.list);
-        ListCountIdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 2);
+        ListCountIdlingResource idlingResource = new ListCountIdlingResource(getList(getFragment(activity)), 2);
         Espresso.registerIdlingResources(idlingResource);
         onView(withId(R.id.container)).check(matches(withId(R.id.container)));  // just wait loading
         Espresso.unregisterIdlingResources(idlingResource);
@@ -131,7 +124,7 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
 
     @Test
     public void checkIfLoggedIn() {
-        setupMockServer(null);
+        TestUtil.setupMockServer(null);
         ImageDetailActivity activity = activityRule.launchActivity(mIntent);
         ImageDetailFragment fragment = getFragment(activity);
         toggleLoginState(mContext, true);
@@ -142,19 +135,19 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
 
     @Test
     public void showLoginDialogWhenFabClicked() {
-        setupMockServer(null);
+        TestUtil.setupMockServer(null);
         ImageDetailActivity activity = activityRule.launchActivity(mIntent);
         ImageDetailFragment fragment = getFragment(activity);
         toggleLoginState(mContext, true);
         fragment.showLoginDialog();
-        SystemClock.sleep(1000);
+        SystemClock.sleep(1000);  // wait until dialog is displayed
         onView(withText(R.string.cancel)).perform(click());
         toggleLoginState(mContext, false);
     }
 
     @Test
     public void checkFabInitialization() {
-        setupMockServer(null);
+        TestUtil.setupMockServer(null);
         toggleLoginState(mContext, true);
         activityRule.launchActivity(mIntent);
         onView(withId(R.id.fab)).check(matches(not(isDisplayed())));
@@ -163,22 +156,19 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         toggleLoginState(mContext, false);
     }
 
-    // TODO cannot scroll
-    // android.support.test.espresso.PerformException:
-    // Error performing 'android.support.test.espresso.contrib.RecyclerViewActions$ActionOnItemAtPositionViewAction@3f1aee29'
-    // on view 'with id: android:id/list'.
-    //@Test
+    @Test
     public void checkFabBehavior() {
-        setupMockServer(null);
+        TestUtil.setupMockServer(null);
         ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        ImageDetailFragment fragment = getFragment(activity);
-        RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(android.R.id.list);
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
-        ListCountIdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 2);
+        ListCountIdlingResource idlingResource = new ListCountIdlingResource(getList(getFragment(activity)), 2);
         Espresso.registerIdlingResources(idlingResource);
-        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(8, scrollTo()));
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.scrollToPosition(10));
         Espresso.unregisterIdlingResources(idlingResource);
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
+        onView(withId(R.id.fab)).check(matches(not(isDisplayed())));
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.scrollToPosition(0));
+        SystemClock.sleep(1000);
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
     }
 
@@ -194,7 +184,7 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
 
     @Test
     public void clickFab() {
-        setupMockServer(null);
+        TestUtil.setupMockServer(null);
         toggleLoginState(mContext, true);
         activityRule.launchActivity(mIntent);
         SystemClock.sleep(5000);  // wait initial like state loading
@@ -219,23 +209,25 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
     public void noRelatedImagesCase() {
         HashMap<String, String> map = new HashMap<>();
         String empty_response = "{\"items\":[]}";
-        map.put(DribbleURL.PATH_USERS+"/", empty_response);
-        setupMockServer(map);
-        activityRule.launchActivity(mIntent);
-        SystemClock.sleep(3000);
+        map.put(DribbleURL.PATH_USERS + "/", empty_response);
+        TestUtil.setupMockServer(map);
+        AppCompatActivity activity = activityRule.launchActivity(mIntent);
+        ImageDetailFragment fragment = getFragment(activity);
+        //noinspection ConstantConditions
+        ProgressBar progress = (ProgressBar)fragment.getView().findViewById(R.id.progress);
+        VisibilityIdlingResource idlingResource = new VisibilityIdlingResource(progress, View.GONE);
+        Espresso.registerIdlingResources(idlingResource);
         onView(withText(R.string.no_data)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        Espresso.unregisterIdlingResources(idlingResource);
     }
 
     // TODO RecyclerViewAction's scroll always gives dy=0 ?
     //@Test
     public void checkIfToolbarAlphaChange() {
         ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        ImageDetailFragment fragment = getFragment(activity);
-        RecyclerView recyclerView = (RecyclerView) fragment.getView().findViewById(android.R.id.list);
-        onView(withId(R.id.toolbar_actionbar)).check(matches(withAlpha(0)));
-        ListCountIdlingResource idlingResource = new ListCountIdlingResource(recyclerView, 2);
+        ListCountIdlingResource idlingResource = new ListCountIdlingResource(getList(getFragment(activity)), 2);
         Espresso.registerIdlingResources(idlingResource);
-        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(5, scrollTo()));
+        onView(withId(android.R.id.list)).perform(RecyclerViewActions.scrollToPosition(15));
         Espresso.unregisterIdlingResources(idlingResource);
         SystemClock.sleep(5000);
         onView(withId(R.id.toolbar_actionbar)).check(matches(not(withAlpha(0))));
@@ -245,6 +237,11 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
     private ImageDetailFragment getFragment(AppCompatActivity activity) {
         return (ImageDetailFragment) activity.getSupportFragmentManager().
                 findFragmentByTag(ImageDetailFragment.class.getSimpleName());
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private RecyclerView getList(Fragment fragment) {
+        return (RecyclerView)fragment.getView().findViewById(android.R.id.list);
     }
 
     private Shot getSampleShot() {
@@ -258,50 +255,9 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         editor.apply();
     }
 
-    public static void setupMockServer(HashMap<String, String> override_map) {
-        HashMap<String, String> map = new HashMap<>(Util.RESPONSE_MAP);
 
-        if(override_map!=null) {
-            for (String key : override_map.keySet()) {
-                map.put(key, override_map.get(key));
-            }
-        }
-
-        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        AndroidApplication app =
-                (AndroidApplication) instrumentation.getTargetContext().getApplicationContext();
-
-        // setup objectGraph to inject Mock API
-        List modules = Collections.singletonList(new DummyAPIModule(map));
-        ObjectGraph graph = ObjectGraph.create(modules.toArray());
-        app.setObjectGraph(graph);
-        app.getObjectGraph().inject(app);
-    }
-
-    /**
-     * Check if child count of target RecyclerView matches to expected one
-     * @param expected_count expected item count in target RecyclerView
-     */
-    public static Matcher<View> withChildCount(final int expected_count) {
-        final Matcher<Integer> matcher = is(expected_count);
-        return new BoundedMatcher<View, RecyclerView>(RecyclerView.class) {
-
-            @Override
-            protected boolean matchesSafely(RecyclerView recyclerView) {
-                Log.i("withChildCount", "item num is " + (recyclerView.getAdapter().getItemCount()));
-                return matcher.matches(recyclerView.getAdapter().getItemCount());
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with childCount: ");
-                matcher.describeTo(description);
-            }
-        };
-    }
-
-    // check if child count of target LienarLayout matches to expected one
-    public static Matcher<View> withChildNum(int expected_count) {
+    // check if child count of target LinearLayout matches to expected one
+    private static Matcher<View> withChildNum(int expected_count) {
         final Matcher<Integer> matcher = is(expected_count);
         return new BoundedMatcher<View, LinearLayout>(LinearLayout.class) {
 
