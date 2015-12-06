@@ -43,15 +43,7 @@ dependencies {
     testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
 
     // Android Testing Support Library's runner and rules
-    androidTestCompile "com.android.support.test:runner:$rootProject.ext.runnerVersion"
-    androidTestCompile "com.android.support.test:rules:$rootProject.ext.runnerVersion"
-
-    // Espresso UI Testing dependencies.
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion") {
-        // IMPORTANT: below code help you from error around RecyclerView conflicts in Espresso test.
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
+    androidTestCompile ('jp.ikota:cappuchino:1.2.0') {
         exclude module: 'recyclerview-v7'
     }
 }

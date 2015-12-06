@@ -1,208 +1,172 @@
 package jp.ikota.drive.ui.imagedetail;
 
-import android.annotation.TargetApi;
-import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.test.espresso.matcher.BoundedMatcher;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 
+import jp.ikota.cappuchino.Cappuchino;
+import jp.ikota.cappuchino.matcher.custommatcher.CustomMatcher;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.SampleResponse;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.network.DribbleURL;
 import jp.ikota.drive.network.oauth.OauthUtil;
-import jp.ikota.drive.util.IdlingResource.ListCountIdlingResource;
-import jp.ikota.drive.util.IdlingResource.VisibilityIdlingResource;
 import jp.ikota.drive.util.TestUtil;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.core.deps.guava.base.Preconditions.checkNotNull;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.core.Is.is;
+import static jp.ikota.cappuchino.matcher.ViewMatcherWrapper.id;
+import static jp.ikota.cappuchino.matcher.ViewMatcherWrapper.text;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<ImageDetailActivity>{
+public class ImageDetailScreenTest extends Cappuchino<ImageDetailActivity> {
 
-    private Context mContext;
     private Intent mIntent;
     private Shot mTarget = getSampleShot();
 
-    public ImageDetailScreenTest() {
-        super(ImageDetailActivity.class);
-    }
-
-    @Rule
-    public ActivityTestRule<ImageDetailActivity> activityRule = new ActivityTestRule<>(
-            ImageDetailActivity.class,
-            true,     // initialTouchMode
-            false);   // launchActivity. False so we can customize the intent per test method
-
     @Before
     public void setUp(){
-        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        mContext = instrumentation.getTargetContext();
-        mIntent = ImageDetailActivity.createIntent(mContext, mTarget);
+        mIntent = ImageDetailActivity.createIntent(getTargetContext(), mTarget);
     }
 
     @Test
     public void preConditions() {
-        activityRule.launchActivity(mIntent);
-        onView(withId(R.id.container)).check(matches(withId(R.id.container)));
-        onView(withId(R.id.toolbar_actionbar)).check(matches(withId(R.id.toolbar_actionbar)));
-        onView(withId(android.R.id.list)).check(matches(withId(android.R.id.list)));
-    }
-
-    @Test
-    public void setShotInfoIntoHeader() {
-        TestUtil.setupMockServer(null);
-        activityRule.launchActivity(mIntent);
-        onView(withId(R.id.title)).check(matches(withText(mTarget.title)));
-        onView(withId(R.id.user_name)).check(matches(withText(mTarget.user.username)));
-        onView(withId(R.id.like_num)).check(matches(withText(String.valueOf(mTarget.likes_count) + " likes")));
-        onView(withId(R.id.related_username)).check(matches(withText(mTarget.user.username)));
-        //onView(withId(R.id.tag_parent)).check(matches(withChildNum(mTarget.tags.length)));
+        launchActivity(mIntent);
+        expect(id(R.id.container)).exists();
+        expect(id(R.id.toolbar_actionbar)).exists();
+        expect(id(android.R.id.list)).exists();
+        // Check if passed data is set to layout
+        expect(id(R.id.title)).hasText(mTarget.title);
+        expect(id(R.id.user_name)).hasText(mTarget.user.name);
+        expect(id(R.id.like_num)).hasText(String.valueOf(mTarget.likes_count) + " likes");
+        expect(id(R.id.related_username)).hasText(mTarget.user.username);
+//        expect(id(R.id.tag_parent)).should(new CustomMatcher.MatcherRule<LinearLayout>() {
+//            @Override
+//            public boolean matches(LinearLayout linearLayout) {
+//                return linearLayout.getChildCount() == mTarget.tags.length;
+//            }
+//        });
     }
 
     @Test
     public void showProgressDuringRelatedLoading() {
         TestUtil.setupMockServer(null);
-        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        onView(withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        ListCountIdlingResource idlingResource = new ListCountIdlingResource(getList(getFragment(activity)), 2);
-        Espresso.registerIdlingResources(idlingResource);
-        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(15, scrollTo()));
-        Espresso.unregisterIdlingResources(idlingResource);
-        onView(withId(android.R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, scrollTo()));
-        onView(withId(R.id.progress)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        launchActivity(mIntent);
+        expect(id(R.id.progress)).isVisible();
+        listIdlingTarget(android.R.id.list).waitUntilItemCountGraterThan(1);
+        expect(id(R.id.progress)).isGone();
     }
 
     @Test
     public void loadRelatedItems() {
         TestUtil.setupMockServer(null);
-        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        ListCountIdlingResource idlingResource = new ListCountIdlingResource(getList(getFragment(activity)), 2);
-        Espresso.registerIdlingResources(idlingResource);
-        onView(withId(R.id.container)).check(matches(withId(R.id.container)));  // just wait loading
-        Espresso.unregisterIdlingResources(idlingResource);
+        launchActivity(mIntent);
+        listIdlingTarget(android.R.id.list).waitUntilItemCountGraterThan(1);
     }
 
     @Test
     public void checkIfLoggedIn() {
         TestUtil.setupMockServer(null);
-        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        ImageDetailFragment fragment = getFragment(activity);
-        toggleLoginState(mContext, true);
+        launchActivity(mIntent);
+        ImageDetailFragment fragment = getFragment(getTargetActivity());
+        toggleLoginState(getTargetContext(), true);
         assertEquals(fragment.getAccessToken(), "dummy");
-        toggleLoginState(mContext, false);
+        toggleLoginState(getTargetContext(), false);
         assertEquals(fragment.getAccessToken(), "");
     }
 
     @Test
     public void showLoginDialogWhenFabClicked() {
         TestUtil.setupMockServer(null);
-        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        ImageDetailFragment fragment = getFragment(activity);
-        toggleLoginState(mContext, true);
+        launchActivity(mIntent);
+        ImageDetailFragment fragment = getFragment(getTargetActivity());
+        toggleLoginState(getTargetContext(), true);
         fragment.showLoginDialog();
-        SystemClock.sleep(1000);  // wait until dialog is displayed
-        onView(withText(R.string.cancel)).perform(click());
-        toggleLoginState(mContext, false);
+        coffeeBreak(1000);  // wait until dialog is displayed
+        perform(text(R.string.cancel)).clickView();
+        toggleLoginState(getTargetContext(), false);
+        expect(id(R.id.text)).should(new CustomMatcher.MatcherRule<TextView>() {
+            @Override
+            public boolean matches(TextView textView) {
+                return textView.getText().toString().equals("Cappuchino");
+            }
+        });
     }
 
     @Test
     public void checkFabInitialization() {
         TestUtil.setupMockServer(null);
-        toggleLoginState(mContext, true);
-        activityRule.launchActivity(mIntent);
-        onView(withId(R.id.fab)).check(matches(not(isDisplayed())));
-        SystemClock.sleep(3000);
-        onView(withId(R.id.fab)).check(matches(isDisplayed()));
-        toggleLoginState(mContext, false);
+        toggleLoginState(getTargetContext(), true);
+        launchActivity(mIntent);
+        expect(id(R.id.fab)).not.isDisplayed();
+        coffeeBreak(3000);
+        expect(id(R.id.fab)).isDisplayed();
+        toggleLoginState(getTargetContext(), false);
     }
 
     @Test
     public void checkFabBehavior() {
         TestUtil.setupMockServer(null);
-        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        onView(withId(R.id.fab)).check(matches(isDisplayed()));
-        ListCountIdlingResource idlingResource = new ListCountIdlingResource(getList(getFragment(activity)), 2);
-        Espresso.registerIdlingResources(idlingResource);
-        onView(withId(android.R.id.list)).perform(RecyclerViewActions.scrollToPosition(10));
-        Espresso.unregisterIdlingResources(idlingResource);
-        SystemClock.sleep(1000);
-        onView(withId(R.id.fab)).check(matches(not(isDisplayed())));
-        onView(withId(android.R.id.list)).perform(RecyclerViewActions.scrollToPosition(0));
-        SystemClock.sleep(1000);
-        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+        launchActivity(mIntent);
+        //expect(id(R.id.fab)).isDisplayed();
+        listIdlingTarget(android.R.id.list).waitUntilItemCountGraterThan(1);
+        perform(id(android.R.id.list)).scrollToPosition(10);
+        coffeeBreak(1000);
+        expect(id(R.id.fab)).not.isDisplayed();
+        perform(id(android.R.id.list)).scrollToPosition(0);
+        coffeeBreak(1000);
+        expect(id(R.id.fab)).isDisplayed();
     }
 
     @Test
     public void noTagCase() {
         Shot noTagShot = getSampleShot();
         noTagShot.tags = new String[0];
-        Intent intent = ImageDetailActivity.createIntent(mContext, noTagShot);
-        activityRule.launchActivity(intent);
-        onView(withId(R.id.tag_parent)).check(matches(withChildNum(0)));
-        onView(withId(R.id.tag_line)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+        Intent intent = ImageDetailActivity.createIntent(getTargetContext(), noTagShot);
+        launchActivity(intent);
+        expect(id(R.id.tag_parent)).should(new CustomMatcher.MatcherRule<LinearLayout>() {
+            @Override
+            public boolean matches(LinearLayout linearLayout) {
+                return linearLayout.getChildCount() == 0;
+            }
+        });
+        expect(id(R.id.tag_line)).isGone();
     }
 
     @Test
     public void clickFab() {
         TestUtil.setupMockServer(null);
-        toggleLoginState(mContext, true);
-        activityRule.launchActivity(mIntent);
-        SystemClock.sleep(5000);  // wait initial like state loading
-        onView(withId(R.id.like_num)).check(matches(withText("478 likes")));
-        onView(withId(R.id.fab)).check(matches(isDisplayed()));
-        onView(withId(R.id.fab)).perform(click());
-        SystemClock.sleep(3000);
-        onView(withId(R.id.like_num)).check(matches(withText("477 likes")));
-        toggleLoginState(mContext, false);
+        toggleLoginState(getTargetContext(), true);
+        launchActivity(mIntent);
+        coffeeBreak(5000);  // wait initial like state loading
+        expect(id(R.id.like_num)).hasText("478 likes");
+        expect(id(R.id.fab)).isDisplayed();
+        perform(id(R.id.fab)).clickView();
+        coffeeBreak(3000);
+        expect(id(R.id.like_num)).hasText("477 likes");
+        toggleLoginState(getTargetContext(), false);
     }
 
     @Test
     public void noLikesCase() {
         Shot no_likes_shot = getSampleShot();
         no_likes_shot.likes_count = 0;
-        Intent intent = ImageDetailActivity.createIntent(mContext, no_likes_shot);
-        activityRule.launchActivity(intent);
-        onView(withId(R.id.like_num)).check(matches(withText("no likes yet")));
+        Intent intent = ImageDetailActivity.createIntent(getTargetContext(), no_likes_shot);
+        launchActivity(intent);
+        expect(id(R.id.like_num)).hasText("no likes yet");
     }
 
     @Test
@@ -211,37 +175,28 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         String empty_response = "{\"items\":[]}";
         map.put(DribbleURL.PATH_USERS + "/", empty_response);
         TestUtil.setupMockServer(map);
-        AppCompatActivity activity = activityRule.launchActivity(mIntent);
-        ImageDetailFragment fragment = getFragment(activity);
-        //noinspection ConstantConditions
-        ProgressBar progress = (ProgressBar)fragment.getView().findViewById(R.id.progress);
-        VisibilityIdlingResource idlingResource = new VisibilityIdlingResource(progress, View.GONE);
-        Espresso.registerIdlingResources(idlingResource);
-        onView(withText(R.string.no_data)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        Espresso.unregisterIdlingResources(idlingResource);
+        launchActivity(mIntent);
+        viewIdlingTarget(R.id.progress).waitUntilViewIsGone();
+        expect(text(R.string.no_data)).isVisible();
     }
 
-    // TODO RecyclerViewAction's scroll always gives dy=0 ?
-    //@Test
+    @Test
     public void checkIfToolbarAlphaChange() {
-        ImageDetailActivity activity = activityRule.launchActivity(mIntent);
-        ListCountIdlingResource idlingResource = new ListCountIdlingResource(getList(getFragment(activity)), 2);
-        Espresso.registerIdlingResources(idlingResource);
-        onView(withId(android.R.id.list)).perform(RecyclerViewActions.scrollToPosition(15));
-        Espresso.unregisterIdlingResources(idlingResource);
-        SystemClock.sleep(5000);
-        onView(withId(R.id.toolbar_actionbar)).check(matches(not(withAlpha(0))));
+        launchActivity(mIntent);
+        listIdlingTarget(android.R.id.list).waitUntilItemCountGraterThan(1);
+        perform(id(android.R.id.list)).swipeUp();
+        expect(id(R.id.toolbar_actionbar)).should(new CustomMatcher.MatcherRule() {
+            @Override
+            public boolean matches(View view) {
+                return view.getBackground().getAlpha() != 0;
+            }
+        });
     }
 
 
     private ImageDetailFragment getFragment(AppCompatActivity activity) {
         return (ImageDetailFragment) activity.getSupportFragmentManager().
                 findFragmentByTag(ImageDetailFragment.class.getSimpleName());
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    private RecyclerView getList(Fragment fragment) {
-        return (RecyclerView)fragment.getView().findViewById(android.R.id.list);
     }
 
     private Shot getSampleShot() {
@@ -253,44 +208,6 @@ public class ImageDetailScreenTest extends ActivityInstrumentationTestCase2<Imag
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(OauthUtil.KEY_ACCESS_TOKEN, be_login ? "dummy" : "");
         editor.apply();
-    }
-
-
-    // check if child count of target LinearLayout matches to expected one
-    private static Matcher<View> withChildNum(int expected_count) {
-        final Matcher<Integer> matcher = is(expected_count);
-        return new BoundedMatcher<View, LinearLayout>(LinearLayout.class) {
-
-            @Override
-            protected boolean matchesSafely(LinearLayout parent) {
-                return matcher.matches(parent.getChildCount());
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with childCount: ");
-                matcher.describeTo(description);
-            }
-        };
-    }
-
-    private static Matcher<View> withAlpha(final int expected_alpha) {
-        final Matcher<Integer> alphaMatcher = is(expected_alpha);
-        checkNotNull(alphaMatcher);
-        return new TypeSafeMatcher<View>() {
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with alpha: ");
-                alphaMatcher.describeTo(description);
-            }
-
-            @TargetApi(Build.VERSION_CODES.KITKAT)
-            @Override
-            protected boolean matchesSafely(View view) {
-                return alphaMatcher.matches(view.getBackground().getAlpha());
-            }
-        };
     }
 
 }

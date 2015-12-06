@@ -1,14 +1,9 @@
 package jp.ikota.drive.network;
 
 
-import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.ActivityInstrumentationTestCase2;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -18,6 +13,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import dagger.ObjectGraph;
+import jp.ikota.cappuchino.Cappuchino;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.HelloActivity;
 import jp.ikota.drive.data.model.Like;
@@ -29,28 +25,18 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+
 @RunWith(AndroidJUnit4.class)
-public class MockClientTest extends ActivityInstrumentationTestCase2<HelloActivity>{
+public class MockClientTest extends Cappuchino<HelloActivity> {
 
-    public MockClientTest() {
-        super(HelloActivity.class);
-    }
-
-    AndroidApplication app;
+    private AndroidApplication app;
     private CountDownLatch lock;
 
-    @Rule
-    public ActivityTestRule<HelloActivity> activityRule = new ActivityTestRule<>(
-            HelloActivity.class,
-            true,     // initialTouchMode
-            true);   // launchActivity. False so we can customize the intent per test method
-
     @Before
-    public void setUp() throws Exception {
-        super.setUp();
-        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        injectInstrumentation(instrumentation);
-        app = (AndroidApplication) instrumentation.getTargetContext().getApplicationContext();
+    public void setUp() {
+        app = (AndroidApplication) getTargetApplication();
         // setup objectGraph to inject Mock API
         List modules = Collections.singletonList(new DummyAPIModule(Util.RESPONSE_MAP));
         ObjectGraph graph = ObjectGraph.create(modules.toArray());
