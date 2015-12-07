@@ -2,6 +2,9 @@ Drive
 ==========================
 Simple Dribbble client for Android to showcase how to use [Cappuchino][1] UI test library.
 
+<img src="demo.gif" width="30%" >
+
+
 About this app
 ===
 ##Architecture
