@@ -8,7 +8,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -98,12 +97,6 @@ public class ImageDetailScreenTest extends Cappuchino<ImageDetailActivity> {
         coffeeBreak(1000);  // wait until dialog is displayed
         perform(text(R.string.cancel)).clickView();
         toggleLoginState(getTargetContext(), false);
-        expect(id(R.id.text)).should(new CustomMatcher.MatcherRule<TextView>() {
-            @Override
-            public boolean matches(TextView textView) {
-                return textView.getText().toString().equals("Cappuchino");
-            }
-        });
     }
 
     @Test
