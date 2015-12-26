@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -15,15 +14,15 @@ import java.util.Arrays;
 import jp.ikota.drive.BusHolder;
 import jp.ikota.drive.data.model.Like;
 import jp.ikota.drive.data.model.Shot;
-import jp.ikota.drive.network.DribbleService;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import jp.ikota.drive.network.ApiSubscriber;
+import jp.ikota.drive.network.DribbbleRxService;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.UserActionsListener {
 
-    private final DribbleService API;
+    private final DribbbleRxService API;
     private final Context mContext;
     private final ImageDetailAdapterContract.View mDetailView;
     private final Shot mShot;
@@ -31,7 +30,7 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
     // state variable
     boolean is_like_on = false;
 
-    public ImageDetailAdapterPresenter( @NonNull DribbleService api, @NonNull Context context,
+    public ImageDetailAdapterPresenter( @NonNull DribbbleRxService api, @NonNull Context context,
             @NonNull Shot shot, @NonNull ImageDetailAdapterContract.View detailView) {
         API = api;
         mContext = context;
@@ -62,19 +61,22 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
     public void loadLikeState() {
         // TODO cannot write test. How to verify if BusHolder.get().post called with specified event
         if(!mDetailView.getAccessToken().isEmpty()) {
-            API.getIfLikeAShot(mShot.id, new Callback<Like>() {
-                @Override
-                public void success(Like like, Response response) {
-                    is_like_on = true;
-                    BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(true));
-                }
+            API.getIfLikeAShot(mShot.id)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new ApiSubscriber<Like>() {
+                        @Override
+                        public void onNext(Like like) {
+                            is_like_on = true;
+                            BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(true));
+                        }
 
-                @Override
-                public void failure(RetrofitError error) {
-                    is_like_on = false;
-                    BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(false));
-                }
-            });
+                        @Override
+                        public void onError(Throwable e) {
+                            is_like_on = false;
+                            BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(false));
+                        }
+                    });
         } else {
             BusHolder.get().post(new ImageDetailPresenter.LikeAvailableEvent(false));
         }
@@ -86,9 +88,11 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
         String access_token = mDetailView.getAccessToken();
         if(!access_token.isEmpty()) {
             if(is_like_on) {
-                API.unlikeAShot(mShot.id, access_token, createEmptyCallback("UnlikeAShot"));
+                API.unlikeAShot(mShot.id, access_token)
+                        .subscribeOn(Schedulers.newThread()).subscribe();
             } else {
-                API.likeAShot(mShot.id, access_token, createEmptyCallback("LikeAShot"));
+                API.likeAShot(mShot.id, access_token)
+                        .subscribeOn(Schedulers.newThread()).subscribe();
             }
             mShot.likes_count = is_like_on ? mShot.likes_count - 1 : mShot.likes_count + 1;
             is_like_on = !is_like_on;
@@ -112,20 +116,6 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
         if(show_empty_view) {
             mDetailView.addEmptyView();
         }
-    }
-
-    private Callback<Response> createEmptyCallback(final String log_tag) {
-        return new Callback<Response>() {
-            @Override
-            public void success(Response response, Response response2) {
-                Log.i(log_tag, response.toString());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        };
     }
 
 }

@@ -23,7 +23,7 @@ import java.util.List;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.model.Shot;
-import jp.ikota.drive.network.DribbleService;
+import jp.ikota.drive.network.DribbbleRxService;
 import jp.ikota.drive.network.oauth.OauthUtil;
 
 public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -35,7 +35,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final String EMPTY_ITEM_ID = "-1";
 
     private final AndroidApplication APP;
-    private final DribbleService API;
+    private final DribbbleRxService API;
     private List<Shot> mShots;
     private OnDetailAdapterClickListener mClickListener;
 
@@ -43,7 +43,7 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public ImageDetailAdapter(AndroidApplication app, List<Shot> shots, OnDetailAdapterClickListener listener) {
         APP = app;
-        API = app.api();
+        API = app.rxapi();
         mShots = shots;
         mClickListener = listener;
     }
