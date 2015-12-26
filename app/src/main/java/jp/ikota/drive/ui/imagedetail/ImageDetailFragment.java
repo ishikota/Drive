@@ -65,7 +65,7 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
         Shot shot = gson.fromJson(json, Shot.class);
         mItemList.add(shot);
         mApp = (AndroidApplication) getActivity().getApplicationContext();
-        mActionsListener = new ImageDetailPresenter(mApp.api(), this, shot, ITEM_PER_PAGE);
+        mActionsListener = new ImageDetailPresenter(mApp.rxapi(), this, shot, ITEM_PER_PAGE);
     }
 
     @Override

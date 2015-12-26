@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
-import jp.ikota.drive.network.DribbleService;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import jp.ikota.drive.network.ApiSubscriber;
+import jp.ikota.drive.network.DribbbleRxService;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ImageDetailPresenter implements ImageDetailContract.UserActionsListener {
 
-    private final DribbleService API;
+    private final DribbbleRxService API;
     private final ImageDetailContract.View mDetailView;
     private final Shot mShot;
     private final int ITEM_PER_PAGE;
@@ -30,7 +30,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     boolean fab_is_on = false;
 
     public ImageDetailPresenter(
-            @NonNull DribbleService api,
+            @NonNull DribbbleRxService api,
             @NonNull ImageDetailContract.View detailView,
             Shot shot,
             int item_per_page) {
@@ -52,27 +52,31 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     public void loadRelatedShots() {
         if(loading) return;
         loading = true;
-        API.getUserLikes(mPage, ITEM_PER_PAGE, mShot.user.id, new Callback<Likes>() {
-            @Override
-            public void success(Likes likes, Response response) {
-                Shots shots = new Shots();
-                shots.items = new ArrayList<>();
-                for (Likes.Like like : likes.items) {
-                    shots.items.add(like.shot);
-                }
-                mDetailView.addShots(shots.items);
-                loading = false;
-                if(!shots.items.isEmpty()) mPage++;
-                mDetailView.notifyRelatedLoadFinish(mPage == 1);
-            }
+        API.getUserLikes(mPage, ITEM_PER_PAGE, mShot.user.id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ApiSubscriber<Likes>() {
 
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-                mDetailView.showNetworkError();
-                mDetailView.notifyRelatedLoadFinish(mPage==1);
-            }
-        });
+                    @Override
+                    public void onNext(Likes likes) {
+                        Shots shots = new Shots();
+                        shots.items = new ArrayList<>();
+                        for (Likes.Like like : likes.items) {
+                            shots.items.add(like.shot);
+                        }
+                        mDetailView.addShots(shots.items);
+                        loading = false;
+                        if(!shots.items.isEmpty()) mPage++;
+                        mDetailView.notifyRelatedLoadFinish(mPage == 1);
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        error.printStackTrace();
+                        mDetailView.showNetworkError();
+                        mDetailView.notifyRelatedLoadFinish(mPage==1);
+                    }
+                });
     }
 
     @Override
