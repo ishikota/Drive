@@ -54,7 +54,7 @@ public class BasicImageListFragment extends Fragment implements BasicImageListCo
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mApp = (AndroidApplication) getActivity().getApplicationContext();
-        mActionsListener = new BasicImageListPresenter(mApp.api(), this, ITEM_PER_PAGE);
+        mActionsListener = new BasicImageListPresenter(mApp.rxapi(), this, ITEM_PER_PAGE);
     }
 
     @Override

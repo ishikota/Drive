@@ -5,14 +5,14 @@ import android.support.annotation.NonNull;
 
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
-import jp.ikota.drive.network.DribbleService;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import jp.ikota.drive.network.ApiSubscriber;
+import jp.ikota.drive.network.DribbbleRxService;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class BasicImageListPresenter implements BasicImageListContract.UserActionsListener {
 
-    private final DribbleService API;
+    private final DribbbleRxService API;
     private final BasicImageListContract.View mShotsView;
     private final int ITEM_PER_PAGE;
 
@@ -21,7 +21,7 @@ public class BasicImageListPresenter implements BasicImageListContract.UserActio
     private boolean loading = false;
 
     public BasicImageListPresenter(
-            @NonNull DribbleService api,
+            @NonNull DribbbleRxService api,
             @NonNull BasicImageListContract.View shotsView,
             int item_per_page) {
         API = api;
@@ -31,50 +31,58 @@ public class BasicImageListPresenter implements BasicImageListContract.UserActio
 
     @Override
     public void refreshShots() {
-        API.getShots(1, ITEM_PER_PAGE, new Callback<Shots>() {
-            @Override
-            public void success(Shots shots, Response response) {
-                mPage = 1;
-                mShotsView.clearShots();
-                mShotsView.addShots(shots.items);
-                if(!shots.items.isEmpty()) mPage++;
-                mShotsView.finishRefreshIndicator();
-                mShotsView.showEmptyView(mPage == 1);
-            }
+        API.getShots(1, ITEM_PER_PAGE)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ApiSubscriber<Shots>() {
 
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-                mShotsView.showNetworkError();
-                mShotsView.finishRefreshIndicator();
-                mShotsView.showEmptyView(mPage == 1);
-            }
-        });
+                    @Override
+                    public void onNext(Shots shots) {
+                        mPage = 1;
+                        mShotsView.clearShots();
+                        mShotsView.addShots(shots.items);
+                        if(!shots.items.isEmpty()) mPage++;
+                        mShotsView.finishRefreshIndicator();
+                        mShotsView.showEmptyView(mPage == 1);
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        error.printStackTrace();
+                        mShotsView.showNetworkError();
+                        mShotsView.finishRefreshIndicator();
+                        mShotsView.showEmptyView(mPage == 1);
+                    }
+                });
     }
 
     @Override
     public void loadShots() {
         if(loading) return;
         loading = true;
-        API.getShots(mPage, ITEM_PER_PAGE, new Callback<Shots>() {
-            @Override
-            public void success(Shots shots, Response response) {
-                if(shots.items.size() != 0) mPage++;
-                mShotsView.addShots(shots.items);
-                mShotsView.setProgressIndicator(false);
-                mShotsView.showEmptyView(mPage == 1);
-                loading = false;
-            }
+        API.getShots(mPage, ITEM_PER_PAGE)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ApiSubscriber<Shots>() {
 
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-                mShotsView.showNetworkError();
-                mShotsView.setProgressIndicator(false);
-                mShotsView.showEmptyView(mPage == 1);
-                loading = false;
-            }
-        });
+                    @Override
+                    public void onNext(Shots shots) {
+                        if(shots.items.size() != 0) mPage++;
+                        mShotsView.addShots(shots.items);
+                        mShotsView.setProgressIndicator(false);
+                        mShotsView.showEmptyView(mPage == 1);
+                        loading = false;
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+                        error.printStackTrace();
+                        mShotsView.showNetworkError();
+                        mShotsView.setProgressIndicator(false);
+                        mShotsView.showEmptyView(mPage == 1);
+                        loading = false;
+                    }
+                });
     }
 
     @Override
