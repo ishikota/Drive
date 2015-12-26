@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import jp.ikota.drive.AndroidApplication;
+import jp.ikota.drive.network.DribbbleRxService;
 import jp.ikota.drive.network.DribbleService;
 import jp.ikota.drive.network.DribbleURL;
 import jp.ikota.drive.network.MockClient;
@@ -37,4 +38,12 @@ public class DummyAPIModule {
                 .create(DribbleService.class);
     }
 
+    @Provides @Singleton
+    public DribbbleRxService provideDribbbleRxService() {
+        return new RestAdapter.Builder()
+                .setEndpoint(DribbleURL.API_END_POINT)
+                .setClient(new MockClient(RESPONSE_MAP))
+                .build()
+                .create(DribbbleRxService.class);
+    }
 }

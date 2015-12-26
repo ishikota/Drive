@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import dagger.ObjectGraph;
 import jp.ikota.drive.di.DribbleApiModule;
+import jp.ikota.drive.network.DribbbleRxService;
 import jp.ikota.drive.network.DribbleService;
 
 
@@ -26,6 +27,9 @@ public class AndroidApplication extends Application {
 
     @Inject
     DribbleService dribbleService;
+
+    @Inject
+    DribbbleRxService dribbbleRxService;
 
     @Override
     public void onCreate() {
@@ -56,6 +60,10 @@ public class AndroidApplication extends Application {
 
     public DribbleService api() {
         return dribbleService;
+    }
+
+    public DribbbleRxService rxapi() {
+        return dribbbleRxService;
     }
 
 }

@@ -19,6 +19,7 @@ import dagger.Provides;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shots;
+import jp.ikota.drive.network.DribbbleRxService;
 import jp.ikota.drive.network.DribbleService;
 import jp.ikota.drive.network.DribbleURL;
 import retrofit.RestAdapter;
@@ -71,6 +72,19 @@ public class DribbleApiModule {
                 .setConverter(new GsonConverter(gson))
                 .build()
                 .create(DribbleService.class);
+    }
+
+    @Provides @Singleton
+    public DribbbleRxService provideDribbbleRxService() {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Shots.class, new ShotsDeserializer())
+                .registerTypeAdapter(Likes.class, new LikesDeserializer())
+                .create();
+        return new RestAdapter.Builder()
+                .setEndpoint(DribbleURL.API_END_POINT)
+                .setConverter(new GsonConverter(gson))
+                .build()
+                .create(DribbbleRxService.class);
     }
 
 }
