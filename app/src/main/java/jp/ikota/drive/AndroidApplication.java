@@ -7,12 +7,10 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.inject.Inject;
 
-import dagger.ObjectGraph;
+import jp.ikota.drive.di.BaseAppComponent;
+import jp.ikota.drive.di.DaggerAppComponent;
 import jp.ikota.drive.di.DribbleApiModule;
 import jp.ikota.drive.network.DribbbleRxService;
 import jp.ikota.drive.network.DribbleService;
@@ -23,7 +21,7 @@ public class AndroidApplication extends Application {
     public int SCREEN_WIDTH;
     public int SCREEN_HEIGHT;
 
-    private ObjectGraph objectGraph = null;
+    private BaseAppComponent appComponent = null;
 
     @Inject
     DribbleService dribbleService;
@@ -34,9 +32,11 @@ public class AndroidApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if(objectGraph == null) {
-            List modules = Collections.singletonList(new DribbleApiModule());
-            objectGraph = ObjectGraph.create(modules.toArray());
+        if(appComponent == null) {
+            appComponent = DaggerAppComponent
+                    .builder()
+                    .dribbleApiModule(new DribbleApiModule())
+                    .build();
         }
 
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -49,13 +49,12 @@ public class AndroidApplication extends Application {
                 String.format("Screen size: w = %d, h = %d", SCREEN_WIDTH, SCREEN_HEIGHT));
     }
 
-    // used to set ObjectGraph for test
-    public void setObjectGraph(ObjectGraph graph) {
-        objectGraph = graph;
+    public void setAppComponent(BaseAppComponent appComponent) {
+        this.appComponent = appComponent;
     }
 
-    public ObjectGraph getObjectGraph() {
-        return objectGraph;
+    public BaseAppComponent getAppComponent() {
+        return appComponent;
     }
 
     public DribbleService api() {

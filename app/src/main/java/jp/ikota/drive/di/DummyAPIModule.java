@@ -7,7 +7,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.network.DribbbleRxService;
 import jp.ikota.drive.network.DribbleService;
 import jp.ikota.drive.network.DribbleURL;
@@ -15,10 +14,7 @@ import jp.ikota.drive.network.MockClient;
 import retrofit.RestAdapter;
 
 
-@Module(
-        injects = AndroidApplication.class,
-        library = true
-)
+@Module
 public class DummyAPIModule {
 
     public HashMap<String, String> RESPONSE_MAP;
@@ -29,7 +25,7 @@ public class DummyAPIModule {
 
     @Provides
     @Singleton
-    public DribbleService provideFlickrService() {
+    public DribbleService provideDribbleService() {
         return new RestAdapter
                 .Builder()
                 .setEndpoint(DribbleURL.API_END_POINT)

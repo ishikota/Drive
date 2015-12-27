@@ -3,12 +3,9 @@ package jp.ikota.drive.network;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import dagger.ObjectGraph;
 import jp.ikota.cappuchino.Cappuchino;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.HelloActivity;
@@ -16,6 +13,8 @@ import jp.ikota.drive.data.model.Like;
 import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
+import jp.ikota.drive.di.BaseAppComponent;
+import jp.ikota.drive.di.DaggerTestComponent;
 import jp.ikota.drive.di.DummyAPIModule;
 import rx.Subscriber;
 import rx.schedulers.Schedulers;
@@ -32,10 +31,11 @@ public class MockRxClientTest extends Cappuchino<HelloActivity> {
     public void setUp() {
         app = (AndroidApplication) getTargetApplication();
         // setup objectGraph to inject Mock API
-        List modules = Collections.singletonList(new DummyAPIModule(Util.RESPONSE_MAP));
-        ObjectGraph graph = ObjectGraph.create(modules.toArray());
-        app.setObjectGraph(graph);
-        app.getObjectGraph().inject(app);
+        BaseAppComponent appComponent = DaggerTestComponent
+                .builder()
+                .dummyAPIModule(new DummyAPIModule(Util.RESPONSE_MAP))
+                .build();
+        appComponent.inject(app);
         lock = new CountDownLatch(1);
     }
 

@@ -4,12 +4,11 @@ package jp.ikota.drive.util;
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
-import dagger.ObjectGraph;
 import jp.ikota.drive.AndroidApplication;
+import jp.ikota.drive.di.BaseAppComponent;
+import jp.ikota.drive.di.DaggerTestComponent;
 import jp.ikota.drive.di.DummyAPIModule;
 import jp.ikota.drive.network.Util;
 
@@ -29,9 +28,10 @@ public class TestUtil {
                 (AndroidApplication) instrumentation.getTargetContext().getApplicationContext();
 
         // setup objectGraph to inject Mock API
-        List modules = Collections.singletonList(new DummyAPIModule(map));
-        ObjectGraph graph = ObjectGraph.create(modules.toArray());
-        app.setObjectGraph(graph);
-        app.getObjectGraph().inject(app);
+        BaseAppComponent appComponent = DaggerTestComponent
+                .builder()
+                .dummyAPIModule(new DummyAPIModule(map))
+                .build();
+        app.setAppComponent(appComponent);
     }
 }

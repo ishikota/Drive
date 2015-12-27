@@ -15,8 +15,8 @@ import java.lang.reflect.Type;
 
 import javax.inject.Singleton;
 
+import dagger.Module;
 import dagger.Provides;
-import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.network.DribbbleRxService;
@@ -25,11 +25,8 @@ import jp.ikota.drive.network.DribbleURL;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@dagger.Module(
-    injects = AndroidApplication.class,
-    library = true
-)
-public class DribbleApiModule {
+@Module
+public class DribbleApiModule{
 
     class ShotsDeserializer implements JsonDeserializer<Shots> {
         @Override
