@@ -6,13 +6,11 @@ import android.support.annotation.NonNull;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.network.ApiSubscriber;
-import jp.ikota.drive.network.DribbbleRxService;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import jp.ikota.drive.network.DribbbleRxApi;
 
 public class BasicImageListPresenter implements BasicImageListContract.UserActionsListener {
 
-    private final DribbbleRxService API;
+    private final DribbbleRxApi API;
     private final BasicImageListContract.View mShotsView;
     private final int ITEM_PER_PAGE;
 
@@ -21,7 +19,7 @@ public class BasicImageListPresenter implements BasicImageListContract.UserActio
     private boolean loading = false;
 
     public BasicImageListPresenter(
-            @NonNull DribbbleRxService api,
+            @NonNull DribbbleRxApi api,
             @NonNull BasicImageListContract.View shotsView,
             int item_per_page) {
         API = api;
@@ -32,8 +30,6 @@ public class BasicImageListPresenter implements BasicImageListContract.UserActio
     @Override
     public void refreshShots() {
         API.getShots(1, ITEM_PER_PAGE)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ApiSubscriber<Shots>() {
 
                     @Override
@@ -61,8 +57,6 @@ public class BasicImageListPresenter implements BasicImageListContract.UserActio
         if(loading) return;
         loading = true;
         API.getShots(mPage, ITEM_PER_PAGE)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ApiSubscriber<Shots>() {
 
                     @Override

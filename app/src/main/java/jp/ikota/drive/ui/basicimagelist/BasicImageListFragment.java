@@ -23,6 +23,7 @@ import java.util.List;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.model.Shot;
+import jp.ikota.drive.network.DribbbleRxApi;
 import jp.ikota.drive.ui.imagedetail.ImageDetailActivity;
 
 
@@ -54,7 +55,7 @@ public class BasicImageListFragment extends Fragment implements BasicImageListCo
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mApp = (AndroidApplication) getActivity().getApplicationContext();
-        mActionsListener = new BasicImageListPresenter(mApp.rxapi(), this, ITEM_PER_PAGE);
+        mActionsListener = new BasicImageListPresenter(new DribbbleRxApi(mApp.rxapi()), this, ITEM_PER_PAGE);
     }
 
     @Override
