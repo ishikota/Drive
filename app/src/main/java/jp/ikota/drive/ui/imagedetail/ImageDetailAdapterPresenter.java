@@ -15,14 +15,12 @@ import jp.ikota.drive.BusHolder;
 import jp.ikota.drive.data.model.Like;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.network.ApiSubscriber;
-import jp.ikota.drive.network.DribbbleRxService;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import jp.ikota.drive.network.DribbbleRxApi;
 
 
 public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.UserActionsListener {
 
-    private final DribbbleRxService API;
+    private final DribbbleRxApi API;
     private final Context mContext;
     private final ImageDetailAdapterContract.View mDetailView;
     private final Shot mShot;
@@ -30,7 +28,7 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
     // state variable
     boolean is_like_on = false;
 
-    public ImageDetailAdapterPresenter( @NonNull DribbbleRxService api, @NonNull Context context,
+    public ImageDetailAdapterPresenter( @NonNull DribbbleRxApi api, @NonNull Context context,
             @NonNull Shot shot, @NonNull ImageDetailAdapterContract.View detailView) {
         API = api;
         mContext = context;
@@ -62,8 +60,6 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
         // TODO cannot write test. How to verify if BusHolder.get().post called with specified event
         if(!mDetailView.getAccessToken().isEmpty()) {
             API.getIfLikeAShot(mShot.id)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new ApiSubscriber<Like>() {
                         @Override
                         public void onNext(Like like) {
@@ -88,11 +84,9 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
         String access_token = mDetailView.getAccessToken();
         if(!access_token.isEmpty()) {
             if(is_like_on) {
-                API.unlikeAShot(mShot.id, access_token)
-                        .subscribeOn(Schedulers.newThread()).subscribe();
+                API.unlikeAShot(mShot.id, access_token).subscribe();
             } else {
-                API.likeAShot(mShot.id, access_token)
-                        .subscribeOn(Schedulers.newThread()).subscribe();
+                API.likeAShot(mShot.id, access_token).subscribe();
             }
             mShot.likes_count = is_like_on ? mShot.likes_count - 1 : mShot.likes_count + 1;
             is_like_on = !is_like_on;

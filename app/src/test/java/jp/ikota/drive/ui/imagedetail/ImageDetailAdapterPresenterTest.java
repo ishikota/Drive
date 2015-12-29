@@ -14,10 +14,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import jp.ikota.drive.data.SampleResponse;
+import jp.ikota.drive.data.model.Like;
 import jp.ikota.drive.data.model.Shot;
-import jp.ikota.drive.network.DribbleService;
+import jp.ikota.drive.network.DribbbleRxApi;
+import retrofit.client.Response;
+import rx.Observable;
+import rx.Subscriber;
 
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -27,7 +32,7 @@ public class ImageDetailAdapterPresenterTest {
 
     private Shot mShot;
 
-    private DribbleService mApi;
+    private DribbbleRxApi mApi;
 
     @Mock
     private Context mContext;
@@ -41,7 +46,7 @@ public class ImageDetailAdapterPresenterTest {
     public void setupPresenter() {
         mShot = createSampleShot();
         MockitoAnnotations.initMocks(this);
-        mApi = mock(DribbleService.class);
+        mApi = mock(DribbbleRxApi.class);
         mPresenter = new ImageDetailAdapterPresenter(mApi, mContext, mShot, mView);
     }
 
@@ -55,16 +60,37 @@ public class ImageDetailAdapterPresenterTest {
     }
 
     @Test
+    public void loadLikeState() {
+        when(mView.getAccessToken()).thenReturn("not empty");
+        Observable<Like> observable = Observable.create(new Observable.OnSubscribe<Like>() {
+            @Override
+            public void call(Subscriber<? super Like> subscriber) {
+                subscriber.onNext(new Like());
+                subscriber.onCompleted();
+            }
+        });
+        when(mApi.getIfLikeAShot(anyString())).thenReturn(observable);
+        mPresenter.loadLikeState();
+        // check if is_likeon = true
+    }
+
+    @Test
     public void toggleLike() {
+        when(mApi.likeAShot(anyString(), anyString())).thenReturn(Observable.<Response>empty());
+        when(mApi.unlikeAShot(anyString(), anyString())).thenReturn(Observable.<Response>empty());
         when(mView.getAccessToken()).thenReturn("");
         int like = createSampleShot().likes_count;
         mPresenter.toggleLike();
         verify(mView, never()).setLikeNum(anyInt());
+        verify(mApi, never()).likeAShot(anyString(), anyString());
+        verify(mApi, never()).likeAShot(anyString(), anyString());
         when(mView.getAccessToken()).thenReturn("dummy");
         mPresenter.toggleLike();
         verify(mView).setLikeNum(like + 1);
+        verify(mApi).likeAShot(anyString(), anyString());
         mPresenter.toggleLike();
         verify(mView).setLikeNum(like);
+        verify(mApi).unlikeAShot(anyString(), anyString());
     }
 
     @Test
@@ -79,6 +105,15 @@ public class ImageDetailAdapterPresenterTest {
         Shot.User user = createSampleShot().user;
         mPresenter.openUserScreen(user);
         verify(mView).showUserScreen(user);
+    }
+
+    @Test
+    public void relatedLoadFinished() {
+        mPresenter.relatedLoadFinished(false);
+        verify(mView).removeProgress();
+        verify(mView, never()).addEmptyView();
+        mPresenter.relatedLoadFinished(true);
+        verify(mView).addEmptyView();
     }
 
 

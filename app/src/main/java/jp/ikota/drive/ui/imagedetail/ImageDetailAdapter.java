@@ -23,6 +23,7 @@ import java.util.List;
 import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.model.Shot;
+import jp.ikota.drive.network.DribbbleRxApi;
 import jp.ikota.drive.network.DribbbleRxService;
 import jp.ikota.drive.network.oauth.OauthUtil;
 
@@ -84,7 +85,8 @@ public class ImageDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         final Shot shot = mShots.get(position);
         if(position == 0) {
             HeaderViewHolder vh = (HeaderViewHolder)holder;
-            mPresenter = new ImageDetailAdapterPresenter(API, vh.itemView.getContext(),shot, vh);
+            mPresenter = new ImageDetailAdapterPresenter(
+                    new DribbbleRxApi(API), vh.itemView.getContext(),shot, vh);
             // bind view holder to presenter
             mPresenter.setCacheData(shot);
             mPresenter.loadLikeState();
