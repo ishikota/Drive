@@ -25,6 +25,7 @@ import jp.ikota.drive.AndroidApplication;
 import jp.ikota.drive.BusHolder;
 import jp.ikota.drive.R;
 import jp.ikota.drive.data.model.Shot;
+import jp.ikota.drive.network.DribbbleRxApi;
 import jp.ikota.drive.network.oauth.OauthUtil;
 
 
@@ -65,7 +66,8 @@ public class ImageDetailFragment extends Fragment implements ImageDetailContract
         Shot shot = gson.fromJson(json, Shot.class);
         mItemList.add(shot);
         mApp = (AndroidApplication) getActivity().getApplicationContext();
-        mActionsListener = new ImageDetailPresenter(mApp.rxapi(), this, shot, ITEM_PER_PAGE);
+        mActionsListener = new ImageDetailPresenter(
+                new DribbbleRxApi(mApp.rxapi()), this, shot, ITEM_PER_PAGE);
     }
 
     @Override

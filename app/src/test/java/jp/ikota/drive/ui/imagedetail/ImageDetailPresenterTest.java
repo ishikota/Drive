@@ -5,8 +5,6 @@ import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -16,10 +14,10 @@ import jp.ikota.drive.data.SampleResponse;
 import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
-import jp.ikota.drive.network.DribbleService;
-import jp.ikota.drive.ui.imagedetail.ImageDetailContract;
-import jp.ikota.drive.ui.imagedetail.ImageDetailPresenter;
-import retrofit.Callback;
+import jp.ikota.drive.network.DribbbleRxApi;
+import jp.ikota.drive.network.DribbbleRxService;
+import rx.Observable;
+import rx.Subscriber;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -34,40 +32,45 @@ public class ImageDetailPresenterTest {
     private final Shots SHOTS = createSampleData();
     private final Shot SHOT = SHOTS.items.get(0);
 
-    private DribbleService mApi;
+    private DribbbleRxApi mApi;
 
     @Mock
     private ImageDetailContract.View mView;
-
-    @Captor
-    private ArgumentCaptor<Callback<Likes>> mLoadLikesCallbackCaptor;
 
     private ImageDetailPresenter mPresenter;
 
     @Before
     public void setupShotsPresenter() {
         MockitoAnnotations.initMocks(this);
-        mApi = mock(DribbleService.class);
+        mApi = mock(DribbbleRxApi.class);
         mPresenter = new ImageDetailPresenter(mApi, mView, SHOT, 15);
     }
 
     @Test
-    public void loadNotesAndSetIntoView() {
+    public void loadRelatedShots() {
         // create data
         String json = SampleResponse.getUserLikes();
         String wrapped_json = "{\"items\":"+json+"}";
-        Likes likes = new Gson().fromJson(wrapped_json, Likes.class);
+        final Likes likes = new Gson().fromJson(wrapped_json, Likes.class);
         Shots expected = new Shots();
         expected.items = new ArrayList<>();
         for(Likes.Like like: likes.items) expected.items.add(like.shot);
 
+        Observable<Likes> observable = Observable.create(new Observable.OnSubscribe<Likes>() {
+            @Override
+            public void call(Subscriber<? super Likes> subscriber) {
+                subscriber.onNext(likes);
+                subscriber.onCompleted();
+            }
+        });
+        when(mApi.getUserLikes(anyInt(), anyInt(), anyString())).thenReturn(observable);
+
         // start verification
         // TODO : check progress visibility
         mPresenter.loadRelatedShots();
-        verify(mApi).getUserLikes(anyInt(), anyInt(), anyString(), mLoadLikesCallbackCaptor.capture());
-        mLoadLikesCallbackCaptor.getValue().success(likes, null);
         verify(mView).addShots(expected.items);
-        // TODO : assert mShotsPresenter.mPage == 1
+        verify(mView).notifyRelatedLoadFinish(false);
+        // TODO : assert mShotsPresenter.mPage == 2
     }
 
     @Test

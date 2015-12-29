@@ -11,13 +11,11 @@ import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.network.ApiSubscriber;
-import jp.ikota.drive.network.DribbbleRxService;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import jp.ikota.drive.network.DribbbleRxApi;
 
 public class ImageDetailPresenter implements ImageDetailContract.UserActionsListener {
 
-    private final DribbbleRxService API;
+    private final DribbbleRxApi API;
     private final ImageDetailContract.View mDetailView;
     private final Shot mShot;
     private final int ITEM_PER_PAGE;
@@ -30,7 +28,7 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
     boolean fab_is_on = false;
 
     public ImageDetailPresenter(
-            @NonNull DribbbleRxService api,
+            @NonNull DribbbleRxApi api,
             @NonNull ImageDetailContract.View detailView,
             Shot shot,
             int item_per_page) {
@@ -53,8 +51,6 @@ public class ImageDetailPresenter implements ImageDetailContract.UserActionsList
         if(loading) return;
         loading = true;
         API.getUserLikes(mPage, ITEM_PER_PAGE, mShot.user.id)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ApiSubscriber<Likes>() {
 
                     @Override
