@@ -14,12 +14,16 @@ import jp.ikota.drive.data.SampleResponse;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.network.DribbbleRxApi;
+import jp.ikota.drive.ui.util.PrivateAccessor;
 import retrofit.Callback;
 import rx.Observable;
 import rx.Subscriber;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -45,7 +49,7 @@ public class BasicImageListPresenterTest {
     }
 
     @Test
-    public void refreshShots() {
+    public void refreshShots_success() {
         Observable<Shots> observable = Observable.create(new Observable.OnSubscribe<Shots>() {
             @Override
             public void call(Subscriber<? super Shots> subscriber) {
@@ -64,8 +68,22 @@ public class BasicImageListPresenterTest {
     }
 
     @Test
-    public void loadNotesAndSetIntoView() {
-        // TODO : assert mShotsPresenter.mPage == 1 (how to assert private variable state)
+    public void refreshShots_error() {
+        Observable<Shots> observable = Observable.create(new Observable.OnSubscribe<Shots>() {
+            @Override
+            public void call(Subscriber<? super Shots> subscriber) {
+                subscriber.onError(new IllegalStateException("fake"));
+            }
+        });
+        when(mApi.getShots(anyInt(), anyInt())).thenReturn(observable);
+        mShotsPresenter.refreshShots();
+        verify(mShotsView).showNetworkError();
+        verify(mShotsView).finishRefreshIndicator();
+        verify(mShotsView).showEmptyView(true);
+    }
+
+    @Test
+    public void loadShots_success() throws Exception {
         Observable<Shots> observable = Observable.create(new Observable.OnSubscribe<Shots>() {
             @Override
             public void call(Subscriber<? super Shots> subscriber) {
@@ -80,7 +98,25 @@ public class BasicImageListPresenterTest {
         verify(mShotsView).setProgressIndicator(false);
         verify(mShotsView).addShots(SHOTS.items);
         verify(mShotsView).showEmptyView(false);
-        // TODO : assert mShotsPresenter.mPage == 2 (how to assert private variable state)
+        assertFalse((Boolean) PrivateAccessor.getPrivateField(mShotsPresenter, "loading"));
+        assertEquals(2, PrivateAccessor.getPrivateField(mShotsPresenter, "mPage"));
+    }
+
+    @Test
+    public void loadShots_error() throws Exception {
+        Observable<Shots> observable = Observable.create(new Observable.OnSubscribe<Shots>() {
+            @Override
+            public void call(Subscriber<? super Shots> subscriber) {
+                subscriber.onError(new IllegalStateException("fake"));
+            }
+        });
+        when(mApi.getShots(anyInt(), anyInt())).thenReturn(observable);
+        mShotsPresenter.loadShots();
+
+        verify(mShotsView).showNetworkError();
+        verify(mShotsView).setProgressIndicator(false);
+        verify(mShotsView).showEmptyView(true);
+        assertFalse((Boolean) PrivateAccessor.getPrivateField(mShotsPresenter, "loading"));
     }
 
     @Test
@@ -88,6 +124,16 @@ public class BasicImageListPresenterTest {
         Shot shot = SHOTS.items.get(0);
         mShotsPresenter.openShotDetails(shot);
         verify(mShotsView).showShotDetail(shot);
+    }
+
+    @Test
+    public void reachListBottom() throws Exception {
+        PrivateAccessor.setPrivateField(mShotsPresenter, "loading", false);
+        mShotsPresenter.reachListBottom();
+        verify(mShotsView, never()).setProgressIndicator(true);
+        PrivateAccessor.setPrivateField(mShotsPresenter, "loading", true);
+        mShotsPresenter.reachListBottom();
+        verify(mShotsView).setProgressIndicator(true);
     }
 
     private Shots createSampleData() {
