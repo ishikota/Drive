@@ -1,0 +1,445 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ImageDetailFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">jp.ikota.drive.ui.imagedetail</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ImageDetailFragment (jp.ikota.drive.ui.imagedetail)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ImageDetailFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 60)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ImageDetailFragment$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailFragment$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailFragment$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailFragment$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailFragment$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 85)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package jp.ikota.drive.ui.imagedetail;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.Activity;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.content.Intent;
+<i>6</i>&nbsp;import android.content.SharedPreferences;
+<i>7</i>&nbsp;import android.os.Bundle;
+<i>8</i>&nbsp;import android.preference.PreferenceManager;
+<i>9</i>&nbsp;import android.support.design.widget.FloatingActionButton;
+<i>10</i>&nbsp;import android.support.v4.app.Fragment;
+<i>11</i>&nbsp;import android.support.v7.widget.GridLayoutManager;
+<i>12</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>13</i>&nbsp;import android.support.v7.widget.Toolbar;
+<i>14</i>&nbsp;import android.view.LayoutInflater;
+<i>15</i>&nbsp;import android.view.View;
+<i>16</i>&nbsp;import android.view.ViewGroup;
+<i>17</i>&nbsp;import android.widget.Toast;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import com.google.gson.Gson;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import java.util.ArrayList;
+<i>22</i>&nbsp;import java.util.List;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;import jp.ikota.drive.AndroidApplication;
+<i>25</i>&nbsp;import jp.ikota.drive.BusHolder;
+<i>26</i>&nbsp;import jp.ikota.drive.R;
+<i>27</i>&nbsp;import jp.ikota.drive.data.model.Shot;
+<i>28</i>&nbsp;import jp.ikota.drive.network.DribbbleRxApi;
+<i>29</i>&nbsp;import jp.ikota.drive.network.oauth.OauthUtil;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;
+<b class="nc"><i>32</i>&nbsp;public class ImageDetailFragment extends Fragment implements ImageDetailContract.View {</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    private ImageDetailContract.UserActionsListener mActionsListener;
+<i>35</i>&nbsp;    private ImageDetailActivity.OnToolbarAlphaListener mToolbarListener;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    private AndroidApplication mApp;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    // const
+<i>40</i>&nbsp;    private static final int PORTRAIT_SPAN_COUNT = 2;
+<i>41</i>&nbsp;    private static final int ITEM_PER_PAGE = 30;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    // list elements
+<b class="nc"><i>44</i>&nbsp;    ArrayList&lt;Shot&gt; mItemList = new ArrayList&lt;&gt;();</b>
+<i>45</i>&nbsp;    ImageDetailAdapter mAdapter;
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    // layout elements
+<i>48</i>&nbsp;    Toolbar mToolbar;
+<i>49</i>&nbsp;    RecyclerView mRecyclerView;
+<i>50</i>&nbsp;    FloatingActionButton mFab;
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    private static final String EXTRA_CONTENT = &quot;content&quot;;
+<i>53</i>&nbsp;    public static ImageDetailFragment newInstance(String json) {
+<b class="nc"><i>54</i>&nbsp;        Bundle args = new Bundle();</b>
+<b class="nc"><i>55</i>&nbsp;        args.putString(EXTRA_CONTENT, json);</b>
+<b class="nc"><i>56</i>&nbsp;        ImageDetailFragment fragment = new ImageDetailFragment();</b>
+<b class="nc"><i>57</i>&nbsp;        fragment.setArguments(args);</b>
+<b class="nc"><i>58</i>&nbsp;        return fragment;</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    @Override
+<i>62</i>&nbsp;    public void onAttach(Activity activity) {
+<b class="nc"><i>63</i>&nbsp;        super.onAttach(activity);</b>
+<b class="nc"><i>64</i>&nbsp;        Gson gson = new Gson();</b>
+<b class="nc"><i>65</i>&nbsp;        String json = getArguments().getString(EXTRA_CONTENT);</b>
+<b class="nc"><i>66</i>&nbsp;        Shot shot = gson.fromJson(json, Shot.class);</b>
+<b class="nc"><i>67</i>&nbsp;        mItemList.add(shot);</b>
+<b class="nc"><i>68</i>&nbsp;        mApp = (AndroidApplication) getActivity().getApplicationContext();</b>
+<b class="nc"><i>69</i>&nbsp;        mActionsListener = new ImageDetailPresenter(</b>
+<i>70</i>&nbsp;                new DribbbleRxApi(mApp.rxapi()), this, shot, ITEM_PER_PAGE);
+<i>71</i>&nbsp;    }
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    @Override
+<i>74</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>75</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>76</i>&nbsp;        setRetainInstance(true);</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    @Override
+<i>80</i>&nbsp;    public void onResume() {
+<b class="nc"><i>81</i>&nbsp;        super.onResume();</b>
+<b class="nc"><i>82</i>&nbsp;        BusHolder.get().register(mActionsListener);</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    @Override
+<i>86</i>&nbsp;    public void onPause() {
+<b class="nc"><i>87</i>&nbsp;        super.onPause();</b>
+<b class="nc"><i>88</i>&nbsp;        BusHolder.get().unregister(mActionsListener);</b>
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    @Override
+<i>92</i>&nbsp;    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+<i>93</i>&nbsp;                             Bundle savedInstanceState) {
+<b class="nc"><i>94</i>&nbsp;        View root = inflater.inflate(R.layout.fragment_imagedetail, container, false);</b>
+<i>95</i>&nbsp;
+<b class="nc"><i>96</i>&nbsp;        if(mItemList.size() == 1) {</b>
+<b class="nc"><i>97</i>&nbsp;            mActionsListener.loadRelatedShots();  // TODO this method here is correct?</b>
+<i>98</i>&nbsp;        }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;        // list related
+<b class="nc"><i>101</i>&nbsp;        if(mAdapter == null) {</b>
+<b class="nc"><i>102</i>&nbsp;            mAdapter = new ImageDetailAdapter(mApp, mItemList,</b>
+<b class="nc"><i>103</i>&nbsp;                    new ImageDetailAdapter.OnDetailAdapterClickListener() {</b>
+<i>104</i>&nbsp;                        @Override
+<i>105</i>&nbsp;                        public void onShotClick(Shot clicked_shot) {
+<b class="nc"><i>106</i>&nbsp;                            Intent intent = ImageDetailActivity.createIntent(mApp, clicked_shot);</b>
+<b class="nc"><i>107</i>&nbsp;                            startActivity(intent);</b>
+<i>108</i>&nbsp;                        }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;                        @Override
+<i>111</i>&nbsp;                        public void onUserClick(Shot.User clicked_user) {
+<b class="nc"><i>112</i>&nbsp;                            Toast.makeText(mApp, &quot;should go User page&quot;,Toast.LENGTH_SHORT).show();</b>
+<i>113</i>&nbsp;                        }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;                        @Override
+<i>116</i>&nbsp;                        public void onTagClick(String clicked_tag) {
+<b class="nc"><i>117</i>&nbsp;                            Toast.makeText(mApp, &quot;should go Tag page&quot;,Toast.LENGTH_SHORT).show();</b>
+<i>118</i>&nbsp;                        }
+<i>119</i>&nbsp;                    });
+<i>120</i>&nbsp;        }
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;        // TODO change column num by checking device orientation
+<i>123</i>&nbsp;        // add span size lookup to change column num by item position
+<b class="nc"><i>124</i>&nbsp;        GridLayoutManager manager = new GridLayoutManager(mApp, PORTRAIT_SPAN_COUNT);</b>
+<b class="nc"><i>125</i>&nbsp;        manager = addSpanSizeLookup(mApp, manager,mAdapter);</b>
+<i>126</i>&nbsp;
+<b class="nc"><i>127</i>&nbsp;        mRecyclerView = (RecyclerView)root.findViewById(android.R.id.list);</b>
+<b class="nc"><i>128</i>&nbsp;        mRecyclerView.setHasFixedSize(false);</b>
+<b class="nc"><i>129</i>&nbsp;        mRecyclerView.setLayoutManager(manager);</b>
+<b class="nc"><i>130</i>&nbsp;        mRecyclerView.setAdapter(mAdapter);</b>
+<i>131</i>&nbsp;
+<b class="nc"><i>132</i>&nbsp;        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {</b>
+<i>133</i>&nbsp;            @Override
+<i>134</i>&nbsp;            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+<b class="nc"><i>135</i>&nbsp;                super.onScrolled(recyclerView, dx, dy);</b>
+<i>136</i>&nbsp;                // load next related images page
+<b class="nc"><i>137</i>&nbsp;                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();</b>
+<b class="nc"><i>138</i>&nbsp;                int totalItemCount = layoutManager.getItemCount() - 1;</b>
+<b class="nc"><i>139</i>&nbsp;                int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();</b>
+<i>140</i>&nbsp;
+<b class="nc"><i>141</i>&nbsp;                if (totalItemCount - firstVisibleItem &lt;= ITEM_PER_PAGE &amp;&amp; isAdded()) {</b>
+<b class="nc"><i>142</i>&nbsp;                    mActionsListener.loadRelatedShots();</b>
+<i>143</i>&nbsp;                }
+<i>144</i>&nbsp;
+<b class="nc"><i>145</i>&nbsp;                mActionsListener.fabStateMayChange(firstVisibleItem == 0);</b>
+<b class="nc"><i>146</i>&nbsp;                mActionsListener.updateToolbarAlpha(dy);</b>
+<i>147</i>&nbsp;            }
+<i>148</i>&nbsp;        });
+<i>149</i>&nbsp;
+<b class="nc"><i>150</i>&nbsp;        mToolbar = (Toolbar)root.findViewById(R.id.toolbar_actionbar);</b>
+<b class="nc"><i>151</i>&nbsp;        setToolbarAlpha(0); // first make Toolbar invisible</b>
+<i>152</i>&nbsp;
+<b class="nc"><i>153</i>&nbsp;        mFab = (FloatingActionButton)root.findViewById(R.id.fab);</b>
+<b class="nc"><i>154</i>&nbsp;        mFab.setOnClickListener(new View.OnClickListener() {</b>
+<i>155</i>&nbsp;            @Override
+<i>156</i>&nbsp;            public void onClick(View view) {
+<b class="nc"><i>157</i>&nbsp;                mActionsListener.clickFab();</b>
+<b class="nc"><i>158</i>&nbsp;                mAdapter.notifyLikeToggle();</b>
+<i>159</i>&nbsp;            }
+<i>160</i>&nbsp;        });
+<b class="nc"><i>161</i>&nbsp;        mFab.hide();</b>
+<i>162</i>&nbsp;
+<b class="nc"><i>163</i>&nbsp;        return root;</b>
+<i>164</i>&nbsp;    }
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    private GridLayoutManager addSpanSizeLookup(
+<i>167</i>&nbsp;            Context context, GridLayoutManager original, final RecyclerView.Adapter adapter) {
+<i>168</i>&nbsp;
+<b class="nc"><i>169</i>&nbsp;        GridLayoutManager manager = new GridLayoutManager(context, original.getSpanCount());</b>
+<b class="nc"><i>170</i>&nbsp;        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {</b>
+<i>171</i>&nbsp;            @Override
+<i>172</i>&nbsp;            public int getSpanSize(int position) {
+<b class="nc"><i>173</i>&nbsp;                switch (adapter.getItemViewType(position)) {</b>
+<i>174</i>&nbsp;                    case ImageDetailAdapter.TYPE_HEADER:
+<b class="nc"><i>175</i>&nbsp;                        return PORTRAIT_SPAN_COUNT;</b>
+<i>176</i>&nbsp;                    case ImageDetailAdapter.TYPE_EMPTY:
+<b class="nc"><i>177</i>&nbsp;                        return PORTRAIT_SPAN_COUNT;</b>
+<i>178</i>&nbsp;                    case ImageDetailAdapter.TYPE_ITEM:
+<b class="nc"><i>179</i>&nbsp;                        return 1;</b>
+<i>180</i>&nbsp;                    default:
+<b class="nc"><i>181</i>&nbsp;                        return -1;</b>
+<i>182</i>&nbsp;                }
+<i>183</i>&nbsp;            }
+<i>184</i>&nbsp;        });
+<b class="nc"><i>185</i>&nbsp;        return manager;</b>
+<i>186</i>&nbsp;    }
+<i>187</i>&nbsp;
+<i>188</i>&nbsp;    @Override
+<i>189</i>&nbsp;    public void addShots(List&lt;Shot&gt; shots) {
+<b class="nc"><i>190</i>&nbsp;        if(!isAdded()) return;  // This method is called after async task</b>
+<b class="nc"><i>191</i>&nbsp;        mItemList.addAll(shots);</b>
+<b class="nc"><i>192</i>&nbsp;        mAdapter.notifyDataSetChanged();</b>
+<i>193</i>&nbsp;    }
+<i>194</i>&nbsp;
+<i>195</i>&nbsp;    @Override
+<i>196</i>&nbsp;    public void showShotDetail(Shot shot) {
+<b class="nc"><i>197</i>&nbsp;        Intent intent = ImageDetailActivity.createIntent(mApp.getApplicationContext(), shot);</b>
+<b class="nc"><i>198</i>&nbsp;        startActivity(intent);</b>
+<i>199</i>&nbsp;    }
+<i>200</i>&nbsp;
+<i>201</i>&nbsp;    @Override
+<i>202</i>&nbsp;    public void showFab(boolean show) {
+<b class="nc"><i>203</i>&nbsp;        if(show) {</b>
+<b class="nc"><i>204</i>&nbsp;            mFab.show();</b>
+<i>205</i>&nbsp;        } else {
+<b class="nc"><i>206</i>&nbsp;            mFab.hide();</b>
+<i>207</i>&nbsp;        }
+<i>208</i>&nbsp;    }
+<i>209</i>&nbsp;
+<i>210</i>&nbsp;    //TODO test it (how to check imageView&#39;s resource)
+<i>211</i>&nbsp;    @Override
+<i>212</i>&nbsp;    public void toggleFab(boolean be_like, boolean hide) {
+<b class="nc"><i>213</i>&nbsp;        mFab.setImageResource(be_like ?</b>
+<i>214</i>&nbsp;                R.drawable.ic_favorite_white_24dp :
+<i>215</i>&nbsp;                R.drawable.ic_favorite_border_white_24dp);
+<b class="nc"><i>216</i>&nbsp;        if(hide) {</b>
+<b class="nc"><i>217</i>&nbsp;            mFab.postDelayed(new Runnable() {</b>
+<i>218</i>&nbsp;                @Override
+<i>219</i>&nbsp;                public void run() {
+<b class="nc"><i>220</i>&nbsp;                    mFab.hide();</b>
+<i>221</i>&nbsp;                }
+<i>222</i>&nbsp;            }, 300);
+<i>223</i>&nbsp;        }
+<i>224</i>&nbsp;    }
+<i>225</i>&nbsp;
+<i>226</i>&nbsp;    @Override
+<i>227</i>&nbsp;    public void setToolbarAlpha(int alpha) {
+<b class="nc"><i>228</i>&nbsp;        mToolbarListener.updateToolbarAlpha(alpha);</b>
+<i>229</i>&nbsp;    }
+<i>230</i>&nbsp;
+<i>231</i>&nbsp;    @Override
+<i>232</i>&nbsp;    public void showLoginDialog() {
+<b class="nc"><i>233</i>&nbsp;        OauthUtil.showOauthDialog(</b>
+<i>234</i>&nbsp;                getResources().getString(R.string.action_likes), getChildFragmentManager());
+<i>235</i>&nbsp;    }
+<i>236</i>&nbsp;
+<i>237</i>&nbsp;    @Override
+<i>238</i>&nbsp;    public void showNetworkError() {
+<b class="nc"><i>239</i>&nbsp;        Toast.makeText(</b>
+<i>240</i>&nbsp;                mApp,
+<i>241</i>&nbsp;                getResources().getString(R.string.network_problem_message),
+<i>242</i>&nbsp;                Toast.LENGTH_SHORT).show();
+<i>243</i>&nbsp;    }
+<i>244</i>&nbsp;
+<i>245</i>&nbsp;    @Override
+<i>246</i>&nbsp;    public void notifyRelatedLoadFinish(boolean show_empty_view) {
+<b class="nc"><i>247</i>&nbsp;        mAdapter.notifyRelatedLoadFinish(show_empty_view);</b>
+<i>248</i>&nbsp;    }
+<i>249</i>&nbsp;
+<i>250</i>&nbsp;    @Override
+<i>251</i>&nbsp;    public String getAccessToken() {
+<b class="nc"><i>252</i>&nbsp;        if(!isAdded()) return &quot;&quot;;</b>
+<b class="nc"><i>253</i>&nbsp;        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());</b>
+<b class="nc"><i>254</i>&nbsp;        return prefs.getString(OauthUtil.KEY_ACCESS_TOKEN, &quot;&quot;);</b>
+<i>255</i>&nbsp;    }
+<i>256</i>&nbsp;
+<i>257</i>&nbsp;    public void setToolbarListener(ImageDetailActivity.OnToolbarAlphaListener listener) {
+<b class="nc"><i>258</i>&nbsp;        mToolbarListener = listener;</b>
+<i>259</i>&nbsp;    }
+<i>260</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2015-12-29 19:01</div>
+</div>
+</body>
+</html>

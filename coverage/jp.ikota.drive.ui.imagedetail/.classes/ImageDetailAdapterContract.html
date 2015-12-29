@@ -1,0 +1,103 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ImageDetailAdapterContract</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">jp.ikota.drive.ui.imagedetail</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ImageDetailAdapterContract (jp.ikota.drive.ui.imagedetail)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">ImageDetailAdapterContract$UserActionsListener</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailAdapterContract$View</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailAdapterContract$View$$EnhancerByMockitoWithCGLIB$$96373e34</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package jp.ikota.drive.ui.imagedetail;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.graphics.Bitmap;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.List;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import jp.ikota.drive.data.model.Shot;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public interface ImageDetailAdapterContract {
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    interface View {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;        void setImage(Bitmap loaded_image);
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;        void setShotData(String title, Shot.User user);
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;        void setLikeNum(int num);
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;        void setTags(List&lt;String&gt; tags);
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;        void showTagScreen(String tag);
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;        void showUserScreen(Shot.User user);
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;        void removeProgress();
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;        void addEmptyView();
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;        String getAccessToken();
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    interface UserActionsListener {
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;        void setCacheData(Shot shot);
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;        void loadLikeState();
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;        void toggleLike();
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;        void openTagScreen(String tag);
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;        void openUserScreen(Shot.User user);
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;        void relatedLoadFinished(boolean show_empty_view);
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2015-12-29 19:01</div>
+</div>
+</body>
+</html>

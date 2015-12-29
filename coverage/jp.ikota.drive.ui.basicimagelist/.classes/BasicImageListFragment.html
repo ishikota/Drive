@@ -1,0 +1,424 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BasicImageListFragment</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">jp.ikota.drive.ui.basicimagelist</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BasicImageListFragment (jp.ikota.drive.ui.basicimagelist)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BasicImageListFragment</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 34)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">BasicImageListFragment$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BasicImageListFragment$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BasicImageListFragment$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BasicImageListFragment$BaseImageListAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">BasicImageListFragment$BaseImageListAdapter$ViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 72)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package jp.ikota.drive.ui.basicimagelist;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.app.Activity;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.content.Intent;
+<i>6</i>&nbsp;import android.os.Bundle;
+<i>7</i>&nbsp;import android.support.v4.app.Fragment;
+<i>8</i>&nbsp;import android.support.v4.widget.SwipeRefreshLayout;
+<i>9</i>&nbsp;import android.support.v7.widget.GridLayoutManager;
+<i>10</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>11</i>&nbsp;import android.view.LayoutInflater;
+<i>12</i>&nbsp;import android.view.View;
+<i>13</i>&nbsp;import android.view.ViewGroup;
+<i>14</i>&nbsp;import android.widget.ImageView;
+<i>15</i>&nbsp;import android.widget.ProgressBar;
+<i>16</i>&nbsp;import android.widget.Toast;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;import com.squareup.picasso.Picasso;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;import java.util.ArrayList;
+<i>21</i>&nbsp;import java.util.List;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import jp.ikota.drive.AndroidApplication;
+<i>24</i>&nbsp;import jp.ikota.drive.R;
+<i>25</i>&nbsp;import jp.ikota.drive.data.model.Shot;
+<i>26</i>&nbsp;import jp.ikota.drive.network.DribbbleRxApi;
+<i>27</i>&nbsp;import jp.ikota.drive.ui.imagedetail.ImageDetailActivity;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;
+<b class="nc"><i>30</i>&nbsp;public class BasicImageListFragment extends Fragment implements BasicImageListContract.View{</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    private BasicImageListContract.UserActionsListener mActionsListener;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    private AndroidApplication mApp;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    // const
+<i>37</i>&nbsp;    private static final int PORTRAIT_SPAN_COUNT = 2;
+<i>38</i>&nbsp;    private static final int ITEM_PER_PAGE = 30;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    // list elements
+<i>41</i>&nbsp;    ArrayList&lt;Shot&gt; mItemList;
+<i>42</i>&nbsp;    BaseImageListAdapter mAdapter;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    // layout elements
+<i>45</i>&nbsp;    RecyclerView mRecyclerView;
+<i>46</i>&nbsp;    SwipeRefreshLayout mSwipeRefreshLayout;
+<i>47</i>&nbsp;    ProgressBar mProgressbar;
+<i>48</i>&nbsp;    View mEmptyView;
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public static BasicImageListFragment newInstance() {
+<b class="nc"><i>51</i>&nbsp;        return new BasicImageListFragment();</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    @Override
+<i>55</i>&nbsp;    public void onAttach(Activity activity) {
+<b class="nc"><i>56</i>&nbsp;        super.onAttach(activity);</b>
+<b class="nc"><i>57</i>&nbsp;        mApp = (AndroidApplication) getActivity().getApplicationContext();</b>
+<b class="nc"><i>58</i>&nbsp;        mActionsListener = new BasicImageListPresenter(new DribbbleRxApi(mApp.rxapi()), this, ITEM_PER_PAGE);</b>
+<i>59</i>&nbsp;    }
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    @Override
+<i>62</i>&nbsp;    public void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>63</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>64</i>&nbsp;        setRetainInstance(true);</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    @Override
+<i>68</i>&nbsp;    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+<i>69</i>&nbsp;                             Bundle savedInstanceState) {
+<b class="nc"><i>70</i>&nbsp;        View root = inflater.inflate(R.layout.fragment_baseimagelist, container, false);</b>
+<i>71</i>&nbsp;
+<b class="nc"><i>72</i>&nbsp;        mRecyclerView = (RecyclerView) root.findViewById(android.R.id.list);</b>
+<b class="nc"><i>73</i>&nbsp;        mEmptyView = root.findViewById(android.R.id.empty);</b>
+<b class="nc"><i>74</i>&nbsp;        mProgressbar = (ProgressBar) root.findViewById(R.id.progress);</b>
+<b class="nc"><i>75</i>&nbsp;        mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipe_refresh);</b>
+<i>76</i>&nbsp;
+<b class="nc"><i>77</i>&nbsp;        mRecyclerView.setHasFixedSize(true);</b>
+<b class="nc"><i>78</i>&nbsp;        mRecyclerView.setLayoutManager(new GridLayoutManager(mApp, PORTRAIT_SPAN_COUNT));</b>
+<b class="nc"><i>79</i>&nbsp;        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {</b>
+<i>80</i>&nbsp;            @Override
+<i>81</i>&nbsp;            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+<b class="nc"><i>82</i>&nbsp;                super.onScrolled(recyclerView, dx, dy);</b>
+<i>83</i>&nbsp;
+<b class="nc"><i>84</i>&nbsp;                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();</b>
+<b class="nc"><i>85</i>&nbsp;                int totalItemCount = layoutManager.getItemCount();</b>
+<b class="nc"><i>86</i>&nbsp;                int visibleItemCount = layoutManager.getChildCount();</b>
+<b class="nc"><i>87</i>&nbsp;                int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();</b>
+<i>88</i>&nbsp;
+<b class="nc"><i>89</i>&nbsp;                if (totalItemCount - firstVisibleItem &lt;= ITEM_PER_PAGE) {</b>
+<b class="nc"><i>90</i>&nbsp;                    mActionsListener.loadShots(); // load next related images page</b>
+<i>91</i>&nbsp;                }
+<i>92</i>&nbsp;
+<b class="nc"><i>93</i>&nbsp;                if (firstVisibleItem + visibleItemCount == totalItemCount) {</b>
+<b class="nc"><i>94</i>&nbsp;                    mActionsListener.reachListBottom(); // show bottom progress</b>
+<i>95</i>&nbsp;                }
+<i>96</i>&nbsp;            }
+<i>97</i>&nbsp;        });
+<i>98</i>&nbsp;
+<b class="nc"><i>99</i>&nbsp;        mSwipeRefreshLayout.setColorSchemeColors(</b>
+<i>100</i>&nbsp;                getResources().getColor(R.color.swipe_color_1),
+<i>101</i>&nbsp;                getResources().getColor(R.color.swipe_color_2),
+<i>102</i>&nbsp;                getResources().getColor(R.color.swipe_color_3),
+<i>103</i>&nbsp;                getResources().getColor(R.color.swipe_color_4)
+<i>104</i>&nbsp;        );
+<i>105</i>&nbsp;
+<b class="nc"><i>106</i>&nbsp;        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {</b>
+<i>107</i>&nbsp;            @Override
+<i>108</i>&nbsp;            public void onRefresh() {
+<b class="nc"><i>109</i>&nbsp;                mActionsListener.refreshShots();</b>
+<i>110</i>&nbsp;            }
+<i>111</i>&nbsp;        });
+<i>112</i>&nbsp;
+<b class="nc"><i>113</i>&nbsp;        if (mItemList != null &amp;&amp; !mItemList.isEmpty()) {</b>
+<b class="nc"><i>114</i>&nbsp;            mRecyclerView.setAdapter(mAdapter);</b>
+<i>115</i>&nbsp;        } else {
+<b class="nc"><i>116</i>&nbsp;            mItemList = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>117</i>&nbsp;            mAdapter  = new BaseImageListAdapter(mItemList, new ShotClickListener() {</b>
+<i>118</i>&nbsp;                @Override
+<i>119</i>&nbsp;                public void onClickShot(Shot clickedShot) {
+<b class="nc"><i>120</i>&nbsp;                    mActionsListener.openShotDetails(clickedShot);</b>
+<i>121</i>&nbsp;                }
+<i>122</i>&nbsp;            });
+<b class="nc"><i>123</i>&nbsp;            mRecyclerView.setAdapter(mAdapter);</b>
+<b class="nc"><i>124</i>&nbsp;            mActionsListener.loadShots();</b>
+<b class="nc"><i>125</i>&nbsp;            mActionsListener.reachListBottom();</b>
+<i>126</i>&nbsp;        }
+<i>127</i>&nbsp;
+<b class="nc"><i>128</i>&nbsp;        return root;</b>
+<i>129</i>&nbsp;    }
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;    @Override
+<i>132</i>&nbsp;    public void finishRefreshIndicator() {
+<b class="nc"><i>133</i>&nbsp;        mSwipeRefreshLayout.setRefreshing(false);</b>
+<i>134</i>&nbsp;    }
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;    @Override
+<i>137</i>&nbsp;    public void setProgressIndicator(boolean active) {
+<b class="nc"><i>138</i>&nbsp;        mProgressbar.setVisibility(active ? View.VISIBLE : View.GONE);</b>
+<i>139</i>&nbsp;    }
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;    @Override
+<i>142</i>&nbsp;    public void clearShots() {
+<b class="nc"><i>143</i>&nbsp;        mItemList.clear();</b>
+<b class="nc"><i>144</i>&nbsp;        mAdapter.replaceData(mItemList);</b>
+<i>145</i>&nbsp;    }
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;    @Override
+<i>148</i>&nbsp;    public void addShots(List&lt;Shot&gt; shots) {
+<b class="nc"><i>149</i>&nbsp;        mAdapter.replaceData(shots);</b>
+<i>150</i>&nbsp;    }
+<i>151</i>&nbsp;
+<i>152</i>&nbsp;    @Override
+<i>153</i>&nbsp;    public void showShotDetail(Shot shot) {
+<b class="nc"><i>154</i>&nbsp;        Intent intent = ImageDetailActivity.createIntent(mApp.getApplicationContext(), shot);</b>
+<b class="nc"><i>155</i>&nbsp;        startActivity(intent);</b>
+<i>156</i>&nbsp;    }
+<i>157</i>&nbsp;
+<i>158</i>&nbsp;    @Override
+<i>159</i>&nbsp;    public void showNetworkError() {
+<b class="nc"><i>160</i>&nbsp;        Toast.makeText(</b>
+<i>161</i>&nbsp;                mApp,
+<i>162</i>&nbsp;                getResources().getString(R.string.network_problem_message),
+<i>163</i>&nbsp;                Toast.LENGTH_SHORT).show();
+<i>164</i>&nbsp;    }
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    @Override
+<i>167</i>&nbsp;    public void showEmptyView(boolean show) {
+<b class="nc"><i>168</i>&nbsp;        mEmptyView.setVisibility(show ? View.VISIBLE : View.GONE);</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<b class="nc"><i>171</i>&nbsp;    public static class BaseImageListAdapter extends RecyclerView.Adapter&lt;BaseImageListAdapter.ViewHolder&gt; {</b>
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;        private List&lt;Shot&gt; mShots;
+<i>174</i>&nbsp;        private ShotClickListener mClickListener;
+<i>175</i>&nbsp;
+<b class="nc"><i>176</i>&nbsp;        public BaseImageListAdapter(List&lt;Shot&gt; shots, ShotClickListener listener) {</b>
+<b class="nc"><i>177</i>&nbsp;            mShots = shots;</b>
+<b class="nc"><i>178</i>&nbsp;            mClickListener = listener;</b>
+<i>179</i>&nbsp;        }
+<i>180</i>&nbsp;
+<i>181</i>&nbsp;        @Override
+<i>182</i>&nbsp;        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+<b class="nc"><i>183</i>&nbsp;            Context context = parent.getContext();</b>
+<b class="nc"><i>184</i>&nbsp;            LayoutInflater inflater = LayoutInflater.from(context);</b>
+<b class="nc"><i>185</i>&nbsp;            View noteView = inflater.inflate(R.layout.row_baseimagelist, parent, false);</b>
+<b class="nc"><i>186</i>&nbsp;            return new ViewHolder(noteView, mClickListener);</b>
+<i>187</i>&nbsp;        }
+<i>188</i>&nbsp;
+<i>189</i>&nbsp;        @Override
+<i>190</i>&nbsp;        public void onBindViewHolder(ViewHolder holder, int position) {
+<b class="nc"><i>191</i>&nbsp;            Shot shot = mShots.get(position);</b>
+<b class="nc"><i>192</i>&nbsp;            Picasso.with(holder.imageView.getContext())</b>
+<i>193</i>&nbsp;                    .load(shot.images.normal)
+<i>194</i>&nbsp;                    .into(holder.imageView);
+<b class="nc"><i>195</i>&nbsp;            addPadding(holder.itemView, position%2==0);</b>
+<i>196</i>&nbsp;        }
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;        @Override
+<i>199</i>&nbsp;        public int getItemCount() {
+<b class="nc"><i>200</i>&nbsp;            return mShots.size();</b>
+<i>201</i>&nbsp;        }
+<i>202</i>&nbsp;
+<i>203</i>&nbsp;        public void replaceData(List&lt;Shot&gt; shots) {
+<b class="nc"><i>204</i>&nbsp;            mShots.addAll(shots);</b>
+<b class="nc"><i>205</i>&nbsp;            notifyDataSetChanged();</b>
+<i>206</i>&nbsp;        }
+<i>207</i>&nbsp;
+<i>208</i>&nbsp;        // Add cell padding to center side and bottom side
+<i>209</i>&nbsp;        private void addPadding(View v, boolean toRight) {
+<b class="nc"><i>210</i>&nbsp;            int padding = (int)v.getContext().getResources().getDimension(R.dimen.list_row_padding);</b>
+<b class="nc"><i>211</i>&nbsp;            v.setPadding(toRight ? 0 : padding, 0, toRight ? padding : 0, padding * 2);</b>
+<i>212</i>&nbsp;        }
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+<i>215</i>&nbsp;
+<i>216</i>&nbsp;            public ImageView imageView;
+<i>217</i>&nbsp;            public ShotClickListener clickListener;
+<i>218</i>&nbsp;
+<b class="nc"><i>219</i>&nbsp;            public ViewHolder(View itemView, ShotClickListener listener) {</b>
+<b class="nc"><i>220</i>&nbsp;                super(itemView);</b>
+<b class="nc"><i>221</i>&nbsp;                clickListener = listener;</b>
+<b class="nc"><i>222</i>&nbsp;                imageView = (ImageView) itemView.findViewById(R.id.image);</b>
+<b class="nc"><i>223</i>&nbsp;                itemView.setOnClickListener(this);</b>
+<i>224</i>&nbsp;            }
+<i>225</i>&nbsp;
+<i>226</i>&nbsp;            @Override
+<i>227</i>&nbsp;            public void onClick(View view) {
+<b class="nc"><i>228</i>&nbsp;                int position = getAdapterPosition();</b>
+<b class="nc"><i>229</i>&nbsp;                Shot shot = mShots.get(position);</b>
+<b class="nc"><i>230</i>&nbsp;                clickListener.onClickShot(shot);</b>
+<i>231</i>&nbsp;            }
+<i>232</i>&nbsp;        }
+<i>233</i>&nbsp;    }
+<i>234</i>&nbsp;
+<i>235</i>&nbsp;    public interface ShotClickListener {
+<i>236</i>&nbsp;        void onClickShot(Shot clickedShot);
+<i>237</i>&nbsp;    }
+<i>238</i>&nbsp;
+<i>239</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2015-12-29 19:01</div>
+</div>
+</body>
+</html>

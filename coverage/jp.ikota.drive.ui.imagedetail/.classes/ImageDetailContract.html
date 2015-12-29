@@ -1,0 +1,104 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ImageDetailContract</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">jp.ikota.drive.ui.imagedetail</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ImageDetailContract (jp.ikota.drive.ui.imagedetail)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">ImageDetailContract$UserActionsListener</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailContract$View</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailContract$View$$EnhancerByMockitoWithCGLIB$$1d77fd6b</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package jp.ikota.drive.ui.imagedetail;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.support.annotation.NonNull;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import jp.ikota.drive.data.model.Shot;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public interface ImageDetailContract {
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    interface View {
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;        void addShots(List&lt;Shot&gt; shots);
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;        void showShotDetail(Shot shot);
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;        void showFab(boolean show);
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;        void toggleFab(boolean be_like, boolean hide);
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;        void setToolbarAlpha(int alpha);
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;        void showLoginDialog();
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;        void showNetworkError();
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;        void notifyRelatedLoadFinish(boolean show_empty_view);
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;        String getAccessToken();
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    }
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    interface UserActionsListener {
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;        void fabStateMayChange(boolean show);
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;        void loadRelatedShots();
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;        void openShotDetails(@NonNull Shot shot);
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;        void clickFab();
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;        void updateToolbarAlpha(int dy);
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    }
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2015-12-29 19:01</div>
+</div>
+</body>
+</html>

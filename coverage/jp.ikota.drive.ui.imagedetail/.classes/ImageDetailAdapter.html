@@ -1,0 +1,455 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ImageDetailAdapter</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">jp.ikota.drive.ui.imagedetail</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ImageDetailAdapter (jp.ikota.drive.ui.imagedetail)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ImageDetailAdapter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 37)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ImageDetailAdapter$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailAdapter$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailAdapter$EmptyViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailAdapter$HeaderViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 41)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ImageDetailAdapter$RelatedViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 26)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 93)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package jp.ikota.drive.ui.imagedetail;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.content.SharedPreferences;
+<i>6</i>&nbsp;import android.content.res.Configuration;
+<i>7</i>&nbsp;import android.graphics.Bitmap;
+<i>8</i>&nbsp;import android.preference.PreferenceManager;
+<i>9</i>&nbsp;import android.support.v7.widget.RecyclerView;
+<i>10</i>&nbsp;import android.util.Log;
+<i>11</i>&nbsp;import android.view.LayoutInflater;
+<i>12</i>&nbsp;import android.view.View;
+<i>13</i>&nbsp;import android.view.ViewGroup;
+<i>14</i>&nbsp;import android.widget.ImageView;
+<i>15</i>&nbsp;import android.widget.LinearLayout;
+<i>16</i>&nbsp;import android.widget.ProgressBar;
+<i>17</i>&nbsp;import android.widget.TextView;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;import com.squareup.picasso.Picasso;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;import java.util.List;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import jp.ikota.drive.AndroidApplication;
+<i>24</i>&nbsp;import jp.ikota.drive.R;
+<i>25</i>&nbsp;import jp.ikota.drive.data.model.Shot;
+<i>26</i>&nbsp;import jp.ikota.drive.network.DribbbleRxApi;
+<i>27</i>&nbsp;import jp.ikota.drive.network.DribbbleRxService;
+<i>28</i>&nbsp;import jp.ikota.drive.network.oauth.OauthUtil;
+<i>29</i>&nbsp;
+<b class="nc"><i>30</i>&nbsp;public class ImageDetailAdapter extends RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt; {</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    static final int TYPE_HEADER = 0;
+<i>33</i>&nbsp;    static final int TYPE_ITEM  = 1;
+<i>34</i>&nbsp;    static final int TYPE_EMPTY = -1;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    private static final String EMPTY_ITEM_ID = &quot;-1&quot;;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    private final AndroidApplication APP;
+<i>39</i>&nbsp;    private final DribbbleRxService API;
+<i>40</i>&nbsp;    private List&lt;Shot&gt; mShots;
+<i>41</i>&nbsp;    private OnDetailAdapterClickListener mClickListener;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    ImageDetailAdapterPresenter mPresenter;
+<i>44</i>&nbsp;
+<b class="nc"><i>45</i>&nbsp;    public ImageDetailAdapter(AndroidApplication app, List&lt;Shot&gt; shots, OnDetailAdapterClickListener listener) {</b>
+<b class="nc"><i>46</i>&nbsp;        APP = app;</b>
+<b class="nc"><i>47</i>&nbsp;        API = app.rxapi();</b>
+<b class="nc"><i>48</i>&nbsp;        mShots = shots;</b>
+<b class="nc"><i>49</i>&nbsp;        mClickListener = listener;</b>
+<i>50</i>&nbsp;    }
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    @Override
+<i>53</i>&nbsp;    public int getItemViewType(int position) {
+<b class="nc"><i>54</i>&nbsp;        if(position == 0) {</b>
+<b class="nc"><i>55</i>&nbsp;            return TYPE_HEADER;</b>
+<b class="nc"><i>56</i>&nbsp;        } else if(mShots.get(position).id.equals(EMPTY_ITEM_ID)) {</b>
+<b class="nc"><i>57</i>&nbsp;            return TYPE_EMPTY;</b>
+<i>58</i>&nbsp;        } else {
+<b class="nc"><i>59</i>&nbsp;            return TYPE_ITEM;</b>
+<i>60</i>&nbsp;        }
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    @Override
+<i>64</i>&nbsp;    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+<b class="nc"><i>65</i>&nbsp;        Context context = parent.getContext();</b>
+<b class="nc"><i>66</i>&nbsp;        LayoutInflater inflater = LayoutInflater.from(context);</b>
+<i>67</i>&nbsp;        View v;
+<b class="nc"><i>68</i>&nbsp;        switch (viewType) {</b>
+<i>69</i>&nbsp;            case TYPE_HEADER:
+<b class="nc"><i>70</i>&nbsp;                v = inflater.inflate(R.layout.detail_header, parent, false);</b>
+<b class="nc"><i>71</i>&nbsp;                return new HeaderViewHolder(v);</b>
+<i>72</i>&nbsp;            case TYPE_EMPTY:
+<b class="nc"><i>73</i>&nbsp;                v = inflater.inflate(R.layout.detail_emptyview, parent, false);</b>
+<b class="nc"><i>74</i>&nbsp;                return new EmptyViewHolder(v);</b>
+<i>75</i>&nbsp;            case TYPE_ITEM:
+<b class="nc"><i>76</i>&nbsp;                v = inflater.inflate(R.layout.row_baseimagelist, parent, false);</b>
+<b class="nc"><i>77</i>&nbsp;                return new RelatedViewHolder(v, mClickListener);</b>
+<i>78</i>&nbsp;            default:
+<b class="nc"><i>79</i>&nbsp;                return null;</b>
+<i>80</i>&nbsp;        }
+<i>81</i>&nbsp;    }
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    @Override
+<i>84</i>&nbsp;    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+<b class="nc"><i>85</i>&nbsp;        final Shot shot = mShots.get(position);</b>
+<b class="nc"><i>86</i>&nbsp;        if(position == 0) {</b>
+<b class="nc"><i>87</i>&nbsp;            HeaderViewHolder vh = (HeaderViewHolder)holder;</b>
+<b class="nc"><i>88</i>&nbsp;            mPresenter = new ImageDetailAdapterPresenter(</b>
+<i>89</i>&nbsp;                    new DribbbleRxApi(API), vh.itemView.getContext(),shot, vh);
+<i>90</i>&nbsp;            // bind view holder to presenter
+<b class="nc"><i>91</i>&nbsp;            mPresenter.setCacheData(shot);</b>
+<b class="nc"><i>92</i>&nbsp;            mPresenter.loadLikeState();</b>
+<b class="nc"><i>93</i>&nbsp;            vh.image_user.setOnClickListener(new View.OnClickListener() {</b>
+<i>94</i>&nbsp;                @Override
+<i>95</i>&nbsp;                public void onClick(View view) {
+<b class="nc"><i>96</i>&nbsp;                    mPresenter.openUserScreen(shot.user);</b>
+<i>97</i>&nbsp;                }
+<i>98</i>&nbsp;            });
+<i>99</i>&nbsp;            // Now tag is not displayed. So below code has no effect on the screen
+<b class="nc"><i>100</i>&nbsp;            for(int i=0; i&lt;vh.tag_parent.getChildCount(); i++) {</b>
+<b class="nc"><i>101</i>&nbsp;                View tag = vh.tag_parent.getChildAt(i);</b>
+<b class="nc"><i>102</i>&nbsp;                tag.setOnClickListener(new View.OnClickListener() {</b>
+<i>103</i>&nbsp;                    @Override
+<i>104</i>&nbsp;                    public void onClick(View view) {
+<b class="nc"><i>105</i>&nbsp;                        String tag = ((TextView)view.findViewById(R.id.content)).getText().toString();</b>
+<b class="nc"><i>106</i>&nbsp;                        mPresenter.openTagScreen(tag);</b>
+<i>107</i>&nbsp;                    }
+<i>108</i>&nbsp;                });
+<i>109</i>&nbsp;            }
+<i>110</i>&nbsp;
+<b class="nc"><i>111</i>&nbsp;        } else if(!shot.id.equals(EMPTY_ITEM_ID)) {</b>
+<b class="nc"><i>112</i>&nbsp;            RelatedViewHolder vh = (RelatedViewHolder)holder;</b>
+<b class="nc"><i>113</i>&nbsp;            Picasso.with(vh.itemView.getContext()).load(shot.images.normal).into(vh.imageView);</b>
+<i>114</i>&nbsp;        }
+<i>115</i>&nbsp;        // else { do nothing for empty view }
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;    @Override
+<i>119</i>&nbsp;    public int getItemCount() {
+<b class="nc"><i>120</i>&nbsp;        return mShots.size();</b>
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;    public class HeaderViewHolder extends RecyclerView.ViewHolder implements ImageDetailAdapterContract.View {
+<i>124</i>&nbsp;        public ImageView image_main, image_user;
+<i>125</i>&nbsp;        public TextView text_title, text_username,text_like_num, text_related_title;
+<i>126</i>&nbsp;        public LinearLayout tag_parent, tag_line;
+<i>127</i>&nbsp;        public ProgressBar progress;
+<b class="nc"><i>128</i>&nbsp;        public HeaderViewHolder(View v) {</b>
+<b class="nc"><i>129</i>&nbsp;            super(v);</b>
+<b class="nc"><i>130</i>&nbsp;            image_main = (ImageView)v.findViewById(R.id.image);</b>
+<b class="nc"><i>131</i>&nbsp;            image_user = (ImageView)v.findViewById(R.id.user_icon);</b>
+<b class="nc"><i>132</i>&nbsp;            text_title = (TextView)v.findViewById(R.id.title);</b>
+<b class="nc"><i>133</i>&nbsp;            text_like_num  = (TextView)v.findViewById(R.id.like_num);</b>
+<b class="nc"><i>134</i>&nbsp;            text_username  = (TextView)v.findViewById(R.id.user_name);</b>
+<b class="nc"><i>135</i>&nbsp;            text_related_title = (TextView)v.findViewById(R.id.related_username);</b>
+<b class="nc"><i>136</i>&nbsp;            tag_parent = (LinearLayout)v.findViewById(R.id.tag_parent);</b>
+<b class="nc"><i>137</i>&nbsp;            tag_line   = (LinearLayout)v.findViewById(R.id.tag_line);</b>
+<b class="nc"><i>138</i>&nbsp;            progress   = (ProgressBar)v.findViewById(R.id.progress);</b>
+<i>139</i>&nbsp;        }
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;        @Override
+<i>142</i>&nbsp;        public void setImage(Bitmap loaded_image) {
+<i>143</i>&nbsp;            // adjust view height to loaded image
+<b class="nc"><i>144</i>&nbsp;            int disp_w = getScreenWidth(APP);</b>
+<b class="nc"><i>145</i>&nbsp;            int img_w  = loaded_image.getWidth();</b>
+<b class="nc"><i>146</i>&nbsp;            int img_h  = loaded_image.getHeight();</b>
+<b class="nc"><i>147</i>&nbsp;            if(img_w == 0 || img_h == 0) return;</b>
+<b class="nc"><i>148</i>&nbsp;            image_main.getLayoutParams().width  = disp_w;</b>
+<b class="nc"><i>149</i>&nbsp;            image_main.getLayoutParams().height = (int) (disp_w * (double)img_h/img_w);</b>
+<b class="nc"><i>150</i>&nbsp;            image_main.setImageBitmap(loaded_image);</b>
+<i>151</i>&nbsp;        }
+<i>152</i>&nbsp;
+<i>153</i>&nbsp;        @Override
+<i>154</i>&nbsp;        public void setShotData(String title, Shot.User user) {
+<b class="nc"><i>155</i>&nbsp;            text_title.setText(title);</b>
+<b class="nc"><i>156</i>&nbsp;            Picasso.with(APP).load(user.avatar_url).into(image_user);</b>
+<b class="nc"><i>157</i>&nbsp;            text_username.setText(user.username);</b>
+<b class="nc"><i>158</i>&nbsp;            text_related_title.setText(user.username);</b>
+<i>159</i>&nbsp;        }
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;        @Override
+<i>162</i>&nbsp;        public void setLikeNum(int num) {
+<b class="nc"><i>163</i>&nbsp;            String msg = num == 0 ? &quot;no likes yet&quot; : num == 1 ? &quot;1 like&quot; : num+&quot; likes&quot;;</b>
+<b class="nc"><i>164</i>&nbsp;            text_like_num.setText(msg);</b>
+<i>165</i>&nbsp;        }
+<i>166</i>&nbsp;
+<i>167</i>&nbsp;        @Override
+<i>168</i>&nbsp;        public void setTags(List&lt;String&gt; tags) {
+<i>169</i>&nbsp;            // Now tag is not displayed on UI to simplify app concept
+<b class="nc"><i>170</i>&nbsp;            tag_line.setVisibility(View.GONE);</b>
+<i>171</i>&nbsp;//            if(tags.isEmpty()) tag_line.setVisibility(View.GONE);
+<i>172</i>&nbsp;//            for(String tag : tags) {
+<i>173</i>&nbsp;//                tag_parent.addView(createTagView(APP, tag));
+<i>174</i>&nbsp;//            }
+<i>175</i>&nbsp;        }
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;        @Override
+<i>178</i>&nbsp;        public void showTagScreen(String tag) {
+<b class="nc"><i>179</i>&nbsp;            mClickListener.onTagClick(tag);</b>
+<i>180</i>&nbsp;        }
+<i>181</i>&nbsp;
+<i>182</i>&nbsp;        @Override
+<i>183</i>&nbsp;        public void showUserScreen(Shot.User user) {
+<b class="nc"><i>184</i>&nbsp;            mClickListener.onUserClick(user);</b>
+<i>185</i>&nbsp;        }
+<i>186</i>&nbsp;
+<i>187</i>&nbsp;        @Override
+<i>188</i>&nbsp;        public void removeProgress() {
+<b class="nc"><i>189</i>&nbsp;            progress.setVisibility(View.GONE);</b>
+<i>190</i>&nbsp;        }
+<i>191</i>&nbsp;
+<i>192</i>&nbsp;        @Override
+<i>193</i>&nbsp;        public void addEmptyView() {
+<i>194</i>&nbsp;            // debug code
+<b class="nc"><i>195</i>&nbsp;            if(mShots.size()!=1) {</b>
+<b class="nc"><i>196</i>&nbsp;                Log.e(&quot;ImageDetailAdapter&quot;, &quot;addEmptyView called when mShots.size!=1&quot;);</b>
+<i>197</i>&nbsp;                return;
+<i>198</i>&nbsp;            }
+<b class="nc"><i>199</i>&nbsp;            Shot shot = new Shot();</b>
+<b class="nc"><i>200</i>&nbsp;            shot.id = EMPTY_ITEM_ID;  // attach special ID to indicate this is empty view</b>
+<b class="nc"><i>201</i>&nbsp;            mShots.add(shot);</b>
+<b class="nc"><i>202</i>&nbsp;            notifyDataSetChanged();</b>
+<i>203</i>&nbsp;        }
+<i>204</i>&nbsp;
+<i>205</i>&nbsp;        @Override
+<i>206</i>&nbsp;        public String getAccessToken() {
+<b class="nc"><i>207</i>&nbsp;            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(APP);</b>
+<b class="nc"><i>208</i>&nbsp;            return prefs.getString(OauthUtil.KEY_ACCESS_TOKEN, &quot;&quot;);</b>
+<i>209</i>&nbsp;        }
+<i>210</i>&nbsp;
+<i>211</i>&nbsp;        private int getScreenWidth(AndroidApplication app) {
+<b class="nc"><i>212</i>&nbsp;            int display_mode = app.getResources().getConfiguration().orientation;</b>
+<b class="nc"><i>213</i>&nbsp;            if(display_mode == Configuration.ORIENTATION_PORTRAIT) {</b>
+<b class="nc"><i>214</i>&nbsp;                return app.SCREEN_WIDTH;</b>
+<i>215</i>&nbsp;            } else {
+<b class="nc"><i>216</i>&nbsp;                int statusbar_height = (int) app.getResources().getDimension(R.dimen.status_bar_height);</b>
+<b class="nc"><i>217</i>&nbsp;                return app.SCREEN_HEIGHT + statusbar_height;</b>
+<i>218</i>&nbsp;            }
+<i>219</i>&nbsp;        }
+<i>220</i>&nbsp;
+<i>221</i>&nbsp;//        private View createTagView(Context context, String tag) {
+<i>222</i>&nbsp;//            View view = LayoutInflater.from(context).inflate(R.layout.tag, null);
+<i>223</i>&nbsp;//            ((TextView)view.findViewById(R.id.content)).setText(tag);
+<i>224</i>&nbsp;//            return view;
+<i>225</i>&nbsp;//        }
+<i>226</i>&nbsp;    }
+<i>227</i>&nbsp;
+<i>228</i>&nbsp;    public void notifyRelatedLoadFinish(boolean show_empty_view) {
+<b class="nc"><i>229</i>&nbsp;        mPresenter.relatedLoadFinished(show_empty_view);</b>
+<i>230</i>&nbsp;    }
+<i>231</i>&nbsp;
+<i>232</i>&nbsp;    public void notifyLikeToggle() {
+<b class="nc"><i>233</i>&nbsp;        mPresenter.toggleLike();</b>
+<i>234</i>&nbsp;    }
+<i>235</i>&nbsp;
+<i>236</i>&nbsp;    public class RelatedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+<i>237</i>&nbsp;
+<i>238</i>&nbsp;        public ImageView imageView;
+<i>239</i>&nbsp;        public OnDetailAdapterClickListener clickListener;
+<i>240</i>&nbsp;
+<b class="nc"><i>241</i>&nbsp;        public RelatedViewHolder(View itemView, OnDetailAdapterClickListener listener) {</b>
+<b class="nc"><i>242</i>&nbsp;            super(itemView);</b>
+<b class="nc"><i>243</i>&nbsp;            clickListener = listener;</b>
+<b class="nc"><i>244</i>&nbsp;            imageView = (ImageView) itemView.findViewById(R.id.image);</b>
+<b class="nc"><i>245</i>&nbsp;            itemView.setOnClickListener(this);</b>
+<i>246</i>&nbsp;        }
+<i>247</i>&nbsp;
+<i>248</i>&nbsp;        @Override
+<i>249</i>&nbsp;        public void onClick(View view) {
+<b class="nc"><i>250</i>&nbsp;            int position = getAdapterPosition();</b>
+<b class="nc"><i>251</i>&nbsp;            Shot shot = mShots.get(position);</b>
+<b class="nc"><i>252</i>&nbsp;            clickListener.onShotClick(shot);</b>
+<i>253</i>&nbsp;        }
+<i>254</i>&nbsp;    }
+<i>255</i>&nbsp;
+<i>256</i>&nbsp;    public class EmptyViewHolder extends RecyclerView.ViewHolder {
+<i>257</i>&nbsp;
+<b class="nc"><i>258</i>&nbsp;        public EmptyViewHolder(View itemView) {</b>
+<b class="nc"><i>259</i>&nbsp;            super(itemView);</b>
+<i>260</i>&nbsp;        }
+<i>261</i>&nbsp;
+<i>262</i>&nbsp;    }
+<i>263</i>&nbsp;
+<i>264</i>&nbsp;    public interface OnDetailAdapterClickListener {
+<i>265</i>&nbsp;        void onShotClick(Shot clicked_shot);
+<i>266</i>&nbsp;        void onUserClick(Shot.User clicked_user);
+<i>267</i>&nbsp;        void onTagClick(String clicked_tag);
+<i>268</i>&nbsp;    }
+<i>269</i>&nbsp;
+<i>270</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2015-12-29 19:01</div>
+</div>
+</body>
+</html>
