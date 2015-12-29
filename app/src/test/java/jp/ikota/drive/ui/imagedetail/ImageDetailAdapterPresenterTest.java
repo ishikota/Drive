@@ -17,10 +17,13 @@ import jp.ikota.drive.data.SampleResponse;
 import jp.ikota.drive.data.model.Like;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.network.DribbbleRxApi;
+import jp.ikota.drive.ui.util.PrivateAccessor;
 import retrofit.client.Response;
 import rx.Observable;
 import rx.Subscriber;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -60,7 +63,7 @@ public class ImageDetailAdapterPresenterTest {
     }
 
     @Test
-    public void loadLikeState() {
+    public void loadLikeState_like_on() throws Exception {
         when(mView.getAccessToken()).thenReturn("not empty");
         Observable<Like> observable = Observable.create(new Observable.OnSubscribe<Like>() {
             @Override
@@ -71,7 +74,23 @@ public class ImageDetailAdapterPresenterTest {
         });
         when(mApi.getIfLikeAShot(anyString())).thenReturn(observable);
         mPresenter.loadLikeState();
-        // check if is_likeon = true
+        boolean like_state = (Boolean) PrivateAccessor.getPrivateField(mPresenter, "is_like_on");
+        assertTrue(like_state);
+    }
+
+    @Test
+    public void loadLikeState_like_off() throws Exception {
+        when(mView.getAccessToken()).thenReturn("not empty");
+        Observable<Like> observable = Observable.create(new Observable.OnSubscribe<Like>() {
+            @Override
+            public void call(Subscriber<? super Like> subscriber) {
+                subscriber.onError(new IllegalStateException("fake"));
+            }
+        });
+        when(mApi.getIfLikeAShot(anyString())).thenReturn(observable);
+        mPresenter.loadLikeState();
+        boolean like_state = (Boolean) PrivateAccessor.getPrivateField(mPresenter, "is_like_on");
+        assertFalse(like_state);
     }
 
     @Test

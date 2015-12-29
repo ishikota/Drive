@@ -57,7 +57,6 @@ public class ImageDetailAdapterPresenter implements ImageDetailAdapterContract.U
 
     @Override
     public void loadLikeState() {
-        // TODO cannot write test. How to verify if BusHolder.get().post called with specified event
         if(!mDetailView.getAccessToken().isEmpty()) {
             API.getIfLikeAShot(mShot.id)
                     .subscribe(new ApiSubscriber<Like>() {
