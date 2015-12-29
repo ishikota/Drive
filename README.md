@@ -15,10 +15,10 @@ Our MVP approach is based on [googlecodelabs/android-testing][2].
 We used **JUnit4** and **Mockito** for unit tests.
 
 ##UI Tests
-We used **Cappuchino** and **Dagger** for UI tests.  
+We used **Cappuchino** and **Dagger2** for UI tests.  
 
 - *Cappuchino* makes our test code short and easy to read.
-- *Dagger* is used for mocking server responce.
+- *Dagger2* is used for mocking server responce.
 
 UI tests written in Cappichino is [here][3].
 
