@@ -15,15 +15,17 @@ import jp.ikota.drive.data.model.Likes;
 import jp.ikota.drive.data.model.Shot;
 import jp.ikota.drive.data.model.Shots;
 import jp.ikota.drive.network.DribbbleRxApi;
-import jp.ikota.drive.network.DribbbleRxService;
+import jp.ikota.drive.ui.util.PrivateAccessor;
 import rx.Observable;
 import rx.Subscriber;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,7 +49,7 @@ public class ImageDetailPresenterTest {
     }
 
     @Test
-    public void loadRelatedShots() {
+    public void loadRelatedShots_loding_off_success() throws Exception {
         // create data
         String json = SampleResponse.getUserLikes();
         String wrapped_json = "{\"items\":"+json+"}";
@@ -66,11 +68,36 @@ public class ImageDetailPresenterTest {
         when(mApi.getUserLikes(anyInt(), anyInt(), anyString())).thenReturn(observable);
 
         // start verification
-        // TODO : check progress visibility
         mPresenter.loadRelatedShots();
         verify(mView).addShots(expected.items);
+        assertFalse((Boolean) PrivateAccessor.getPrivateField(mPresenter, "loading"));
+        assertEquals(2, PrivateAccessor.getPrivateField(mPresenter, "mPage"));
         verify(mView).notifyRelatedLoadFinish(false);
-        // TODO : assert mShotsPresenter.mPage == 2
+    }
+
+    @Test
+    public void loadRelatedShots_loding_off_error() throws Exception {
+        // create data
+
+        Observable<Likes> observable = Observable.create(new Observable.OnSubscribe<Likes>() {
+            @Override
+            public void call(Subscriber<? super Likes> subscriber) {
+                subscriber.onError(new IllegalStateException("fake"));
+            }
+        });
+        when(mApi.getUserLikes(anyInt(), anyInt(), anyString())).thenReturn(observable);
+
+        // start verification
+        mPresenter.loadRelatedShots();
+        verify(mView).showNetworkError();
+        verify(mView).notifyRelatedLoadFinish(true);
+    }
+
+    @Test
+    public void loadRelatedShots_loding_on() throws Exception {
+        PrivateAccessor.setPrivateField(mPresenter, "loading", true);
+        mPresenter.loadRelatedShots();
+        verify(mApi, never()).getUserLikes(anyInt(), anyInt(), anyString());
     }
 
     @Test
@@ -78,6 +105,17 @@ public class ImageDetailPresenterTest {
         Shot shot = SHOTS.items.get(0);
         mPresenter.openShotDetails(shot);
         verify(mView).showShotDetail(shot);
+    }
+
+    @Test
+    public void clickFab() throws Exception {
+        when(mView.getAccessToken()).thenReturn("");
+        mPresenter.clickFab();
+        verify(mView).showLoginDialog();
+        when(mView.getAccessToken()).thenReturn("not empty");
+        mPresenter.clickFab();
+        assertTrue((Boolean) PrivateAccessor.getPrivateField(mPresenter, "fab_is_on"));
+        verify(mView).toggleFab(true, true);
     }
 
     @Test
@@ -92,23 +130,6 @@ public class ImageDetailPresenterTest {
     }
 
     @Test
-    public void initFab() {
-        mPresenter.initFab(new ImageDetailPresenter.LikeAvailableEvent(true));
-        verify(mView).toggleFab(true, false);
-        assertTrue(mPresenter.getIfFabIsOn());
-        mPresenter.initFab(new ImageDetailPresenter.LikeAvailableEvent(false));
-        verify(mView).toggleFab(false, false);
-        assertFalse(mPresenter.getIfFabIsOn());
-    }
-
-    @Test
-    public void checkIfShowLoginDialog() {
-        when(mView.getAccessToken()).thenReturn("");
-        mPresenter.clickFab();
-        verify(mView).showLoginDialog();
-    }
-
-    @Test
     public void updateToolbarAlpha() {
         mPresenter.updateToolbarAlpha(100);
         verify(mView).setToolbarAlpha(100);
@@ -116,6 +137,16 @@ public class ImageDetailPresenterTest {
         verify(mView).setToolbarAlpha(200);
         mPresenter.updateToolbarAlpha(-700);
         verify(mView).setToolbarAlpha(0);
+    }
+
+    @Test
+    public void initFab() {
+        mPresenter.initFab(new ImageDetailPresenter.LikeAvailableEvent(true));
+        verify(mView).toggleFab(true, false);
+        assertTrue(mPresenter.getIfFabIsOn());
+        mPresenter.initFab(new ImageDetailPresenter.LikeAvailableEvent(false));
+        verify(mView).toggleFab(false, false);
+        assertFalse(mPresenter.getIfFabIsOn());
     }
 
     private Shots createSampleData() {
